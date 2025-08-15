@@ -20,9 +20,10 @@ const questionSchema = new mongoose.Schema({
         defalut : "",
     },
     difficulty : {
-        type: String,
-        enum : ["easy", "medium" ,"hard"],
-        default: "medium"
+        type: Number,
+        min : 1,
+        max : 5,
+        default : 3,       
     },
     createdAt : {
         type: Date,

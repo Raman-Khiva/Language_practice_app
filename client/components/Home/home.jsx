@@ -1,4 +1,5 @@
 import Button from "../Button/button";
+import Link from "next/link";
 
 
 const Home = () => {
@@ -17,7 +18,7 @@ const Home = () => {
                 LinguaWrite makes practice fun and effective.
             </h5>
 
-            <Button data="Start now"/>
+            <Link href="/categories"><Button data="Start now"/></Link>
 
         </div>
     </section>
