@@ -13,9 +13,8 @@ const question = () => {
       <div className="  bg-[#e0e4eeb5] p-[14px] border-2 border-[#969696]
                      rounded-4xl 
       ">
-        <div className="w-160 h-180 bg-white rounded-3xl overflow-hidden relative
-                   
-        ">
+        <div className="w-190 h-160 bg-white rounded-3xl overflow-hidden relative
+        "> 
           
           <div className="flex w-full h-8 items-center bg-[#aeaeae] relative">
             <h3 className="text-lg font-[600] text-[#d3d3d3] absolute left-[50%] translate-x-[-50%]">Question 7 out of 10</h3>
@@ -33,7 +32,7 @@ const question = () => {
                 <h2 className="text-[21px] font-[500] text-[#242424] leading-relaxed"> Question will appear here and  input field will appear below it. Under developement! see you soon with updates.  </h2>
               </div>
 
-              <textarea className="text-2xl font-[500] text-[#474747]  border-4 outline-none rounded-xl border-[#4c4b4b] 
+              <textarea className="text-2xl font-[500] text-[#474747]  border-4 outline-none rounded-xl border-[#4c4b4b] bg-[#fff]
                                    w-full  py-4 px-4 resize-none flex-grow max-h-100" placeholder="Type your answer here.."></textarea>
             </div>
 

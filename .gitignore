@@ -39,4 +39,4 @@ Thumbs.db
 # Temporary files
 /client/DataBase/
 
-/server/dataUploader/
+/server/dataUploader/ 
