@@ -6,30 +6,34 @@ import {  useContext } from 'react';
 
 const page = ({params}) => {
     const category = params.category;
-
     const {categories} = useContext(ProductContext)
-    console.log("Current category:", category);
-    console.log("Available categories:", Object.keys(categories));
+    
     if (!categories || Object.keys(categories).length === 0) {
       return <div>Loading...</div>; // Or skeleton UI
     }
-    console.log("Categories available now :", categories);
+    // const categoryArray  = Object.keys(categories); //change object to array
     
+    // //check if first letter is alphabet (because all categories start with alphabet)
+    // const isFirstLetter = /^[a-zA-Z]$/.test(category.charAt(0)); 
+
+    // //check if category exists in categories (required to check if category is valid either uppercase or lowercase)
+    // const exists = categoryArray.some(
+    //   (key) => key.toLowerCase() === category.toLowerCase()
+    // );
     
-    if((!category.charAt(0).isUpper() && !category.charAt(0).isLower()) ||
-       (!Object.keys(categories).includes(category) && !Object.keys(categories).includes(category.toLowerCase()))){
-      return notFound();
-    }
+    // // if first letter is not alphabet or category does not exist, return 404 (because user asked for invalid category)
+    // if(!isFirstLetter || !exists){
+    //   return notFound();
+    // }
 
     const totalLesson = Math.ceil(categories[category]/10);
-
 
 
   return (
     <div className='w-screen flex flex-col px-40 py-20 min-h-screen
                     bg-gradient-to-r from-[#f1e9ff]  via-[#fff5d8cf] to-[#ffe3ec]
     '>
-      <h1 className='text-4xl font-[600] text-[#5e5e5e]'>{category.charAt(0).toUpperCase() + category.slice(1)} </h1>
+      <h1 className='text-4xl font-[600] text-[#5e5e5e]'>{category} </h1>
       <div className='flex flex-wrap gap-6 my-20'>
 
         
@@ -42,9 +46,6 @@ const page = ({params}) => {
        
         
       </div>
-      
-
-
     </div>
   )
 }
