@@ -1,97 +1,231 @@
+'use client'
+import { ProductContext } from "@/app/context/ProductContext";
+import { notFound, useRouter } from "next/navigation";
+import { useContext, useState, useEffect } from "react"
 
+// url is /categories/[category]/[lesson]
+// This component expects params: { category: string, lesson: string }
 
+const Question = ({ params }) => {
+  const router = useRouter();
+  const { 
+    currentLesson,
+    lessonData,
+    setCurrentLesson,
+    categories,
+    currentCategory,
+    setCurrentCategory
+  } = useContext(ProductContext);
+  
+  // Parse URL parameters
+  const categoryName = params.category;
+  const lessonId = parseInt(params.lesson, 10);
+  
+  // Component state
+  const [questionNo, setQuestionNo] = useState(0); // 0-indexed for array access
+  const [userAnswer, setUserAnswer] = useState("");
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Validate category and lesson on mount and params change
+  useEffect(() => {
+    if (categories && Object.keys(categories).length > 0) {
+      // Check if category exists
+      if (!categories.hasOwnProperty(categoryName)) {
+        notFound();
+        return;
+      }
 
-const question = () => {
+      // Check if lesson number is valid (1 to total lessons for category)
+      const totalLessons = Math.ceil(categories[categoryName] / 10);
+      if (lessonId < 1 || lessonId > totalLessons) {
+        notFound();
+        return;
+      }
+
+      // Set current category and lesson if they're different
+      if (currentCategory !== categoryName) {
+        setCurrentCategory(categoryName);
+      }
+      if (currentLesson !== lessonId) {
+        setCurrentLesson(lessonId);
+      }
+
+      setIsLoading(false);
+    }
+  }, [categories, categoryName, lessonId, currentCategory, currentLesson, setCurrentCategory, setCurrentLesson]);
+
+  // Reset question state when lesson changes
+  useEffect(() => {
+    if (lessonData && lessonData.length > 0) {
+      setQuestionNo(0);
+      setUserAnswer("");
+      setShowAnswer(false);
+    }
+  }, [lessonData]);
+
+  // Loading state
+  if (isLoading || !categories || Object.keys(categories).length === 0) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center text-2xl font-bold text-gray-700">
+        Loading categories...
+      </div>
+    );
+  }
+
+  // Loading lesson data
+  if (!lessonData || lessonData.length === 0) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center text-2xl font-bold text-gray-700">
+        Loading lesson data...
+      </div>
+    );
+  }
+
+  // Get current question
+  const currentQuestion = lessonData[questionNo];
+  const totalQuestions = lessonData.length;
+  const progressPercentage = ((questionNo + 1) * 100) / totalQuestions;
+
+  // Handle answer submission
+  const handleSubmit = () => {
+    if (userAnswer.trim()) {
+      setShowAnswer(true);
+    }
+  };
+
+  // Handle skip question
+  const handleSkip = () => {
+    if (questionNo < totalQuestions - 1) {
+      setQuestionNo(prev => prev + 1);
+      setUserAnswer("");
+      setShowAnswer(false);
+    } else {
+      handleLessonComplete();
+    }
+  };
+
+  // Handle next question
+  const handleNextQuestion = () => {
+    if (questionNo < totalQuestions - 1) {
+      setQuestionNo(prev => prev + 1);
+      setUserAnswer("");
+      setShowAnswer(false);
+    } else {
+      handleLessonComplete();
+    }
+  };
+
+  // Handle lesson completion
+  const handleLessonComplete = () => {
+    const totalLessons = Math.ceil(categories[categoryName] / 10);
+    if (lessonId < totalLessons) {
+      // Move to next lesson
+      router.push(`/categories/${categoryName}/${lessonId + 1}`);
+    } else {
+      // All lessons completed, redirect to category page or completion page
+      router.push(`/categories/${categoryName}`);
+    }
+  };
+
+  // Answer component
+  const AnswerComponent = () => (
+    <div className="bg-white border-2 border-gray-300 rounded-xl p-6 mt-4">
+      <div className="space-y-4">
+        <div>
+          <h4 className="text-lg font-semibold text-gray-700 mb-2">Your Answer:</h4>
+          <p className="text-gray-600 bg-gray-50 p-3 rounded-lg">{userAnswer}</p>
+        </div>
+        <div>
+          <h4 className="text-lg font-semibold text-gray-700 mb-2">Correct Answer:</h4>
+          <p className="text-green-600 bg-green-50 p-3 rounded-lg font-medium">
+            it is working on orignial answer, please move ot next question
+          </p>
+        </div>
+        <div className="flex justify-center pt-4">
+          <button
+            onClick={handleNextQuestion}
+            className="px-6 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 hover:scale-105 transition-all"
+          >
+            {questionNo < totalQuestions - 1 ? "Next Question" : "Complete Lesson"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <div className='w-screen min-h-screen px-32 py-12
-                    bg-fixed bg-gradient-to-r from-[#eaddffa7] via-[#fff1c288] to-[#eed6ddb5] 
-                    flex flex-col items-center justify-end 
-                    
-    '>
-
-      <div className="  bg-[#e0e4eeb5] p-[14px] border-2 border-[#969696]
-                     rounded-4xl 
-      ">
-        <div className="w-190 h-160 bg-white rounded-3xl overflow-hidden relative
-        "> 
+    <div className="w-screen min-h-screen px-4 md:px-32 py-12 bg-fixed bg-gradient-to-r from-[#eaddffa7] via-[#fff1c288] to-[#eed6ddb5] flex flex-col items-center justify-center">
+      <div className="bg-[#e0e4eeb5] p-[14px] border-2 border-[#969696] rounded-4xl max-w-4xl w-full">
+        <div className="bg-white rounded-3xl overflow-hidden relative min-h-[600px]">
           
-          <div className="flex w-full h-8 items-center bg-[#aeaeae] relative">
-            <h3 className="text-lg font-[600] text-[#d3d3d3] absolute left-[50%] translate-x-[-50%]">Question 7 out of 10</h3>
-            <div className="h-full w-[70%] bg-[#3763db]  rounded-r-xl"/>
-            {/* <div className="w-[92%] h-2 rounded-full bg-[#8e8e8e] absolute top-0">
-              <div className="h-full w-[70%] bg-[#0c9315] rounded-full" />
-            </div> */} 
+          {/* Progress header */}
+          <div className="flex w-full h-12 items-center bg-[#aeaeae] relative">
+            <h3 className="text-lg font-semibold text-white absolute left-1/2 transform -translate-x-1/2 z-10">
+              Question {questionNo + 1} of {totalQuestions}
+            </h3>
+            <div 
+              className="h-full bg-[#3763db] rounded-r-xl transition-all duration-300 ease-out"
+              style={{ width: `${progressPercentage}%` }}
+            />
           </div>
 
-          <div className="flex flex-col justify-between h-[calc(100%-2rem)] ">
-            <div className="w-full flex flex-col justify-end p-6 flex-1">
-
-              <div className="flex flex-col gap-6 mb-8">
-                <h3 className="text-lg font-[500] text-[#474646]">Translate given sentence to spanish </h3>
-                <h2 className="text-[21px] font-[500] text-[#242424] leading-relaxed"> Question will appear here and  input field will appear below it. Under developement! see you soon with updates.  </h2>
+          <div className="flex flex-col justify-between h-[calc(100%-3rem)] p-6">
+            
+            {/* Question section */}
+            <div className="flex flex-col justify-center flex-1 space-y-6">
+              <div className="space-y-4">
+                <h3 className="text-xl font-medium text-gray-600">
+                  Translate the given sentence to Spanish:
+                </h3>
+                <h2 className="text-2xl font-medium text-gray-800 leading-relaxed bg-gray-50 p-4 rounded-lg">
+                  {currentQuestion.english}
+                </h2>
               </div>
 
-              <textarea className="text-2xl font-[500] text-[#474747]  border-4 outline-none rounded-xl border-[#4c4b4b] bg-[#fff]
-                                   w-full  py-4 px-4 resize-none flex-grow max-h-100" placeholder="Type your answer here.."></textarea>
+              {!showAnswer ? (
+                <textarea
+                  value={userAnswer}
+                  onChange={(e) => setUserAnswer(e.target.value)}
+                  className="text-xl font-medium text-gray-700 border-2 outline-none rounded-xl border-gray-400 bg-white w-full py-4 px-4 resize-none min-h-32 focus:border-blue-500 transition-colors"
+                  placeholder="Type your answer here..."
+                  disabled={showAnswer}
+                />
+              ) : (
+                <AnswerComponent />
+              )}
             </div>
 
-            <div className=" px-6 pb-5 
-                      w-full flex items-center justify-between text-xl font-[500]
-            " >
-              <button className="text-[#4c4c4c] font-[600] hover:text-[#343434] hover:font-[700] cursor-pointer">Skip</button>
-                <button className="px-5 py-[6px] text-[#fff] bg-[#1d5acd] rounded-xl cursor-pointer
-                                  hover:bg-[#1a4bbd] hover:scale-[102%] transition-all 
-
-                
-                ">Submit</button>
-            </div>
-
-          </div>
-
-
-          {/* <div className="bg-blue-700">
-            <button className="text-lg text-[#fff] bg-[#0f187e]">Submit</button>
-          </div> */}
-
-        </div>
-
-
-
-      </div>
-
-
-
-
-
-
-
-      {/* bg-[linear-gradient(to-right, #F9DEDC_0%, #EADDFF_33%, #FFF1C2_66%, #FFD8E4_100%  )]
-      <div className="w-full flex  items-center flex-row-reverse justify-between relative mt-16 px-48">
-
-        <h3 className="text-lg font-[500] text-[#747474b6] "> Question 11 of 15</h3>
-
-          <div className="w-72 h-[8px] rounded-2xl bg-gray-300 absolute left-[50%] translate-x-[-50%]">
-            <div className="h-full w-[70%] bg-[#3cba38] rounded-2xl" />
-          </div>
-        <h3 className="text-lg font-[500] text-[#747474b6] "> Lesson X</h3>
-
-
-      </div>
-      <div className="w-full mt-12 grid place-items-center">
-        <div className="w-max  flex flex-col items-start gap-10 relative py-14">
-          <QuestionFeild question={"The question will be placed here.."}/>
-          <TextArea/>
-          <div className="absolute right-0 bottom-[-1rem]">
-           <Button data={"Check it"} />
-
+            {/* Action buttons */}
+            {!showAnswer && (
+              <div className="flex items-center justify-between pt-6 border-t border-gray-200">
+                <button
+                  onClick={handleSkip}
+                  className="text-gray-600 font-semibold hover:text-gray-800 transition-colors"
+                >
+                  Skip
+                </button>
+                <button
+                  onClick={handleSubmit}
+                  disabled={!userAnswer.trim()}
+                  className="px-6 py-3 text-white bg-blue-600 rounded-xl font-medium hover:bg-blue-700 hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                >
+                  Submit
+                </button>
+              </div>
+            )}
           </div>
         </div>
+      </div>
 
-      </div> */}
-
+      {/* Lesson info */}
+      <div className="mt-6 text-center text-gray-600">
+        <p className="text-lg font-medium">
+          {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} - Lesson {lessonId}
+        </p>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default question
+export default Question;

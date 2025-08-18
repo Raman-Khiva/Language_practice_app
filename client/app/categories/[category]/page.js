@@ -11,20 +11,20 @@ const page = ({params}) => {
     if (!categories || Object.keys(categories).length === 0) {
       return <div>Loading...</div>; // Or skeleton UI
     }
-    // const categoryArray  = Object.keys(categories); //change object to array
+    const categoryArray  = Object.keys(categories); //change object to array
     
-    // //check if first letter is alphabet (because all categories start with alphabet)
-    // const isFirstLetter = /^[a-zA-Z]$/.test(category.charAt(0)); 
+    //check if first letter is alphabet (because all categories start with alphabet)
+    const isFirstLetter = /^[a-zA-Z]$/.test(category.charAt(0)); 
 
-    // //check if category exists in categories (required to check if category is valid either uppercase or lowercase)
-    // const exists = categoryArray.some(
-    //   (key) => key.toLowerCase() === category.toLowerCase()
-    // );
+    //check if category exists in categories (required to check if category is valid either uppercase or lowercase)
+    const exists = categoryArray.some(
+      (key) => key.toLowerCase() === category.toLowerCase()
+    );
     
-    // // if first letter is not alphabet or category does not exist, return 404 (because user asked for invalid category)
-    // if(!isFirstLetter || !exists){
-    //   return notFound();
-    // }
+    // if first letter is not alphabet or category does not exist, return 404 (because user asked for invalid category)
+    if(!isFirstLetter || !exists){
+      return notFound();
+    }
 
     const totalLesson = Math.ceil(categories[category]/10);
 

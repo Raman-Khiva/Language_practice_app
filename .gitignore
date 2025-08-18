@@ -40,3 +40,6 @@ Thumbs.db
 /client/DataBase/
 
 /server/dataUploader/ 
+
+/client/app/oldLesson.js
+/server/.env
