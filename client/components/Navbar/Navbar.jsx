@@ -17,22 +17,43 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="w-full border-b bg-white/70 backdrop-blur sticky top-0 z-40">
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="text-lg font-bold text-gray-800">LinguaWrite</Link>
-        <div className="flex items-center gap-3">
-          <Link href="/categories" className="text-sm text-gray-700 hover:text-gray-900">Categories</Link>
-          {!isAuthenticated ? (
-            <div className="flex items-center gap-2">
-              <Link href={`/login?next=${encodeURIComponent(pathname || '/')}`} className="px-3 py-1.5 bg-blue-600 text-white rounded-md text-sm">Sign in</Link>
-              <Link href={`/signup?next=${encodeURIComponent(pathname || '/')}`} className="px-3 py-1.5 border border-blue-600 text-blue-600 rounded-md text-sm">Sign up</Link>
-            </div>
-          ) : (
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-700">Hi, {user?.name || 'User'}</span>
-              <button onClick={handleLogout} className="px-3 py-1.5 bg-gray-800 text-white rounded-md text-sm">Logout</button>
-            </div>
-          )}
+    <nav className="sticky top-0 z-50 w-full -mt-25">
+      <div className="mx-auto max-w-6xl px-4 py-3">
+        <div className="flex items-center justify-between rounded-2xl border border-white/20 bg-white/60 backdrop-blur-xl shadow-sm ring-1 ring-black/5 px-4 py-2.5">
+          <Link href="/" className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
+            LinguaWrite
+          </Link>
+          <div className="flex items-center gap-3">
+            <Link href="/categories" className="text-sm text-gray-700/90 hover:text-gray-900 transition-colors">
+              Categories
+            </Link>
+            {!isAuthenticated ? (
+              <div className="flex items-center gap-2">
+                <Link
+                  href={`/login?next=${encodeURIComponent(pathname || '/')}`}
+                  className="px-4 py-2 rounded-full text-sm text-gray-800 bg-white/70 border border-gray-200 hover:bg-white transition-colors"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  href={`/signup?next=${encodeURIComponent(pathname || '/')}`}
+                  className="px-4 py-2 rounded-full text-sm text-white bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-sm"
+                >
+                  Sign up
+                </Link>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-700/90">Hi, {user?.name || 'User'}</span>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 rounded-full text-sm text-gray-800 bg-white/70 border border-gray-200 hover:bg-white transition-colors"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </nav>

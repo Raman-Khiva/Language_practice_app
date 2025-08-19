@@ -2,7 +2,7 @@ import Home from "@/components/Home/home.jsx";
 
 export default function page() {
   return (
-    <div className="w-screen h-screen">
+    <div className="min-h-screen w-full">
       <Home/>
     </div>
   );
