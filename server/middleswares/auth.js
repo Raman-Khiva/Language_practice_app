@@ -35,7 +35,7 @@ export const protect = async (req, res, next) => {
                 success: false,
                 message: 'User account is deactivated'
             });
-        }
+}
 
         req.user = user;
         next();
