@@ -50,16 +50,14 @@ const categoryCard = ({category}) => {
   const percent = counts.total > 0 ? Math.round((counts.completed / counts.total) * 100) : 0;
   return (
     <div
-        className='w-full bg-[#ffffffd8] py-4 pl-6 pr-10 text-2xl text-gray-600 font-[500] border-2 border-gray-200 shadow-sm shadow-gray-200 rounded-2xl
-                    grid grid-cols-[1.5fr_1fr_1fr_0.7fr] items-center
-                   '
+        className='w-full bg-[#ffffffd8] py-4 px-4 sm:pl-6 sm:pr-10 text-xl sm:text-2xl text-gray-600 font-[500] border-2 border-gray-200 shadow-sm shadow-gray-200 rounded-2xl grid grid-cols-1 sm:grid-cols-[1.5fr_1fr_1fr_0.7fr] gap-3 sm:gap-2 items-center'
     >
 
 
       <h3 className=" ">{category}</h3>
 
 
-      <h4 className="text-lg   ">{counts.completed}/{counts.total} questions</h4>
+      <h4 className="text-base sm:text-lg">{counts.completed}/{counts.total} questions</h4>
 
 
 
@@ -67,10 +65,10 @@ const categoryCard = ({category}) => {
       
 
 
-      <div className="flex flex-row-reverse">
+      <div className="flex sm:flex-row-reverse">
         <Link 
           href={`/categories/${category}`}
-          className="text-[16px]  text-white px-3 py-[6px] bg-blue-600 rounded-xl hover:scale-[103%] "> Do it
+          className="text-[15px] sm:text-[16px] text-white px-3 py-[8px] sm:py-[6px] bg-blue-600 rounded-xl hover:scale-[103%] transition-transform"> Do it
         </Link>
       </div>
 

@@ -112,7 +112,7 @@ const Question = ({ params }) => {
   // Loading state
   if (isLoading || !categories || Object.keys(categories).length === 0) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center text-2xl font-bold text-gray-700">
+      <div className="w-full min-h-[60vh] flex items-center justify-center text-xl sm:text-2xl font-bold text-gray-700 px-4">
         Loading categories...
       </div>
     );
@@ -121,7 +121,7 @@ const Question = ({ params }) => {
   // Loading lesson data
   if (!lessonData || lessonData.length === 0) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center text-2xl font-bold text-gray-700">
+      <div className="w-full min-h-[60vh] flex items-center justify-center text-xl sm:text-2xl font-bold text-gray-700 px-4">
         Loading lesson data...
       </div>
     );
@@ -304,30 +304,35 @@ const Question = ({ params }) => {
   };
 
   return (
-    <div className="w-screen min-h-screen px-4 md:px-32 py-12 bg-fixed bg-gradient-to-r from-[#eaddffa7] via-[#fff1c288] to-[#eed6ddb5] flex flex-col items-center justify-center">
-      <div className="bg-[#e0e4eeb5] p-[14px] border-2 border-[#969696] rounded-4xl max-w-4xl w-full">
-        <div className="bg-white rounded-3xl overflow-hidden relative min-h-[600px]">
-          
+    <div className="w-full min-h-screen px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 py-10 md:py-12 bg-fixed bg-gradient-to-r from-[#eaddffa7] via-[#fff1c288] to-[#eed6ddb5] flex flex-col items-center justify-center">
+      <div className="bg-white/60 backdrop-blur-xl p-3 sm:p-4 border border-white/30 rounded-3xl md:rounded-4xl shadow-xl ring-1 ring-black/5 max-w-4xl w-full">
+        <div className="bg-white/90 rounded-2xl md:rounded-3xl overflow-hidden relative min-h-[520px] md:min-h-[600px]">
+
           {/* Progress header */}
-          <div className="flex w-full h-12 items-center bg-[#aeaeae] relative">
-            <h3 className="text-lg font-semibold text-white absolute left-1/2 transform -translate-x-1/2 z-10">
-              Question {questionNo + 1} of {totalQuestions}
-            </h3>
-            <div 
-              className="h-full bg-[#3763db] rounded-r-xl transition-all duration-300 ease-out"
-              style={{ width: `${progressPercentage}%` }}
-            />
+          <div className="px-4 sm:px-6 pt-4 pb-2 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm md:text-base font-semibold text-gray-700">
+                Question {questionNo + 1} of {totalQuestions}
+              </h3>
+              <span className="text-xs md:text-sm font-medium text-gray-500">{Math.round(progressPercentage)}%</span>
+            </div>
+            <div className="mt-3 h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full transition-all duration-300 ease-out"
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
           </div>
 
-          <div className="flex flex-col justify-between h-[calc(100%-3rem)] p-6">
+          <div className="flex flex-col justify-between h-[calc(100%-3rem)] p-4 sm:p-6">
             
             {/* Question section */}
             <div className="flex flex-col justify-center flex-1 space-y-6">
               <div className="space-y-4">
-                <h3 className="text-xl font-medium text-gray-600">
+                <h3 className="text-lg md:text-xl font-medium text-gray-700">
                   Translate the given sentence to Spanish:
                 </h3>
-                <h2 className="text-2xl font-medium text-gray-800 leading-relaxed bg-gray-50 p-4 rounded-lg">
+                <h2 className="text-xl md:text-2xl font-medium text-gray-900 leading-relaxed bg-gray-50 p-3 md:p-4 rounded-lg">
                   {currentQuestion.english}
                 </h2>
               </div>
@@ -336,7 +341,7 @@ const Question = ({ params }) => {
                 <textarea
                   value={userAnswer}
                   onChange={(e) => setUserAnswer(e.target.value)}
-                  className="text-xl font-medium text-gray-700 border-2 outline-none rounded-xl border-gray-400 bg-white w-full py-4 px-4 resize-none min-h-32 focus:border-blue-500 transition-colors"
+                  className="text-lg md:text-xl font-medium text-gray-800 border-2 outline-none rounded-xl border-gray-300 bg-white w-full py-3 md:py-4 px-3 md:px-4 resize-none min-h-28 md:min-h-32 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 transition"
                   placeholder="Type your answer here..."
                   disabled={showAnswer}
                 />
@@ -347,17 +352,17 @@ const Question = ({ params }) => {
 
             {/* Action buttons */}
             {!showAnswer && (
-              <div className="flex items-center justify-between pt-6 border-t border-gray-200">
+              <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-gray-200">
                 <button
                   onClick={handleSkip}
-                  className="text-gray-600 font-semibold hover:text-gray-800 transition-colors"
+                  className="text-gray-600 font-semibold hover:text-gray-800 transition-colors text-sm md:text-base px-3 py-2 rounded-full hover:bg-gray-50"
                 >
                   Skip
                 </button>
                 <button
                   onClick={handleSubmit}
                   disabled={!userAnswer.trim()}
-                  className="px-6 py-3 text-white bg-blue-600 rounded-xl font-medium hover:bg-blue-700 hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="px-5 md:px-6 py-2.5 md:py-3 text-white rounded-full font-medium bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-sm hover:shadow transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   Submit
                 </button>
@@ -368,8 +373,8 @@ const Question = ({ params }) => {
       </div>
 
       {/* Lesson info */}
-      <div className="mt-6 text-center text-gray-600">
-        <p className="text-lg font-medium">
+      <div className="mt-6 text-center text-gray-600 px-4">
+        <p className="text-base md:text-lg font-medium">
           {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} - Lesson {lessonId}
         </p>
       </div>

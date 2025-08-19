@@ -38,18 +38,15 @@ const lessonCard = ({lessonId,category}) => {
   return (
     <Link 
       href={targetHref}
-      className=' bg-[#d6dfe674] border-3 rounded-2xl  shadow-lg border-none
-                    p-[10px]
-    '>
+      className=' bg-[#d6dfe674] border-3 rounded-2xl shadow-lg border-none p-2 sm:p-[10px] w-full sm:w-auto'
+    >
 
-      <div className=' flex  flex-col justify-between
-                    w-48 h-56 bg-[#fafcffc4] rounded-[12px] px-4 py-4 border-3 border-[#d9d9d995]
-      '>
+      <div className=' flex flex-col justify-between w-full sm:w-48 h-52 sm:h-56 bg-[#fafcffc4] rounded-[12px] px-3 sm:px-4 py-4 border-3 border-[#d9d9d995]'>
         <div className='flex items-center justify-center py-1'>
           <CircularProgressBar progress={progressPercent} />
         </div>
         
-        <h3 className='text-lg font-[600] text-gray-400'>Lesson {lessonId}</h3>
+        <h3 className='text-base sm:text-lg font-[600] text-gray-400'>Lesson {lessonId}</h3>
       </div>
 
     </Link>
