@@ -1,9 +1,15 @@
+// Question routes: CRUD, retrieval and completion tracking helpers
 import express from "express";
 import Question from "../models/questionModel.js";
 import Category from "../models/categoryModel.js";
+import { protect } from "../middleswares/auth.js";
+import UserProgress from "../models/userProgressModel.js";
 
 const router = express.Router();
 
+// @desc    Add a new question
+// @route   POST /api/questions/add
+// @access  Public (consider protecting in the future)
 router.post("/add", async (req,res)=>{
     try{
         const {english,spanish,categories,explanation,difficulty} = req.body;
@@ -28,6 +34,9 @@ router.post("/add", async (req,res)=>{
 });
 
 
+// @desc    Get questions by category (?category=...)
+// @route   GET /api/questions?category=<name>
+// @access  Public
 router.get("/", async (req,res) => {
 
     console.log("User asked for category questions ! Will check if category is valid");
@@ -65,3 +74,68 @@ router.get("/", async (req,res) => {
 })
 
 export default router;
+
+// @desc    Mark a specific question as completed by the user
+// @route   POST /api/questions/:questionId/complete
+// @access  Private (Bearer token)
+router.post("/:questionId/complete", protect, async (req, res) => {
+    try {
+        const { questionId } = req.params;
+
+        const question = await Question.findById(questionId);
+        if (!question) {
+            return res.status(404).json({ success: false, message: "Question not found" });
+        }
+
+        const updated = await UserProgress.findOneAndUpdate(
+            { userId: req.user._id },
+            {
+                $setOnInsert: { userId: req.user._id, completedQuestions: [] },
+                $addToSet: { completedQuestions: question._id }
+            },
+            { new: true, upsert: true }
+        );
+
+        return res.json({
+            success: true,
+            message: "Question marked as completed",
+            data: {
+                questionId: question._id,
+                questionsCompleted: updated.completedQuestions.length
+            }
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ success: false, message: "Server error while marking question completed" });
+    }
+});
+
+// @desc    Get unanswered questions for the user (optional ?category=...)
+// @route   GET /api/questions/unanswered?category=<name>
+// @access  Private (Bearer token)
+router.get("/unanswered", protect, async (req, res) => {
+    try {
+        const category = req.query.category;
+
+        // Get completed question IDs for the user
+        const progress = await UserProgress.findOne(
+            { userId: req.user._id },
+            { completedQuestions: 1 }
+        );
+        const completedIds = progress ? progress.completedQuestions : [];
+
+        const query = {};
+        if (category) {
+            query.categories = category;
+        }
+        if (completedIds.length > 0) {
+            query._id = { $nin: completedIds };
+        }
+
+        const questions = await Question.find(query);
+        return res.json(questions);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ success: false, message: "Server error while fetching unanswered questions" });
+    }
+});

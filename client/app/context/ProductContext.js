@@ -1,5 +1,10 @@
 "use client";
 
+// Global product context
+// - Manages categories and questions
+// - Tracks current category/lesson and provides lesson data slices
+// - Handles authentication (login/register/logout) and token persistence
+// - Loads and exposes user progress (completed question IDs)
 import React, { useState, useEffect, createContext } from 'react';
 
 // =============================================================================
@@ -47,6 +52,21 @@ const ProductProvider = (props) => {
   const [lessonData, setLessonData] = useState([]);
 
   // ---------------------------------------------------------------------------
+  // AUTH STATE
+  // ---------------------------------------------------------------------------
+
+  // JWT token and user profile
+  const [authToken, setAuthToken] = useState(null);
+  const [user, setUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  // ---------------------------------------------------------------------------
+  // PROGRESS STATE
+  // ---------------------------------------------------------------------------
+  const [completedQuestionIds, setCompletedQuestionIds] = useState([]);
+  const [questionsCompleted, setQuestionsCompleted] = useState(0);
+
+  // ---------------------------------------------------------------------------
   // API UTILITY FUNCTIONS
   // ---------------------------------------------------------------------------
 
@@ -63,6 +83,102 @@ const ProductProvider = (props) => {
       console.log("Categories fetched successfully:", data);
     } catch (error) {
       console.error('Error fetching categories:', error);
+    }
+  };
+
+  /**
+   * Helper: authorized fetch wrapper
+   */
+  const authFetch = async (url, options = {}) => {
+    const headers = new Headers(options.headers || {});
+    if (authToken) headers.set('Authorization', `Bearer ${authToken}`);
+    const isAbsolute = typeof url === 'string' && /^https?:\/\//i.test(url);
+    const normalized = isAbsolute ? url : `${API_BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+    return fetch(normalized, { ...options, headers });
+  };
+
+  /**
+   * Progress: load user's progress (completed question ids)
+   */
+  const refreshProgress = async () => {
+    if (!authToken) return;
+    try {
+      const res = await authFetch('/progress');
+      if (!res.ok) return;
+      const data = await res.json();
+      const ids = (data?.data?.completedQuestions || []).map((id) => id?.toString?.() || id);
+      setCompletedQuestionIds(ids);
+      setQuestionsCompleted(Number(data?.data?.questionsCompleted || ids.length || 0));
+    } catch (e) {
+      // noop
+    }
+  };
+
+  /**
+   * Auth: login user
+   */
+  const login = async (email, password) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!res.ok || !data?.token) {
+        throw new Error(data?.message || 'Login failed');
+      }
+      setAuthToken(data.token);
+      console.log("Token is",authToken);
+      setUser(data.data || null);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('authUser', JSON.stringify(data.data || null));
+      }
+      // load progress after login
+      await refreshProgress();
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, error: e.message };
+    }
+  };
+
+  /**
+   * Auth: register user
+   */
+  const register = async (name, email, password) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+      const data = await res.json();
+      if (!res.ok || !data?.token) {
+        throw new Error(data?.message || 'Registration failed');
+      }
+      setAuthToken(data.token);
+      setUser(data.data || null);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('authUser', JSON.stringify(data.data || null));
+      }
+      await refreshProgress();
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, error: e.message };
+    }
+  };
+
+  /**
+   * Auth: logout user
+   */
+  const logout = () => {
+    setAuthToken(null);
+    setUser(null);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('authUser');
     }
   };
 
@@ -104,6 +220,15 @@ const ProductProvider = (props) => {
     console.log(`Lesson data extracted for category ${category}, lesson ${lessonNumber}:`, newLessonData);
   };
 
+  /**
+   * Attempt to ensure category data is fetched when a category becomes current
+   */
+  useEffect(() => {
+    if (currentCategory && !allData[currentCategory]) {
+      fetchQuestionsForCategory(currentCategory)
+    }
+  }, [currentCategory])
+
   // ---------------------------------------------------------------------------
   // EFFECTS
   // ---------------------------------------------------------------------------
@@ -115,6 +240,53 @@ const ProductProvider = (props) => {
   useEffect(() => {
     fetchCategories();
   }, []);
+
+  /**
+   * Effect: initialize auth from localStorage and validate profile
+   */
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        const storedToken = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
+        const storedUser = typeof window !== 'undefined' ? localStorage.getItem('authUser') : null;
+        if (storedToken) {
+          console.log("Token is : ",storedToken);
+          setAuthToken(storedToken);
+          if (storedUser) setUser(JSON.parse(storedUser));
+          // Optionally refresh profile to ensure token validity
+          const res = await fetch(`${API_BASE_URL}/auth/profile`, {
+            headers: { Authorization: `Bearer ${storedToken}` }
+          });
+          if (res.ok) {
+            const profile = await res.json();
+            setUser(profile?.data || null);
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('authUser', JSON.stringify(profile?.data || null));
+            }
+            // Load progress after successful profile fetch
+            await refreshProgress();
+          } else {
+            // Invalid token
+            logout();
+          }
+        }
+      } finally {
+        setAuthLoading(false);
+      }
+    };
+    initAuth();
+  }, []);
+
+  // When authToken changes from null → value, refresh progress
+  useEffect(() => {
+    if (authToken) {
+      refreshProgress();
+    } else {
+      setCompletedQuestionIds([]);
+      setQuestionsCompleted(0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken]);
 
   /**
    * Effect: Handle category and lesson changes
@@ -160,6 +332,20 @@ const ProductProvider = (props) => {
     // Navigation actions
     setCurrentCategory,
     setCurrentLesson,
+
+    // Auth state & actions
+    authToken,
+    user,
+    authLoading,
+    isAuthenticated: Boolean(authToken),
+    login,
+    register,
+    logout,
+    authFetch,
+    // Progress state & actions
+    completedQuestionIds,
+    questionsCompleted,
+    refreshProgress,
   };
 
   // ---------------------------------------------------------------------------

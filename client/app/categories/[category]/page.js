@@ -2,11 +2,11 @@
 import LessonCard from '@/components/LessonCard/lessonCard'
 import { ProductContext, } from '@/app/context/ProductContext';
 import { notFound } from 'next/navigation';
-import {  useContext } from 'react';
+import {  useContext, useEffect } from 'react';
 
 const page = ({params}) => {
     const category = params.category;
-    const {categories} = useContext(ProductContext)
+    const {categories, setCurrentCategory, currentCategory} = useContext(ProductContext)
     
     if (!categories || Object.keys(categories).length === 0) {
       return <div>Loading...</div>; // Or skeleton UI
@@ -25,6 +25,13 @@ const page = ({params}) => {
     if(!isFirstLetter || !exists){
       return notFound();
     }
+
+    // Ensure context knows current category so questions are fetched for lesson progress
+    useEffect(() => {
+      if (currentCategory !== category) {
+        setCurrentCategory(category)
+      }
+    }, [category, currentCategory, setCurrentCategory])
 
     const totalLesson = Math.ceil(categories[category]/10);
 

@@ -1,6 +1,7 @@
 
 import ProductProvider from "./context/ProductContext";
 import "./globals.css";
+import Navbar from "@/components/Navbar/Navbar";
 
 
 
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
       <body className={` antialiased`}>
 
         <ProductProvider>
+          <Navbar/>
           {children}
         </ProductProvider>
       </body>

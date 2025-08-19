@@ -1,7 +1,8 @@
-// components/CircularProgress.jsx
+// Circular progress indicator
+// - Accepts size, strokeWidth, progress (0-100), and color
 import React from "react";
 
-const CircularProgress = ({ size = 120, strokeWidth = 10, progress = 50, color = "blue" }) => {
+const CircularProgress = ({ size = 120, strokeWidth = 10, progress = 0, color = "#34cc3e" }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
@@ -23,7 +24,7 @@ const CircularProgress = ({ size = 120, strokeWidth = 10, progress = 50, color =
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke={'#34cc3e'}
+          stroke={color}
           strokeWidth={strokeWidth}
           fill="none"
           strokeDasharray={circumference}
