@@ -45,10 +45,13 @@ class GroqService {
         }, {
           role: 'user',
           content: `
-            You must ONLY respond with valid JSON (no extra text).
+            You must ONLY respond with valid JSON (no extra text). 
 
             Original text: "${originalText}"
             Spanish translation: "${spanishTranslation}"
+
+            if there is minor issue like accent missing , minor spelling mistke or capitalization issue you can ignore them and mark status as correct but metion these in suggestions section
+
             Follow this exact format:
 
             {
@@ -63,12 +66,16 @@ class GroqService {
             }
 
             Rules:
+            - if there is just accent mark missing , there is minor spelling mistake or there is capitalization issue  , consider it as correct answer because these are just minor issues.
             - "issue" must be tags only, not sentences.
             - "suggestions" must be bullet-style, short, clear, and concise should not exceed 5, you can add suggestions even if translation is correct (eg. Great! this also can be said in this way) (remember not always just when suggestions are required).
             - Omit any field that is not applicable.
+            - Do not leave correctTranslation section empty if the answer is correct put same answer as value of correctTranslation key
+            - Focus extra on countries name, only accept original spanish countries name (like. UK is not acceptable as it is not original spanish name)
+            - Provide only suggestions that are relevent to given originalText and spanishTranslation, do not provide irrelevent suggestions (like, if there is no requirement of accent in given translation then do not say anything about it)
 `
         }],
-        temperature: 0.8, // Low temperature for consistent evaluation
+        temperature: 1.2, // Low temperature for consistent evaluation
         top_p: 0.9
       });
 

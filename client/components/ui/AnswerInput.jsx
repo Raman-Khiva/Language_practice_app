@@ -1,15 +1,66 @@
-'use client'
+"use client";
 
-const AnswerInput = ({ userAnswer, setUserAnswer, disabled = false }) => {
+import { useRef } from "react";
+
+export default function AnswerInput({
+  value,
+  onChange,
+  placeholder,
+  disabled,
+  className,
+  handleSubmit
+}) {
+  const textareaRef = useRef(null);
+
+  const handleKeyDown = (e) => {
+
+    if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault(); // prevent newline
+            handleSubmit();
+    }
+
+    if (!textareaRef.current) return;
+
+    const map = {
+      a: "á",
+      e: "é",
+      i: "í",
+      o: "ó",
+      u: "ú",
+      n: "ñ",
+      "?": "¿",
+      "!": "¡",
+    };
+
+    // Works with Left Alt, Right Alt (AltGr), and Ctrl+Alt
+    if ((e.altKey || (e.ctrlKey && e.altKey)) && map[e.key]) {
+      e.preventDefault();
+      insertAtCursor(map[e.key], textareaRef.current);
+    }
+  };
+
+  const insertAtCursor = (char, textArea) => {
+    const start = textArea.selectionStart;
+    const end = textArea.selectionEnd;
+    const text = textArea.value;
+    const newValue = text.slice(0, start) + char + text.slice(end);
+
+    onChange(newValue);
+
+    setTimeout(() => {
+      textArea.selectionStart = textArea.selectionEnd = start + char.length;
+    }, 0);
+  };
+
   return (
     <textarea
-      value={userAnswer}
-      onChange={(e) => setUserAnswer(e.target.value)}
-      className="text-lg md:text-xl font-medium text-gray-800 border-2 outline-none rounded-xl border-gray-300 bg-white w-full py-3 md:py-4 px-3 md:px-4 resize-none min-h-28 md:min-h-32 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 transition"
-      placeholder="Type your answer here..."
+      ref={textareaRef}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      onKeyDown={handleKeyDown}
+      placeholder={placeholder}
       disabled={disabled}
+      className={className}
     />
   );
-};
-
-export default AnswerInput;
+}

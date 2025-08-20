@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { ProductContext } from '@/app/context/ProductContext'
+import Image from 'next/image'
 
 export default function Navbar() {
   const { isAuthenticated, user, logout } = useContext(ProductContext)
@@ -17,11 +18,11 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full -mt-25">
-      <div className="mx-auto max-w-6xl px-4 py-3">
+    <nav className="fixed top-0 z-50 w-full mt-0">
+      <div className="mx-auto max-w-7xl px-8 py-3">
         <div className="flex items-center justify-between rounded-2xl border border-white/20 bg-white/60 backdrop-blur-xl shadow-sm ring-1 ring-black/5 px-4 py-2.5">
-          <Link href="/" className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
-            LinguaWrite
+          <Link href="/" >
+            <Image src="/logo.png" width={240} height={36} alt='Native Lab' />
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/categories" className="text-sm text-gray-700/90 hover:text-gray-900 transition-colors">

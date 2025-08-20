@@ -1,7 +1,15 @@
-'use client'
+'use client';
+import React, { useEffect, useState } from "react";
 
 const ProgressHeader = ({ questionNo, totalQuestions }) => {
-  const progressPercentage = ((questionNo + 1) * 100) / totalQuestions;
+  
+  const [progressPercentage,setProgressPercentage] = useState(0);
+  useEffect(()=>{
+    
+    const curProgressPercentage = ((questionNo+1) * 100)/totalQuestions;
+    setProgressPercentage(curProgressPercentage);
+  },[questionNo]);
+
 
   return (
     <div className="px-4 sm:px-6 pt-4 pb-2 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
@@ -14,7 +22,7 @@ const ProgressHeader = ({ questionNo, totalQuestions }) => {
         </span>
       </div>
       <div className="mt-3 h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-        <div 
+        <div
           className="h-full bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full transition-all duration-300 ease-out"
           style={{ width: `${progressPercentage}%` }}
         />
