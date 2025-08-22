@@ -1,18 +1,39 @@
 "use client"
 
-// Lesson card
-// - Links to a specific lesson within a category
-// - Shows circular progress for that lesson (computed from completed question IDs)
-// - Redirects unauthenticated users to login with return path
 import Link from 'next/link'
-import React, { useContext, useMemo } from 'react'
+import { easeOut, motion, useAnimation } from 'framer-motion';
+import React, { useContext, useMemo, useEffect } from 'react'
 import CircularProgressBar from '../ProgessBar/circularProgressBar';
 import { ProductContext } from '@/app/context/ProductContext';
 
-const lessonCard = ({lessonId,category}) => {
+// --------------------
+// Skeleton
+// --------------------
+export const LessonCardSkeleton = () => {
+  return (
+    <motion.div
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.6, ease: easeOut }}
+      className='bg-[#d6dfe674] border-1 border-[#afafaf] rounded-2xl p-2 sm:p-[10px] w-full sm:w-auto'
+    >
+      <div className='flex flex-col justify-between w-full sm:w-48 h-52 sm:h-56 bg-[#fffffff0] rounded-[12px] px-3 sm:px-4 py-4 border-3 border-[#d9d9d995]'>
+        <div className='flex items-center justify-center py-1'>
+          <div className="h-16 w-16 sm:h-20 sm:w-20 bg-gray-200 rounded-full animate-pulse"></div>
+        </div>
+        <div className='h-5 w-20 bg-gray-200 animate-pulse rounded'></div>
+      </div>
+    </motion.div>
+  );
+}
+
+// --------------------
+// LessonCard
+// --------------------
+const LessonCard = ({lessonId, category}) => {
   const { isAuthenticated, authLoading, completedQuestionIds, allData } = useContext(ProductContext);
 
-  // Build target href: if not authenticated, send to login with next back to this lesson
+  // Build target href
   const targetHref = useMemo(() => {
     const lessonPath = `/categories/${category}/${lessonId}`;
     if (!authLoading && !isAuthenticated) {
@@ -21,7 +42,7 @@ const lessonCard = ({lessonId,category}) => {
     return lessonPath;
   }, [authLoading, isAuthenticated, category, lessonId]);
 
-  // Compute lesson-level progress percent for authenticated users
+  // Compute progress percent
   const progressPercent = useMemo(() => {
     const QUESTIONS_PER_LESSON = 10;
     if (!isAuthenticated) return 0;
@@ -35,22 +56,30 @@ const lessonCard = ({lessonId,category}) => {
     const completed = slice.filter(q => completedQuestionIds.includes(q._id)).length;
     return Math.round((completed / total) * 100);
   }, [isAuthenticated, allData, category, lessonId, completedQuestionIds]);
+
+  // Animation for CircularProgressBar
+
+
   return (
-    <Link 
-      href={targetHref}
-      className=' bg-[#d6dfe674] border-3 rounded-2xl shadow-lg border-none p-2 sm:p-[10px] w-full sm:w-auto'
+    <motion.div
+      initial={{opacity:0, scale:0.8}}
+      animate={{opacity:1, scale:1}}
+      transition={{duration:0.6,ease:easeOut}}
+      className='bg-[#d6dfe674] border-1 border-[#afafaf] rounded-2xl p-2 sm:p-[10px] w-full sm:w-auto'
     >
-
-      <div className=' flex flex-col justify-between w-full sm:w-48 h-52 sm:h-56 bg-[#fafcffc4] rounded-[12px] px-3 sm:px-4 py-4 border-3 border-[#d9d9d995]'>
-        <div className='flex items-center justify-center py-1'>
-          <CircularProgressBar progress={progressPercent} />
+      <Link href={targetHref} className='h-full w-full'>
+        <div className='flex flex-col justify-between w-full sm:w-48 h-52 sm:h-56 bg-[#fffffff0] rounded-[12px] px-3 sm:px-4 py-4 border-3 border-[#d9d9d995]'>
+          
+          <div className='flex items-center justify-center py-1'>
+            {/* Animated circular progress */}
+            <CircularProgressBar progress={progressPercent} />
+          </div>
+          
+          <h3 className='text-base sm:text-lg font-[600] text-gray-400'>Lesson {lessonId}</h3>
         </div>
-        
-        <h3 className='text-base sm:text-lg font-[600] text-gray-400'>Lesson {lessonId}</h3>
-      </div>
-
-    </Link>
+      </Link>
+    </motion.div>
   )
 }
 
-export default lessonCard
+export default LessonCard;

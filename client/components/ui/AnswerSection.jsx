@@ -11,7 +11,9 @@ const AnswerSection = ({
   questionNo,
   totalQuestions,
   handleNextQuestion,
-  disabled
+  disabled,
+  questionId,
+  addComplete
 }) => {
 
   const buttonRef = useRef(null);
@@ -66,6 +68,11 @@ const AnswerSection = ({
   const bgColor = isCorrect ? "bg-green-50" : "bg-red-50";
   const borderColor = isCorrect ? "border-green-500" : "border-red-600";
   const gradientBorder = isCorrect? "bg-[#b3f2b0]":"bg-[#f6a199]"
+
+  if(isCorrect){
+    console.log("User's answer was correct , now starting to add question to userProgress!");
+    addComplete(questionId);
+  }
 
    
 //   const bgColor = isCorrect ? ""

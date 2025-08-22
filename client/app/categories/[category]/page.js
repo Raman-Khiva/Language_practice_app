@@ -9,7 +9,7 @@ const page = ({params}) => {
     const {categories, setCurrentCategory, currentCategory} = useContext(ProductContext)
     
     if (!categories || Object.keys(categories).length === 0) {
-      return <div>Loading...</div>; // Or skeleton UI
+      return <div className='h-full w-screen flex items-center justify-center'>Loading...</div>; // Or skeleton UI
     }
     const categoryArray  = Object.keys(categories); //change object to array
     
@@ -37,9 +37,9 @@ const page = ({params}) => {
 
 
   return (
-    <div className='w-full flex flex-col px-4 sm:px-6 lg:px-12 xl:px-24 2xl:px-40 py-12 md:py-16 min-h-screen bg-gradient-to-r from-[#f1e9ff]  via-[#fff5d8cf] to-[#ffe3ec]'>
-      <h1 className='text-2xl sm:text-3xl md:text-4xl font-[600] text-[#5e5e5e]'>{category} </h1>
-      <div className='flex flex-wrap gap-4 sm:gap-6 my-10 sm:my-16'>
+    <div className='w-full flex flex-col px-4 sm:px-6 lg:px-12 xl:px-24 2xl:px-40 pt-24 pb-10   min-h-screen bg-gradient-to-r from-[#f1e9ff]  via-[#fff5d8cf] to-[#ffe3ec]'>
+      <h1 className='text-2xl ml-20 py-10 sm:text-3xl md:text-4xl font-[600] text-[#5e5e5e]'>{category} </h1>
+      <div className='flex flex-wrap justify-center gap-4 sm:gap-6 mt-4 '>
 
         
 

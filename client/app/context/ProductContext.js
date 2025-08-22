@@ -204,6 +204,23 @@ const ProductProvider = (props) => {
     }
   };
 
+  const addComplete = async (questionId) =>{
+      console.log("Starting to send request to server to add question.")
+      if (authToken){
+        const headers = {'Authorization': `Bearer ${authToken}`,
+        'Content-Type' : 'application/json'
+      }
+        
+        console.log("User Authed");
+        const response =await fetch(`${API_BASE_URL}/progress/complete`,{
+          method : 'POST',
+          headers,
+          body : JSON.stringify({questionId:questionId})
+        });
+        console.log("Server responded for request to add question to userProgress with this res:",response);
+      }
+  }
+
   /**
    * Extracts lesson data from category questions based on current lesson
    * @param {string} category - The category to extract lesson data from
@@ -342,10 +359,12 @@ const ProductProvider = (props) => {
     register,
     logout,
     authFetch,
+
     // Progress state & actions
     completedQuestionIds,
     questionsCompleted,
     refreshProgress,
+    addComplete
   };
 
   // ---------------------------------------------------------------------------

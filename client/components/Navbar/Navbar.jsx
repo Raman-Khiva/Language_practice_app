@@ -21,8 +21,10 @@ export default function Navbar() {
     <nav className="fixed top-0 z-50 w-full mt-0">
       <div className="mx-auto max-w-7xl px-8 py-3">
         <div className="flex items-center justify-between rounded-2xl border border-white/20 bg-white/60 backdrop-blur-xl shadow-sm ring-1 ring-black/5 px-4 py-2.5">
-          <Link href="/" >
-            <Image src="/logo.png" width={240} height={36} alt='Native Lab' />
+          <Link href="/" className='flex gap-5 items-center px-3' >   
+              <Image src="/brain-logo.svg" className=" rounded-2xl" width={46}  height={4} alt='Native Lab' />  
+              <p className='text-[28px] font-[700] text-[#323131] '>Native <span class = 'bg-clip-text text-transparent bg-linear-to-r from-[#DD8BE1] via-[#305CED] to-[#45afe0]'>labs</span></p>
+              {/*  */}
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/categories" className="text-sm text-gray-700/90 hover:text-gray-900 transition-colors">

@@ -77,8 +77,9 @@ router.post('/complete', protect, async (req, res) => {
             },
             { new: true, upsert: true }
         );
-
-
+        
+        
+        console.log('[POST /api/progress/complete] response sent', { userId: req.user._id, questionsCompleted: updated.completedQuestions.length }); // 3: after response has been sent
         res.json({
             success: true,
             data: {
@@ -88,7 +89,6 @@ router.post('/complete', protect, async (req, res) => {
             message: 'Question marked as completed!'
         });
 
-        console.log('[POST /api/progress/complete] response sent', { userId: req.user._id, questionsCompleted: updated.completedQuestions.length }); // 3: after response has been sent
     } catch (error) {
         console.error('[POST /api/progress/complete] error', error); // 4: on error
         res.status(500).json({

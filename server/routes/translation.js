@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Middleware for request validation
 const validateTranslationRequest = (req, res, next) => {
-    console.log('Validation request received:');
+   
   const { originalText, spanishTranslation } = req.body;
   
   if (!originalText || !spanishTranslation) {
@@ -27,16 +27,16 @@ const validateTranslationRequest = (req, res, next) => {
 
 // Single translation validation
 router.post('/validate', validateTranslationRequest, async (req, res) => {
-    console.log('Received translation validation request:', req.body);
+   
   try {
     const { originalText, spanishTranslation } = req.body;
     
     const startTime = Date.now();
-    console.log(`Validating translation for by groq`)
+    // console.log(`Validating translation for by groq`)
     const validation = await GroqService.validateSpanishTranslation(originalText, spanishTranslation);
     const responseTime = Date.now() - startTime;
-    console.log(`Translation validation completed in ${responseTime}ms`);
-    console.log("sending response to user");
+    // console.log(`Translation validation completed in ${responseTime}ms`);
+    // console.log("sending response to user");
     res.json({
       success: true,
       data: validation,

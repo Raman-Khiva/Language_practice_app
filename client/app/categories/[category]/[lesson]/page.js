@@ -19,7 +19,8 @@ const Question = ({ params }) => {
     setCurrentLesson,
     categories,
     currentCategory,
-    setCurrentCategory
+    setCurrentCategory,
+    addComplete
   } = useContext(ProductContext);
   
   // Parse URL parameters
@@ -106,6 +107,7 @@ const Question = ({ params }) => {
   // Reset question state when lesson changes
   useEffect(() => {
     if (lessonData && lessonData.length > 0) {
+      console.log("This is lessonData array : ",lessonData);
       setQuestionNo(0);
       setUserAnswer("");
       setShowAnswer(false);
@@ -113,6 +115,8 @@ const Question = ({ params }) => {
       setValidationError(null);
     }
   }, [lessonData]);
+
+
 
   // Loading state
   if (isLoading || !categories || Object.keys(categories).length === 0) {
@@ -227,6 +231,8 @@ const Question = ({ params }) => {
                   questionNo={questionNo}
                   totalQuestions={totalQuestions}
                   handleNextQuestion={handleNextQuestion}
+                  questionId={lessonData[questionNo]._id}
+                  addComplete={addComplete}
                   />
                 )}
 
