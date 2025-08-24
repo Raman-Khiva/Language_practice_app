@@ -15,9 +15,9 @@ export const LessonCardSkeleton = () => {
       initial={{ scale: 0.8, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.6, ease: easeOut }}
-      className='bg-[#d6dfe674] border-1 border-[#afafaf] rounded-2xl p-2 sm:p-[10px] w-full sm:w-auto'
+      className='bg-[#d6dfe674] border-1 border-[#afafaf] rounded-2xl p-[6px] sm:p-[10px] w-full sm:w-auto'
     >
-      <div className='flex flex-col justify-between w-full sm:w-48 h-52 sm:h-56 bg-[#fffffff0] rounded-[12px] px-3 sm:px-4 py-4 border-3 border-[#d9d9d995]'>
+      <div className='flex flex-col justify-between w-full sm:w-48 h-52 sm:h-56 bg-[#ffffff] rounded-[12px] px-3 sm:px-4 py-4 border-3 border-[#d9d9d995]'>
         <div className='flex items-center justify-center py-1'>
           <div className="h-16 w-16 sm:h-20 sm:w-20 bg-gray-200 rounded-full animate-pulse"></div>
         </div>
@@ -65,7 +65,7 @@ const LessonCard = ({lessonId, category}) => {
       initial={{opacity:0, scale:0.8}}
       animate={{opacity:1, scale:1}}
       transition={{duration:0.6,ease:easeOut}}
-      className='bg-[#d6dfe674] border-1 border-[#afafaf] rounded-2xl p-2 sm:p-[10px] w-full sm:w-auto'
+      className='bg-[#d6dfe674] border-[1px] border-[#707070] rounded-2xl p-1 sm:p-[7px] w-full sm:w-auto'
     >
       <Link href={targetHref} className='h-full w-full'>
         <div className='flex flex-col justify-between w-full sm:w-48 h-52 sm:h-56 bg-[#fffffff0] rounded-[12px] px-3 sm:px-4 py-4 border-3 border-[#d9d9d995]'>

@@ -3,7 +3,7 @@
 import { easeOut, motion } from "framer-motion";
 import Link from "next/link";
 import ProgressBar from "../ProgessBar/progressBar";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { ProductContext } from "@/app/context/ProductContext";
 
 // --------------------
@@ -27,33 +27,98 @@ const CategoryCardSkeleton = () => {
   );
 };
 
+// Global render counter for all CategoryCard instances
+let globalCardRenderCount = 0;
+
 // --------------------
 // Real card component
 // --------------------
 const CategoryCard = ({ category }) => {
-  const { isAuthenticated, authLoading, completedQuestionIds, allData, authFetch, categories } = useContext(ProductContext);
+  // Individual render counter for this specific category
+  const renderCountRef = useRef(0);
+  renderCountRef.current++;
+  globalCardRenderCount++;
+  
+  console.log(`🎯 CATEGORYCARD  RENDER #${renderCountRef.current} (Global: #${globalCardRenderCount})`);
+
+  const contextValue = useContext(ProductContext);
+  const { isAuthenticated, authLoading, completedQuestionIds, allData, authFetch, categories } = contextValue;
+  
   const [counts, setCounts] = useState({ completed: 0, total: 0 });
   const [loading, setLoading] = useState(true);
 
+  // Track what's causing this component to re-render
+  // const prevContext = useRef();
+  
+  // useEffect(() => {
+  //   if (prevContext.current) {
+  //     const changes = {};
+      
+  //     if (prevContext.current.isAuthenticated !== isAuthenticated) {
+  //       changes.isAuthenticated = `${prevContext.current.isAuthenticated} → ${isAuthenticated}`;
+  //     }
+  //     if (prevContext.current.authLoading !== authLoading) {
+  //       changes.authLoading = `${prevContext.current.authLoading} → ${authLoading}`;
+  //     }
+  //     if (prevContext.current.completedQuestionIds !== completedQuestionIds) {
+  //       changes.completedQuestionIds = `${prevContext.current.completedQuestionIds?.length || 0} → ${completedQuestionIds?.length || 0} items`;
+  //     }
+  //     if (prevContext.current.allData !== allData) {
+  //       const prevKeys = Object.keys(prevContext.current.allData || {});
+  //       const currentKeys = Object.keys(allData || {});
+  //       changes.allData = `[${prevKeys.join(',')}] → [${currentKeys.join(',')}]`;
+  //     }
+  //     if (prevContext.current.categories !== categories) {
+  //       const prevCount = Object.keys(prevContext.current.categories || {}).length;
+  //       const currentCount = Object.keys(categories || {}).length;
+  //       changes.categories = `${prevCount} → ${currentCount} categories`;
+  //     }
+      
+  //     if (Object.keys(changes).length > 0) {
+  //       console.log(`🎯 CATEGORYCARD  re-render caused by:`, changes);
+  //     }
+  //   }
+    
+  //   prevContext.current = {
+  //     isAuthenticated,
+  //     authLoading,
+  //     completedQuestionIds,
+  //     allData,
+  //     categories
+  //   };
+  // });
+
   useEffect(() => {
+    console.log(`🔄 CATEGORYCARD  useEffect triggered`);
     let cancelled = false;
+    
     const compute = async () => {
+      console.log(`🔄 CATEGORYCARD  computing counts...`);
       setLoading(true);
 
       if (Array.isArray(allData?.[category])) {
+        console.log(`📊 CATEGORYCARD all data present!`);
         const total = allData[category].length;
+        console.log(`📊 CATEGORYCARD now setting completed questions!`);
         const completed = total > 0 ? allData[category].filter(q => completedQuestionIds.includes(q._id)).length : 0;
         if (!cancelled) {
           setCounts({ completed, total });
         }
+        console.log(`📊 CATEGORYCARD final count is {completed : ${counts.completed}, total:${counts.total}}!`);
+        
         return;
       }
+      
+      console.log(`📊 CATEGORYCARD  allData isn't present , trying to fetch!`);
+
 
       if (!authLoading && isAuthenticated) {
+        console.log(`🔄 CATEGORYCARD  fetching progress from API...`);
         try {
           const res = await authFetch(`/progress/count-by-category/${encodeURIComponent(category)}`);
           if (res.ok) {
             const data = await res.json();
+            console.log(`✅ CATEGORYCARD API progress:`, data?.data);
             if (!cancelled) {
               setCounts({
                 completed: data?.data?.completedCount || 0,
@@ -62,12 +127,15 @@ const CategoryCard = ({ category }) => {
               setLoading(false);
             }
           } else {
+            console.log(`❌ CATEGORYCARD  API error:`, res.status);
             if (!cancelled) setLoading(false);
           }
-        } catch {
+        } catch (error) {
+          console.log(`❌ CATEGORYCARD  fetch error:`, error);
           if (!cancelled) setLoading(false);
         }
       } else {
+        console.log(`📊 CATEGORYCARD  using categories fallback`);
         const totalFromCategories = Number.isFinite(categories?.[category]) ? categories[category] : 0;
         if (!cancelled) {
           setCounts({ completed: 0, total: totalFromCategories });
@@ -75,15 +143,30 @@ const CategoryCard = ({ category }) => {
         }
       }
     };
+    
     compute();
     return () => {
       cancelled = true;
     };
   }, [allData, completedQuestionIds, category, authLoading, isAuthenticated, categories]);
 
-  if (loading ) return <CategoryCardSkeleton />; // <-- use skeleton
+  // console.log(`🎯 CATEGORYCARD  state:`, {
+  //   loading,
+  //   counts,
+  //   isAuthenticated,
+  //   authLoading,
+  //   hasCachedData: Boolean(allData?.[category]),
+  //   completedCount: completedQuestionIds?.length || 0
+  // });
+
+  if (loading) {
+    console.log(`⏳ CATEGORYCARD  showing skeleton`);
+    return <CategoryCardSkeleton />;
+  }
 
   const percent = counts.total > 0 ? Math.round((counts.completed / counts.total) * 100) : 0;
+
+  console.log(`✅ CATEGORYCARD  rendering final card: ${counts.completed}/${counts.total} (${percent}%)`);
 
   return (
     <motion.div

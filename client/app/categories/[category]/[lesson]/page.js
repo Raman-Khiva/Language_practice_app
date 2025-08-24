@@ -1,7 +1,9 @@
 'use client'
-import { ProductContext } from "@/app/context/ProductContext";
-import { notFound, useRouter } from "next/navigation";
-import { useContext, useState, useEffect } from "react"
+import { ProductContext } from "@/app/context/index.js";
+import { notFound, useParams, useRouter } from "next/navigation";
+import { useContext, useState, useEffect, use } from "react"
+
+import { easeOut, motion } from "framer-motion";
 
 import AnswerSection from "@/components/ui/AnswerSection";
 import ProgressHeader from "@/components/ui/ProgressHeader";
@@ -11,7 +13,8 @@ import AnswerInput from "@/components/ui/AnswerInput";
 // url is /categories/[category]/[lesson]
 // This component expects params: { category: string, lesson: string }
 
-const Question = ({ params }) => {
+const Question = ({params}) => {
+  
   const router = useRouter();
   const { 
     currentLesson,
@@ -24,8 +27,9 @@ const Question = ({ params }) => {
   } = useContext(ProductContext);
   
   // Parse URL parameters
-  const categoryName = params.category;
-  const lessonId = parseInt(params.lesson, 10);
+  const {category, lesson} = use(params);
+  const categoryName = category;
+  const lessonId = parseInt(lesson, 10);
   
   // Component state
   const [questionNo, setQuestionNo] = useState(0);
@@ -188,7 +192,12 @@ const Question = ({ params }) => {
 
   return (
     <div className="w-full h-screen px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 py-10 md:py-12 xl:py-12 bg-fixed bg-gradient-to-r from-[#eaddffa7] via-[#fff1c288] to-[#eed6ddb5] flex flex-col items-center justify-center">
-      <div className="bg-white/60 h-[100%] backdrop-blur-xl p-3 mt-20 sm:p-4 border border-white/30 rounded-3xl md:rounded-4xl shadow-xl ring-1 ring-black/5 max-w-4xl w-full ">
+      <motion.div 
+        initial = {{scale:0.9 , opacity: 0.2}}
+        animate = {{scale: 1, opacity:1}}
+        transition={{duration : 0.6, ease: easeOut}}
+      
+        className="bg-[#e5eef591]  h-[100%] backdrop-blur-xl p-3 mt-20 sm:p-4 border-2 border-[#5c5c5c] rounded-3xl md:rounded-4xl shadow-xl ring-1 ring-black/5 max-w-4xl w-full ">
         <div className="bg-white/90  rounded-2xl md:rounded-3xl overflow-hidden relative  h-full ">
 
           {/* Progress header */}
@@ -200,7 +209,7 @@ const Question = ({ params }) => {
             {/* Question section */}
             <div className="flex flex-col h-full space-y-4">
               <div className="space-y-2">
-                <h3 className="text-md md:text-lg font-medium text-gray-700">
+                <h3 className="text-md md:text-lg font-medium text-[#606060]">
                   Translate the given sentence to Spanish:
                 </h3>
                 <h2 className="text-lg md:text-xl font-medium text-gray-900 leading-relaxed bg-gray-50 p-3 md:p-2 rounded-lg">
@@ -249,7 +258,7 @@ const Question = ({ params }) => {
 
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Lesson info */}
     </div>

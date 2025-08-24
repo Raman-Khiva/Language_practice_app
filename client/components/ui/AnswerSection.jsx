@@ -65,9 +65,9 @@ const AnswerSection = ({
 
   const isCorrect = validationResult.status === "CORRECT";
   const statusColor = isCorrect ? "green" : "red";
-  const bgColor = isCorrect ? "bg-green-50" : "bg-red-50";
-  const borderColor = isCorrect ? "border-green-500" : "border-red-600";
-  const gradientBorder = isCorrect? "bg-[#b3f2b0]":"bg-[#f6a199]"
+  const ringColor = isCorrect ? "ring-[#daf5da] " : "ring-red-50";
+  const borderColor = isCorrect ? "border-[#29d116]" : "border-red-600";
+
 
   if(isCorrect){
     console.log("User's answer was correct , now starting to add question to userProgress!");
@@ -78,8 +78,8 @@ const AnswerSection = ({
 //   const bgColor = isCorrect ? ""
 
   return (
-    <div className={`${gradientBorder} rounded-2xl p-[6px] h-full`}>
-    <div className={`bg-white border-2 ${borderColor}   rounded-xl p-3 h-full`}>
+    // <div className={` ${gradientBorder} rounded-2xl p-[5px] h-full `}>
+    <div className={`bg-white border-2 ${borderColor}  rounded-xl p-3 h-full ring-4 ${ringColor}`}>
      <div className="h-full flex flex-col justify-between ">
       <div className="space-y-2">
         {/* Status */}
@@ -190,7 +190,7 @@ const AnswerSection = ({
             onClick={handleNextQuestion}
             className={`px-6 py-2 w-full ${
               isCorrect
-                ? "bg-green-600 hover:bg-green-700"
+                ? "bg-[#67cd62] hover:bg-[#2e9932]"
                 : "bg-[#f04545] hover:bg-red-500"
             } text-white rounded-xl font-medium hover:scale-102 transition-all cursor-pointer`}
           >
@@ -199,7 +199,7 @@ const AnswerSection = ({
         </div>
       </div>
     </div>
-    </div>
+    // </div>
   );
 };
 

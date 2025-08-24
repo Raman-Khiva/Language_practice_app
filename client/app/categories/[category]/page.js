@@ -1,11 +1,17 @@
 'use client';
 import LessonCard from '@/components/LessonCard/lessonCard'
-import { ProductContext, } from '@/app/context/ProductContext';
+import { ProductContext, } from '@/app/context/index.js';
 import { notFound } from 'next/navigation';
-import {  useContext, useEffect } from 'react';
+import {  use, useContext, useEffect } from 'react';
 
 const page = ({params}) => {
-    const category = params.category;
+    
+
+    const {category} = use(params);
+
+
+    
+    
     const {categories, setCurrentCategory, currentCategory} = useContext(ProductContext)
     
     if (!categories || Object.keys(categories).length === 0) {
@@ -26,12 +32,19 @@ const page = ({params}) => {
       return notFound();
     }
 
+    console.log(`lesson page rendered! with category [${category}]  & currentCategory [${currentCategory}]`);
+    let render = 0;
+
     // Ensure context knows current category so questions are fetched for lesson progress
     useEffect(() => {
+      render +=1;
+      console.log(`useEffect has been called ${render} times`);
+      console.log('category : ' ,category);
+      console.log('current category :', currentCategory);
       if (currentCategory !== category) {
         setCurrentCategory(category)
       }
-    }, [category, currentCategory, setCurrentCategory])
+    }, [category]);
 
     const totalLesson = Math.ceil(categories[category]/10);
 
