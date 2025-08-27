@@ -8,12 +8,13 @@ router.get("/", async (req, res) => {
     try {
         const categories = await Category.find({});
         console.log("List fetched! converting to object for client");
-        const categoryObject = {};
-        categories.forEach(obj => {
-            categoryObject[obj.category] = obj.count;
-        });
-        console.log("Converted categories to object and sent! This is object", categoryObject);
-        res.status(200).json(categoryObject);
+        const categoryArray = categories.map((obj)=>({
+            name : obj.category,
+            count : obj.count
+        }))
+        
+        console.log("Converted categories to array and sent! This is object", categoryArray);
+        res.status(200).json(categoryArray);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Server error while fetching categories" });

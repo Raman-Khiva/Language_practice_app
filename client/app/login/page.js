@@ -3,35 +3,34 @@ import { useContext, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ProductContext } from '@/app/context/ProductContext'
+import {selectAuth,loginUser} from '../store/slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function LoginPage() {
-  const router = useRouter()
-  const { login, isAuthenticated } = useContext(ProductContext)
+  const router = useRouter();
+  const auth = useSelector(selectAuth);
+  const dispatch = useDispatch();
   const search = useSearchParams()
   const next = search.get('next') || '/'
+
+  if(auth.isAuthenticated){
+    router.replace(next);
+    return null;
+  }
+  
+  
+
   const signupHref = `/signup?next=${encodeURIComponent(next)}`
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError('')
-    setLoading(true)
-    const res = await login(email, password)
-    setLoading(false)
-    if (res.ok) {
-      router.push(next)
-    } else {
-      setError(res.error || 'Login failed')
-    }
-  }
-
-  if (isAuthenticated) {
-    router.replace(next)
-    return null
+    
+    dispatch(loginUser({email,password}));
+    
+    
   }
 
   return (
@@ -53,9 +52,9 @@ export default function LoginPage() {
             <p className="text-sm text-gray-500 mt-1">Enter your credentials to access your account</p>
           </div>
 
-          {error && (
+          {auth.error && (
             <div className="mb-4 text-sm text-red-700 bg-red-50 border border-red-200 p-3 rounded-lg">
-              {error}
+              {auth.error}
             </div>
           )}
 
@@ -94,10 +93,10 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={auth.isLoading}
               className="w-full bg-indigo-600 text-white py-2.5 rounded-xl hover:bg-indigo-700 transition disabled:opacity-60"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
+              {auth.isLoading ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
 

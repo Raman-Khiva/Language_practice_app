@@ -1,17 +1,33 @@
 'use client'
 import Link from 'next/link'
-import { useContext } from 'react'
+// import { useContext } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { ProductContext } from '@/app/context/ProductContext'
+// import { ProductContext } from '@/app/context/ProductContext'
 import Image from 'next/image'
+import {logoutUser, selectIsAuthenticated, selectUser} from '../../app/store/slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
+
+let render = 0;
+console.log('NAVBAR : navbar file loaded!');
+
 
 export default function Navbar() {
-  const { isAuthenticated, user, logout } = useContext(ProductContext)
-  const pathname = usePathname()
-  const router = useRouter()
+  
+  render += 1;
+  console.log(`NAVBAR : this is ${render} render of navbar!`);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const user = useSelector(selectUser);
+  
+  const dispatch = useDispatch();
+
+  const pathname = usePathname();
+  const router = useRouter();
+
 
   const handleLogout = () => {
-    logout()
+    console.log("NAVBAR : logout request is made!")
+    dispatch(logoutUser());
     if (pathname.startsWith('/categories')) {
       router.push('/')
     }
@@ -20,9 +36,9 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 z-50 w-full mt-0">
       <div className="mx-auto max-w-7xl px-8 py-3">
-        <div className="flex items-center justify-between rounded-2xl border border-white/20 bg-white/60 backdrop-blur-xl shadow-sm ring-1 ring-black/5 px-4 py-1">
+        <div className="flex items-center justify-between rounded-2xl border border-white/20 bg-white/60 backdrop-blur-xl shadow-sm ring-1 ring-black/5 px-4 ">
           <Link href="/" className='flex gap-1 items-center px-3' >   
-              <Image src="/brain-logo.svg" className=" rounded-2xl" width={92}  height={40} alt='Native Lab' />  
+              <Image src="/brain-logo.svg"  width={92}  height={40} className='h-16 w-auto' alt='Native Lab' />  
               <p className='text-[28px] font-[700] text-[#323131] '>Native <span className = 'bg-clip-text text-transparent bg-linear-to-r from-[#DD8BE1] via-[#305CED] to-[#45afe0]'>labs</span></p>
               {/*  */}
           </Link>
@@ -44,8 +60,7 @@ export default function Navbar() {
                 >
                   Sign up
                 </Link>
-              </div>
-            ) : (
+              </div>) : (
               <div className="flex items-center gap-3">
                 <span className="text-sm text-gray-700/90">Hi, {user?.name || 'User'}</span>
                 <button
@@ -55,7 +70,7 @@ export default function Navbar() {
                   Logout
                 </button>
               </div>
-            )}
+            )} 
           </div>
         </div>
       </div>

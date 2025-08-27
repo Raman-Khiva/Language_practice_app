@@ -61,8 +61,12 @@ const ProductProvider = (props) => {
   // AUTHENTICATION STATE
   // ---------------------------------------------------------------------------
 
-  const [authToken, setAuthToken] = useState(null);
-  const [user, setUser] = useState(null);
+  const [authToken, setAuthToken] = useState(()=>{
+    return localStorage.getItem('authToken');
+  });
+  const [user, setUser] = useState(()=>{
+    return localStorage.getItem('authUser');
+  });
   const [authLoading, setAuthLoading] = useState(true);
 
   // ---------------------------------------------------------------------------
