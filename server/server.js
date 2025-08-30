@@ -10,6 +10,7 @@ import authRoutes from "./routes/auth.js";
 import progressRoutes from "./routes/userProgress.js";
 import dotenv from 'dotenv';
 import cors from 'cors';
+import lessonRouter from "./routes/lessonRoutes.js";
 
 // Load environment variables
 dotenv.config();
@@ -49,6 +50,7 @@ app.use("/api/categories",categoreyRoutes);
 app.use("/api/translation", translationRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/progress", progressRoutes);
+app.use("/api/lessons", lessonRouter);
 
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`);

@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
       <body className="antialiased">
         <Provider store={store}>
           <AuthLoader>
-            <Navbar />
+            {/* <Navbar /> */}
             {children}
           </AuthLoader>
         </Provider>

@@ -1,13 +1,15 @@
 import mongoose from 'mongoose';
-import { Schema } from 'mongoose';
 
 
 
-const lessonSchema = new Schema({
+
+const lessonSchema = new mongoose.Schema({
 
     category : String,
-    questions : [{ type: Schema.Types.ObjectId, ref: 'Question' }],
+    questions : [String],
     rank : Number,
-    difficulty : Number
+    difficulty : Number,
 });
-export default mongoose.models.Lesson || mongoose.model('Lesson', lessonSchema);
+
+
+export default mongoose.model('Lesson', lessonSchema);

@@ -1,10 +1,13 @@
 import express from "express";
-import { Router } from "express";
-import { getLessonsByDifficulty, getLessonsByDifficultyAndCategory } from "../controllers/lessonControllers.js";
+import { getLessonsByDifficulty, getLessonsByDifficultyAndCategory, addManyLessons } from "../controllers/lessonControllers.js";
 
 
 const lessonRouter = express.Router();
 lessonRouter.get('/difficulty/:difficulty', getLessonsByDifficulty);
 lessonRouter.get('/difficulty/:difficulty/category/:category', getLessonsByDifficultyAndCategory);
+lessonRouter.post('/addMany', addManyLessons);
+
+
+export default lessonRouter;
 
 

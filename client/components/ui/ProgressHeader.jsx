@@ -12,7 +12,7 @@ const ProgressHeader = ({ questionNo, totalQuestions }) => {
 
 
   return (
-    <div className="px-4 sm:px-6 pt-4 pb-2 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+    <div className="px-4 sm:px-6 pt-4 pb-2 border-b border-gray-100 ">
       <div className="flex items-center justify-between">
         <h3 className="text-sm md:text-base font-semibold text-gray-700">
           Question {questionNo + 1} of {totalQuestions}
