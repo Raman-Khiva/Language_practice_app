@@ -37,8 +37,9 @@ class GroqService {
 
   async validateSpanishTranslation(originalText, spanishTranslation) {
     try {
+      console.log("GROQ SERVICES : request to validate received , ",originalText, spanishTranslation,)
       const response = await this.client.post('/chat/completions', {
-        model: 'llama3-70b-8192',
+        model: 'openai/gpt-oss-120b',
         messages: [{
           role: 'system',
           content: 'You are a professional Spanish translator. Evaluate if the Spanish translation is accurate, natural, and contextually appropriate.'
@@ -85,6 +86,7 @@ class GroqService {
       
       // Try to parse JSON response, fallback to text analysis
       try {
+        console.log("GROQ SERVICES : Model response ,",content);
         return JSON.parse(content);
       } catch (parseError) {
         // Fallback parsing if model doesn't return valid JSON

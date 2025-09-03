@@ -1,8 +1,10 @@
 'use client'
 import React from 'react'
 import CircularProgressBar from '../ProgessBar/circularProgressBar';
-import {easeOut, motion} from 'framer-motion'
-import Link from 'next/link';
+import { easeOut, motion } from 'framer-motion';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { setLesson } from '@/app/store/slices/currentLessonSlice'; // adjust path
 
 const Tick = () => {
   return (
@@ -22,36 +24,44 @@ const Tick = () => {
   );
 };
 
-const LessonCardNew = ({lessonId}) => {
+const LessonCardNew = ({ lessonId, index }) => {
+  const progress = Math.floor(Math.random() * 100);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-    const progress = Math.floor((Math.random()*100));
+  const handleClick = () => {
+    // Dispatch thunk with index
+    console.log('LESSON CARD : Thunk dispatched')
+    dispatch(setLesson({ index: index }));
+    // Navigate to practice/field
+    router.push('/field');
+  };
+
   return (
     <motion.div
-      initial={{opacity:0, scale:0.8}}
-      animate={{opacity:1, scale:1}}
-      transition={{duration:0.6, ease: easeOut}}
-      className='border-2 border-[#adadad] rounded-xl p-1 sm:p-[7px] w-full sm:w-auto'
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6, ease: easeOut }}
+      className="border-2 border-[#adadad] rounded-xl p-1 sm:p-[7px] h-fit sm:w-auto cursor-pointer"
+      onClick={handleClick}
     >
-      <Link href={'/practice'} className='h-full w-full'>
-        <div className='flex flex-col gap-1 justify-between w-full sm:w-40 h-52 sm:h-48 bg-[#fff] rounded-[12px] px-2 sm:px-2 py-2 '>
-          
-          <div className='flex items-center justify-center  bg-[#f4f1f1] 
-                          p-4 rounded-t-lg
-          '>
-            {/* Animated circular progress */}
-            { (progress <90) ?
-                <CircularProgressBar progress={progress} color='#5af47b' className='bg-[]'/>
-                :<Tick/>
-
-            }
-          </div>
-          <div className='p-2 bg-[#f4f1f1] rounded-b-lg h-full flex flex-col justify-end'>
-            <h3 className='text-base sm:text-md font-[600] text-gray-800'>Lesson {lessonId}</h3>
-          </div>
+      <div className="flex flex-col gap-1 justify-between w-full sm:w-40 h-52 sm:h-48 bg-[#fff] rounded-[12px] px-2 sm:px-2 py-2">
+        <div className="flex items-center justify-center bg-[#f4f1f1] p-4 rounded-t-lg">
+          {/* Animated circular progress */}
+          {progress < 90 ? (
+            <CircularProgressBar progress={progress} color="#5af47b" />
+          ) : (
+            <Tick />
+          )}
         </div>
-      </Link>
+        <div className="p-2 bg-[#f4f1f1] rounded-b-lg h-full flex flex-col justify-end">
+          <h3 className="text-base sm:text-md font-[600] text-gray-800">
+            Lesson {lessonId}
+          </h3>
+        </div>
+      </div>
     </motion.div>
-  )
-}
+  );
+};
 
 export default LessonCardNew;

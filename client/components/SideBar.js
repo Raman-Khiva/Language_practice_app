@@ -2,8 +2,23 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { GoSidebarCollapse } from "react-icons/go";
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
+import { selectSideBarOpen,changeSideBarState,selectCurrentFocus,changeFocus } from '@/app/store/slices/sideBarSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
-const SideBar = ({ barOpen, setBarOpen }) => {
+
+const sideBarOptions = [
+  { name: 'library', link: '/practice/library' },
+  { name: 'categories', link: '/practice/categories' },
+  { name: 'stories', link: '/practice/library' },
+  { name: 'custom', link: '/practice/library' }
+];
+
+
+const SideBar = () => {
+    const barOpen = useSelector(selectSideBarOpen);
+    const currentFocus = useSelector(selectCurrentFocus);
+    const dispatch = useDispatch();
   return (
     <>
       {barOpen ? 
@@ -17,7 +32,7 @@ const SideBar = ({ barOpen, setBarOpen }) => {
 
             <MdKeyboardDoubleArrowLeft 
               className='text-gray-600 cursor-pointer absolute text-2xl z-50 right-0 top-[50%] translate-y-[-50%]'
-              onClick={() => { setBarOpen(!barOpen) }}
+              onClick={() => { dispatch(changeSideBarState()) }}
             />
 
             <div className={`transition-opacity duration-300 ${barOpen ? 'opacity-100 delay-300' : 'opacity-0'}`}>
@@ -32,10 +47,16 @@ const SideBar = ({ barOpen, setBarOpen }) => {
                           animate={{ opacity: 1, scale: 1 }
                           transition={{ duration: 0.6, ease: "easeInOut" }
               `}>
-                <p>library</p>
-                <p>categories</p>
-                <p>stories</p>
-                <p>custom</p>
+                {sideBarOptions.map((option,index)=>(
+                  <Link href={option.link}
+                    key={index}
+                    className={` px-3 py-1 rounded-lg duration-300 ` + ((currentFocus===index)?' bg-gray-300':'hover:bg-gray-200') }
+                    onClick={()=>dispatch(changeFocus(index))}
+                  >
+                    {option.name}
+                  </Link>
+                ))}
+                
               </motion.div>
             </div>
             
@@ -59,7 +80,7 @@ const SideBar = ({ barOpen, setBarOpen }) => {
             <div className='h-full py-10'>
               <GoSidebarCollapse 
                 className='text-xl cursor-pointer'
-                onClick={() => { setBarOpen(!barOpen) }}  
+                onClick={() => { dispatch(changeSideBarState()) }}  
               />
             </div>
 

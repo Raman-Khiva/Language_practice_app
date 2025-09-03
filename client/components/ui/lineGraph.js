@@ -1,7 +1,7 @@
 import React from 'react'
 
 const LineGraph = ({ 
-  data = [65, 45, 80, 30, 95, 55, 75], // Default 7-day data (0-100 scale)
+  data = [30, 50, 35, 40, 70, 45, 50], // Default 7-day data (0-100 scale)
   width = 395, 
   height = 220,
   showGrid = true,

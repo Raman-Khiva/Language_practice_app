@@ -4,15 +4,15 @@ const ActionButtons = ({ handleSkip, handleSubmit, userAnswer }) => {
   return (
     <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-gray-200">
       <button
-        // onClick={handleSkip}
-        className="text-gray-600 font-semibold hover:text-gray-800 transition-colors text-sm md:text-base px-3 py-2 rounded-full hover:bg-gray-50"
+        onClick={handleSkip}
+        className="text-gray-600 font-semibold hover:text-gray-800 transition-colors text-sm md:text-base px-3 py-2 rounded-full hover:bg-gray-50 cursor-pointer"
       >
         Skip
       </button>
       <button
-        // onClick={handleSubmit}
+        onClick={handleSubmit}
         // disabled={!userAnswer.trim()}
-        className="px-5 md:px-6 py-2.5 md:py-3 text-white rounded-full font-medium bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-sm hover:shadow transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        className="px-5 md:px-6 py-2.5 md:py-3 text-white cursor-pointer rounded-full font-medium bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-sm hover:shadow transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
       >
         Submit
       </button>

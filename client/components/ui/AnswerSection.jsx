@@ -7,13 +7,13 @@ const AnswerSection = ({
   isValidating,
   validationError,
   validationResult,
+  incCorrectCount,
   userAnswer,
   questionNo,
   totalQuestions,
   handleNextQuestion,
   disabled,
-  questionId,
-  addComplete
+  correctCount
 }) => {
 
   const buttonRef = useRef(null);
@@ -32,6 +32,12 @@ const AnswerSection = ({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  useEffect(() => {
+  if (validationResult && validationResult.status === "CORRECT") {
+    console.log('ANSWER SECTION: Incrementing correct count from', correctCount, 'to', correctCount + 1);
+    incCorrectCount(correctCount + 1);
+  }
+}, [validationResult?.status]); // Only run when validation result status changes
 
   if (isValidating) {
     return (
@@ -63,16 +69,21 @@ const AnswerSection = ({
 
   if (!validationResult) return null;
 
+
   const isCorrect = validationResult.status === "CORRECT";
   const statusColor = isCorrect ? "green" : "red";
   const ringColor = isCorrect ? "ring-[#daf5da] " : "ring-red-50";
   const borderColor = isCorrect ? "border-[#29d116]" : "border-red-600";
 
+  // if(isCorrect){
+  //    incCorrectCount(correctCount+1);
+  //    console.log('ANSWER SECTION : CORRECT QUESTIONS COUNT ,', correctCount);
+  // }
 
-  if(isCorrect){
-    console.log("User's answer was correct , now starting to add question to userProgress!");
-    addComplete(questionId);
-  }
+  // if(isCorrect){
+  //   console.log("User's answer was correct , now starting to add question to userProgress!");
+  //   addComplete(questionId);
+  // }
 
    
 //   const bgColor = isCorrect ? ""

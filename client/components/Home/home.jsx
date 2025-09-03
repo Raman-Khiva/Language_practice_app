@@ -1,3 +1,4 @@
+'use client'
 import Button from "../Button/button";
 import Link from "next/link";
 
@@ -19,8 +20,9 @@ const Home = () => {
                 LinguaWrite makes practice fun and effective.
             </h5>
 
-            <Link href="/categories"><Button data="Start now"/></Link>
-
+            <Link href="/practice"><Button data="Start now"/></Link>
+            
+            
         </div>
     </section>
   )

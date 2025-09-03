@@ -1,9 +1,9 @@
 
-// Core app and dependencies
+// Core app and dependencies 
 import express from "express";
 import mongoose from "mongoose";
 // Route modules
-import questionRoutes from "./routes/questions.js";
+// import questionRoutes from "./routes/questions.js";
 import categoreyRoutes from "./routes/category.js";
 import translationRoutes from "./routes/translation.js";
 import authRoutes from "./routes/auth.js";
@@ -45,7 +45,7 @@ mongoose.connect(process.env.MONGODB_URI || process.env.MONGO_URI)
 // Categories        → /api/categories
 // Translation       → /api/translation
 // User Progress     → /api/progress
-app.use("/api/questions",questionRoutes);
+// app.use("/api/questions",questionRoutes);
 app.use("/api/categories",categoreyRoutes);
 app.use("/api/translation", translationRoutes);
 app.use("/api/auth", authRoutes);
@@ -53,5 +53,5 @@ app.use("/api/progress", progressRoutes);
 app.use("/api/lessons", lessonRouter);
 
 app.listen(PORT, ()=>{
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running at http://localhost/${PORT}`);
 });
