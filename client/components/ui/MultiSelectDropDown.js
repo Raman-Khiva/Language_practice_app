@@ -1,25 +1,49 @@
 "use client";
-import React, { useState } from "react";
+import { selectLessons, toggleCategoryThunk, removeCategoryThunk } from "@/app/store/slices/lessonsSlices";
+import React, { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const MultiSelectDropdown = () => {
-  const options = ["A1-early","A1-pro","A2-early","A2-pro","B1-early","B1-pro",];
+  const options = [
+    "A1-early", "A1-pro", "A2-early", "A2-pro",
+    "B1-early", "B1-pro", "B2-early", "B2-pro",
+    "C1-early", "C1-pro", "C2-early", "C2-pro"
+  ];
   const [selected, setSelected] = useState([]);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const lessons = useSelector(selectLessons);
+  const dropdownRef = useRef(null);
 
-  const toggleOption = (option) => {
-    if (selected.includes(option)) {
-      setSelected(selected.filter((item) => item !== option));
+  const toggleOption = (idx) => {
+    if (selected.includes(idx)) {
+      setSelected(selected.filter((item) => item !== idx));
     } else {
-      setSelected([...selected, option]);
+      setSelected([...selected, idx]);
     }
+    dispatch(toggleCategoryThunk(idx));
   };
 
-  const removeOption = (option) => {
-    setSelected(selected.filter((item) => item !== option));
+  const removeOption = (idx) => {
+    setSelected(selected.filter((item) => item !== idx));
+    dispatch(removeCategoryThunk(idx));
   };
+
+  // 🔑 Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open]);
 
   return (
-    <div className="min-w-80 max-w-[36rem] relative">
+    <div ref={dropdownRef} className="min-w-80 max-w-[56rem] relative">
       {/* Dropdown Field */}
       <div
         onClick={() => setOpen(!open)}
@@ -33,7 +57,7 @@ const MultiSelectDropdown = () => {
             key={item}
             className="flex items-center bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-sm"
           >
-            {item}
+            {options[item]}
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -49,13 +73,13 @@ const MultiSelectDropdown = () => {
 
       {/* Dropdown Options */}
       {open && (
-        <div className="mt-1 border rounded-md shadow bg-white absolute right-4 p-2">
-          {options.map((option) => (
+        <div className="mt-1 border rounded-md shadow bg-white absolute right-4 p-2 z-50">
+          {options.map((option, i) => (
             <div
-              key={option}
-              onClick={() => toggleOption(option)}
+              key={i}
+              onClick={() => toggleOption(i)}
               className={`p-2 cursor-pointer hover:bg-gray-100 ${
-                selected.includes(option) ? "bg-blue-50" : ""
+                selected.includes(i) ? "bg-blue-50" : ""
               }`}
             >
               {option}

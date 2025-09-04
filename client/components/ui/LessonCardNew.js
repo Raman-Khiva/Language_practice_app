@@ -24,7 +24,7 @@ const Tick = () => {
   );
 };
 
-const LessonCardNew = ({ lessonId, index }) => {
+const LessonCardNew = ({ lessonId, index,currentLesson }) => {
   const progress = Math.floor(Math.random() * 100);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -58,6 +58,10 @@ const LessonCardNew = ({ lessonId, index }) => {
           <h3 className="text-base sm:text-md font-[600] text-gray-800">
             Lesson {lessonId}
           </h3>
+          <div className='flex items-center justify-between text-sm font-[300]'>
+              <p>{currentLesson.category}</p>
+              <p>{currentLesson.difficulty}</p>
+          </div>
         </div>
       </div>
     </motion.div>

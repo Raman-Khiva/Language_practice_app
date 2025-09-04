@@ -15,11 +15,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchLessons, selectLoading, selectCurrentLessons } from '@/app/store/slices/lessonsSlices';
 
 import LessonsSection from '@/components/LessonsSection';
+import { MdArrowDropDown } from 'react-icons/md';
+import MultiSelectDropdown from '@/components/ui/MultiSelectDropDown';
+import Link from 'next/link';
 
 
 const page = () => {
 
   const barOpen = useSelector(selectSideBarOpen);
+  const currentLessons = useSelector(selectCurrentLessons);
   const [mainExpanded, setMainExpanded] = useState(false);
   const dispatch = useDispatch();
   // const loading = useSelector(selectLoading);
@@ -32,16 +36,16 @@ const page = () => {
   let displayPropertyMain = mainExpanded ? ' col-start-1 col-end-9 row-start-1 row-end-11' : ' col-start-1 col-end-8 row-start-3 row-end-11';
   let displayPropertyStatsBar = mainExpanded ? ' col-start-9 col-end-11 row-start-1 row-end-11 flex-col' : 'col-start-1 col-end-8 row-start-1 row-end-3';
   
-  useEffect(()=>{
-    console.log('ENTERED USE-EFFECT TO DISAPATCH fetchLessons');
-    dispatch(fetchLessons({difficulty : difficulty}));
-  },[dispatch,difficulty]);
+  // useEffect(()=>{
+  //   console.log('ENTERED USE-EFFECT TO DISAPATCH fetchLessons');
+  //   dispatch(fetchLessons({difficulty : difficulty}));
+  // },[dispatch,difficulty]);
 
-  const handleChange = () =>{
-     const idx = 1 + Math.ceil(Math.random()*10);
-     setDifficulty(idx);
-     return ;
-  }
+  // const handleChange = () =>{
+  //    const idx = 1 + Math.ceil(Math.random()*10);
+  //    setDifficulty(idx);
+  //    return ;
+  // }
   
 
   // if(loading){
@@ -69,11 +73,12 @@ const page = () => {
 
         <div className='col-span-1 row-span-1 h-[60px] w-full flex items-center justify-center '>
           <div className='w-full h-[60px] z-50 bg-white border-b-2 border-gray-400 px-4 flex items-center justify-center
-                          rounded-xl cursor-pointer
+                          rounded-xl cursor-pointer gap-24 text-lg font-[500]
                 '
-                onClick={()=> handleChange()}
           >
-            Navbar here
+            <Link href='/'>Home</Link>
+            <Link href='/'>Learn</Link>
+            <Link href='/'>Read</Link>
           </div>
         </div>
 
@@ -114,7 +119,7 @@ const page = () => {
               />
               <div className='border-b-2 border-gray-300 p-2 text-lg flex-shrink-0 flex items-center justify-center'>
                   <p>Cureent difficulty is {difficulty}</p>
-                  <MdArrowDropDown/>
+                   <MultiSelectDropdown/>
               </div>
               <div className='flex-1 h-full overflow-auto p-3 w-full '>
                 <div className='w-full  h-full flex gap-3 flex-wrap my-1.5 justify-center '>
