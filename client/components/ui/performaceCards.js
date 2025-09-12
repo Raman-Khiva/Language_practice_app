@@ -1,11 +1,20 @@
 import React from 'react'
+import CircularProgressNew from './CircularProgressNew'
 
-const performaceCards = ({children, className}) => {
+const performaceCards = ({children, className,fillColor,text}) => {
   return (
-    <div className={` w-36 h-24 flex flex-col justify-end items-center
+    <div className={` flex justify-between items-center gap-2
+                      min-w-44 px-3 pb-1 pt-1 h-28
                     text-lg rounded-xl ` + className}
     >
-      {children}
+      <div className='flex flex-col justify-between py-2
+                      h-full 
+      '>
+        {children}
+        <p>{text}</p>
+      </div>
+
+      <CircularProgressNew fillColor={fillColor} />
     </div>
   )
 }

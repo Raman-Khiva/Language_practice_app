@@ -2,8 +2,8 @@ import React from 'react'
 
 const LineGraph = ({ 
   data = [30, 50, 35, 40, 70, 45, 50], // Default 7-day data (0-100 scale)
-  width = 395, 
-  height = 220,
+  width = 390, 
+  height = 210,
   showGrid = true,
   showDots = true 
 }) => {
@@ -78,8 +78,10 @@ const LineGraph = ({
   const yTicks = [0, 25, 50, 75, 100];
 
   return (
-    <div className=' h-full w-full overflow-hidden rounded-xl flex items-center justify-center'>
-      <svg width="100%%" height="100%" className=" rounded-lg bg-[#f0faff8e] ">
+    <div className=' h-full w-full overflow-hidden rounded-xl flex items-center justify-center
+    
+    '>
+      <svg width="100%%" height="100%" className=" rounded-lg bg-white/20 ">
         
         {/* Grid lines */}
         {showGrid && (

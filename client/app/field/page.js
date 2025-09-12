@@ -1,7 +1,7 @@
 //in new file
 'use client'
 import ProgressHeader from '@/components/ui/ProgressHeader'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import { motion } from 'framer-motion'
 import ActionButtons from '@/components/ui/ActionButtons'
 import AnswerInput from '@/components/ui/AnswerInput'
@@ -21,14 +21,15 @@ const page = () => {
     const [validationResult, setValidationResult] = useState(null);
     const [isValidating, setIsValidating] = useState(false);
     const [validationError, setValidationError] = useState(null);
-    const [currCard, setCurrentCard] = useState(0);
+    // const [currCard, setCurrentCard] = useState(0);
     const [correctCount , incCorrectCount] = useState(0);
+    const [borderStyling , setBorderStyling] = useState('border-violet-600/90 ring-5 ring-violet-300/50');
     const dispatch = useDispatch();
     
-    const changeCard = ()=>{
-        const idx = Math.ceil(Math.random()*3);
-        setCurrentCard(idx);
-    }
+    // const changeCard = ()=>{
+    //     const idx = Math.ceil(Math.random()*3);
+    //     setCurrentCard(idx);
+    // }
     // Validate translation function
     const validateTranslation = async (originalText, spanishTranslation) => {
         try {
@@ -108,6 +109,20 @@ const page = () => {
         }
     };
 
+
+    useEffect(() => {
+      if (validationResult && validationResult.status === "CORRECT") {
+        setBorderStyling('ring-5 border-green-600 ring-[#b2f1b6d9]')
+      }
+      else if(validationResult && validationResult.status === "WRONG"){
+        setBorderStyling('ring-4 border-red-500 ring-red-200');
+      }
+      else setBorderStyling('border-violet-600/90 ring-5 ring-violet-300/50')
+    }, [validationResult?.status]);
+
+
+
+
     if (!currentLesson.loading && !currentLesson.isFetchedLesson) {
         return (
             <div className='w-full h-screen grid place-items-center'>
@@ -142,12 +157,10 @@ const page = () => {
 
             {/*main question and answer div*/}
             {currentIdx < 10 ? (
-                <div className=' bg-[#fff]
+                <div className={` bg-[#fff]
                             h-[36rem] min-w-[56rem] max-w-[64rem] rounded-2xl 
-                            border-2 border-violet-600/90 ring-5 ring-violet-300/50
-                            flex 
-        '
-                >
+                            flex border-2 ` + borderStyling
+                }>
                     {/*question div */}
                     <div
                         className='flex-1'
@@ -210,13 +223,10 @@ const page = () => {
                         
                     </div>
 
-                </div>) : (
-                    <div onClick={()=> changeCard()}>
-                        {
-                          cards?.[currCard]
-                        }
-                        
-                    </div>
+                </div>) : ((correctCount==10)? <ScoreCard score={correctCount}/>:
+                          (correctCount>6)?<GoodScoreCard score={correctCount}/>:
+                          (correctCount>3)?<AverageScoreCard score={correctCount}/> : <NeedsImprovementScoreCard score={correctCount} />
+                      
             )}
 
         </div>

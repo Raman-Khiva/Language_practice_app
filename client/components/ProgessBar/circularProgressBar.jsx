@@ -3,8 +3,8 @@
 import { percent } from "framer-motion";
 import React from "react";
 
-const CircularProgress = ({ size = 80, strokeWidth = 8, progress = 0, color = "#56adff" }) => {
-  const radius = (size - strokeWidth) / 2;
+const CircularProgress = ({ size = 75, strokeWidth = 7, progress = 0, color = "#56adff" }) => {
+  const radius = (size - strokeWidth-1) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
 

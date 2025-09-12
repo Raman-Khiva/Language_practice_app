@@ -1,6 +1,7 @@
 // layout.js - Updated
 'use client'
 import "./globals.css";
+import { Inter, Josefin_Sans, Ubuntu} from "next/font/google"
 // import Navbar from "@/components/Navbar/Navbar";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
@@ -9,6 +10,41 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadAuthFromLocalStorage, selectIsInitialized, selectIsAuthenticated } from "./store/slices/authSlice";
 import {getUserProgress,selectUserProgress}  from './store/slices/userProgressSlice'
 // import {fetchLessons,selectLessons}  from './store/slices/lessonsSlices'
+
+const josefin_sans = Josefin_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '700'], // Specify the weights you want to use
+  variable: '--font-josefin-sans', // Create a CSS variable
+});
+
+// const tasa = Tasa_Explorer({
+//   subsets: ['latin'],
+//   display: 'swap',
+//   weight: ['400', '700'], // Specify the weights you want to use
+//   variable: '--font-tasa-explorer',
+// });
+const ubuntu = Ubuntu({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['300', '400', '500', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-ubuntu',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '700'], // Specify the weights you want to use
+  variable: '--font-inter',
+});
+
+// const tasa = TASA_Explorer({
+//   subsets: ["latin"],
+//   weight: ["400", "700"], // choose the weights you need
+//   variable: "--font-tasa", // custom CSS variable
+// });
+
 
 const AuthLoader = ({ children }) => {
   const dispatch = useDispatch();
@@ -68,7 +104,7 @@ const AuthLoader = ({ children }) => {
 export default function RootLayout({ children }) {
   console.log('APP STARTED!')
   return (
-    <html lang="en">
+    <html lang="en" className={`${josefin_sans.variable} ${inter.variable} ${ubuntu.variable}`}>
       <body className="antialiased">
         <Provider store={store}>
           <AuthLoader>

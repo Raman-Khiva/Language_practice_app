@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // API base URL - adjust according to your setup
-const API_BASE_URL = '/api/categories';
+const API_BASE_URL = 'http://localhost:5000/api';
 
 // Async thunks for API calls
 
@@ -11,7 +11,7 @@ export const getCategories = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     console.log('THUNK-GET_CATEGORIES : Entered');
     try {
-      const response = await fetch('http://localhost:5000/api/categories');
+      const response = await fetch(`${API_BASE_URL}/categories`);
       
       console.log('THUNK-GET_CATEGORIES : response received!');
       if (!response.ok) {
@@ -33,9 +33,8 @@ export const getCategories = createAsyncThunk(
 const initialState = {
   categoriesList: [], // Array format: [{ name: "categoryName", count: number }]
   loading: false,
-  dataFetced : false,
+  dataFetched : false,
   error: null,
-  lastFetched: null,
 };
 
 // Categories slice
@@ -68,12 +67,12 @@ const categoriesSlice = createSlice({
         state.loading = false;
         state.categoriesList = action.payload;
         state.lastFetched = new Date().toISOString();
-        state.dataFetced = true;
+        state.dataFetched = true;
         
       })
       .addCase(getCategories.rejected, (state, action) => {
         state.loading = false;
-        state.dataFetced = true;
+        state.dataFetched = true;
         state.error = action.payload;
       });
   },
@@ -88,9 +87,10 @@ export const {
 
 // Basic selectors
 // export const selectCategories = (state) => state.categories.categories;
+export const selectCategories = (state) => state.categories;
 export const selectCategoriesList = (state) => state.categories.categoriesList;
 export const selectCategoriesLoading = (state) => state.categories.loading;
-export const selectCategoriesDataFetched = (state) => state.categories.dataFetced;
+export const selectCategoriesDataFetched = (state) => state.categories.dataFetched;
 export const selectCategoriesError = (state) => state.categories.error;
 export const selectLastFetched = (state) => state.categories.lastFetched;
 

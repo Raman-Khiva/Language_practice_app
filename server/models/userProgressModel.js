@@ -10,14 +10,13 @@ const userProgressSchema = new mongoose.Schema({
 
   // Total category counts
   totalCount: {
-    type: [],
-    default: []
+    type: [],         // {category : categoryName, difficulty : [0,0,3,0,1,0,......]} 
+    default: []       // {category : otherCateogry , difficulty: [0,0,0....]}
   },
 
 // Daily activity stats
   dailyCount: {
-    type: [
-    ],
+    type: [], // {date : 4sep2025 , count:5} max7
     default: []
   },
 
@@ -26,8 +25,8 @@ const userProgressSchema = new mongoose.Schema({
   lessonsList: {
     type: [
       { 
-        lessonId : { type: mongoose.Schema.Types.ObjectId, ref: 'Lesson' },
-        solved : {type : Number}
+        lessonId : { type: mongoose.Schema.Types.ObjectId, ref: 'Lesson' },   // {lessonId : , solved : 6}
+        solved : {type : Number}  
       }
 
     ],

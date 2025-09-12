@@ -2,7 +2,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 
-import questionsReducer from './slices/questionsSlice';
+// import questionsReducer from './slices/questionsSlice';
 import userProgressReducer from './slices/userProgressSlice';
 import categoriesReducer from './slices/categoriesSlices';
 import authReducer from './slices/authSlice';
@@ -14,7 +14,7 @@ import currentLessonReducer from './slices/currentLessonSlice'
 export const store = configureStore({
   reducer: {
       auth: authReducer,
-      questions: questionsReducer,
+      // questions: questionsReducer,
       categories: categoriesReducer,
       userProgress: userProgressReducer,
       sideBar : sideBarReducer,

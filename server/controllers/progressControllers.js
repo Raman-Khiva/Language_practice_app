@@ -64,6 +64,14 @@ export const addToProgress = async (req, res) => {
         const userId = req.user._id;
         lessonId = cleanObjectId(lessonId);
         
+        // ================= Step 1.5: Check Passing Criteria =================
+        const PASSING_SCORE = 9;
+        const hasPassed = correctCount >= PASSING_SCORE;
+        console.log("Passing criteria check:");
+        console.log("- Required score:", PASSING_SCORE);
+        console.log("- User score:", correctCount);
+        console.log("- Has passed:", hasPassed);
+        
         // ================= Step 2: Find or Create Progress Document =================
         let progressDoc = await UserProgress.findOne({ userId });
         console.log("Found existing progressDoc:", !!progressDoc);
@@ -98,39 +106,81 @@ export const addToProgress = async (req, res) => {
         
         console.log("Existing lesson index:", existingLessonIndex);
         
-        if (existingLessonIndex !== -1) {
-            // ================= Case A: Lesson Already Exists =================
-            console.log("\n=== CASE A: Lesson Already Exists ===");
+        if (hasPassed) {
+            console.log("\n=== USER PASSED (Score >= 9) ===");
             
-            const existingLesson = progressDoc.lessonsList[existingLessonIndex];
-            console.log("Current solved count:", existingLesson.solved);
-            console.log("New correct count:", correctCount);
-            
-            // Update solved to max(currentSolved, newCorrectCount)
-            const newSolvedCount = Math.max(existingLesson.solved, correctCount);
-            existingLesson.solved = newSolvedCount;
-            
-            console.log("Updated solved count to:", newSolvedCount);
-            
-            // Update daily count only
+            // Update daily count for passing score
             updateDailyCount(progressDoc);
+            
+            if (existingLessonIndex !== -1) {
+                // ================= Case A: Lesson Exists & User Passed =================
+                console.log("\n=== CASE A: Lesson Exists & User Passed ===");
+                
+                const existingLesson = progressDoc.lessonsList[existingLessonIndex];
+                const oldScore = existingLesson.solved;
+                
+                console.log("Current solved count:", oldScore);
+                console.log("New correct count:", correctCount);
+                
+                if (oldScore < PASSING_SCORE) {
+                    console.log("Old score was below passing criteria - updating category & difficulty count");
+                    // Previously didn't pass, now passes - update totalCount
+                    updateTotalCount(progressDoc, category, difficulty);
+                } else {
+                    console.log("Old score was already passing - only updating lesson with max count");
+                }
+                
+                // Update solved to max(currentSolved, newCorrectCount)
+                const newSolvedCount = Math.max(existingLesson.solved, correctCount);
+                existingLesson.solved = newSolvedCount;
+                
+                console.log("Updated solved count to:", newSolvedCount);
+                
+            } else {
+                // ================= Case B: New Lesson & User Passed =================
+                console.log("\n=== CASE B: New Lesson & User Passed ===");
+                
+                // Add to lessonsList
+                progressDoc.lessonsList.push({
+                    lessonId: lessonId,
+                    solved: correctCount
+                });
+                console.log("✓ Added lesson to lessonsList with solved count:", correctCount);
+                
+                // Update totalCount for category and difficulty
+                updateTotalCount(progressDoc, category, difficulty);
+            }
             
         } else {
-            // ================= Case B: New Lesson =================
-            console.log("\n=== CASE B: New Lesson ===");
+            console.log("\n=== USER FAILED (Score < 9) ===");
             
-            // Add to lessonsList
-            progressDoc.lessonsList.push({
-                lessonId: lessonId,
-                solved: correctCount
-            });
-            console.log("✓ Added lesson to lessonsList with solved count:", correctCount);
-            
-            // Update totalCount for category and difficulty
-            updateTotalCount(progressDoc, category, difficulty);
-            
-            // Update daily count
-            updateDailyCount(progressDoc);
+            if (existingLessonIndex !== -1) {
+                // ================= Case C: Lesson Exists & User Failed =================
+                console.log("\n=== CASE C: Lesson Exists & User Failed ===");
+                
+                const existingLesson = progressDoc.lessonsList[existingLessonIndex];
+                console.log("Current solved count:", existingLesson.solved);
+                console.log("New correct count:", correctCount);
+                
+                // Update solved to max(currentSolved, newCorrectCount) but don't affect counts
+                const newSolvedCount = Math.max(existingLesson.solved, correctCount);
+                existingLesson.solved = newSolvedCount;
+                
+                console.log("Updated solved count to:", newSolvedCount);
+                console.log("No daily/category count updates (score below passing criteria)");
+                
+            } else {
+                // ================= Case D: New Lesson & User Failed =================
+                console.log("\n=== CASE D: New Lesson & User Failed ===");
+                
+                // Add to lessonsList but don't update counts
+                progressDoc.lessonsList.push({
+                    lessonId: lessonId,
+                    solved: correctCount
+                });
+                console.log("✓ Added lesson to lessonsList with solved count:", correctCount);
+                console.log("No daily/category count updates (score below passing criteria)");
+            }
         }
         
         // ================= Step 4: Save Document =================
@@ -145,6 +195,7 @@ export const addToProgress = async (req, res) => {
         return res.status(200).json({ 
             success: true,
             message: "Progress updated successfully",
+            passed: hasPassed,
             progress: progressDoc
         });
         
@@ -195,10 +246,10 @@ function updateTotalCount(progressDoc, category, difficulty) {
 }
 
 /**
- * Updates the daily count for today
+ * Updates the daily count for today (only called when score >= 9)
  */
 function updateDailyCount(progressDoc) {
-    console.log("\n--- Updating dailyCount ---");
+    console.log("\n--- Updating dailyCount (Passing Score Only) ---");
     
     // Get today's date (normalized to start of day)
     const today = new Date();
@@ -220,7 +271,7 @@ function updateDailyCount(progressDoc) {
         console.log("Creating new entry for today");
         progressDoc.dailyCount.push({ 
             date: today, 
-            count: 1 
+            count: 1
         });
         
         // Keep only last 7 entries (maintain queue-like behavior)
@@ -234,6 +285,7 @@ function updateDailyCount(progressDoc) {
     
     console.log("Current dailyCount length:", progressDoc.dailyCount.length);
 }
+
 
 //============================= Read Operations =============================
 

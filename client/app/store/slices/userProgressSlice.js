@@ -39,6 +39,9 @@ export const getUserProgress = createAsyncThunk(
       }
 
       console.log("GET-USER-PROGRESS: Successfully fetched progress");
+      console.log("GET-USER-PROGRESS: Progress- TotalCount",data.progress.totalCount);
+      console.log("GET-USER-PROGRESS: Progress - DailyCount",data.progress.dailyCount);
+      console.log("GET-USER-PROGRESS: Progress - LessonsList", data.progress.lessonsList);
 
       return {
         totalCount: data.progress.totalCount,
@@ -113,6 +116,10 @@ const initialState = {
   totalCount:[], //list of objects each having category (string) and difficulty (list of size 12 representing each difficulty)
   dailyCount:[],
   lessonsList : [], //list of ids (stings)
+  difficultyWiseProgress : [],
+  totalLessons : [10,12,13,12,18,14,20,22,19,23,25,21],
+  totalDone : 0,
+  totalAce : 0,
   isFetched : false,
   isLoading: false,
   error: null,

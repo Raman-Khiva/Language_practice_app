@@ -42,11 +42,19 @@ const LessonCardNew = ({ lessonId, index,currentLesson }) => {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: easeOut }}
-      className="border-2 border-[#adadad] rounded-xl p-1 sm:p-[7px] h-fit sm:w-auto cursor-pointer"
+      className="  rounded-xl   h-fit sm:w-auto cursor-pointer 
+                   
+      "
       onClick={handleClick}
     >
-      <div className="flex flex-col gap-1 justify-between w-full sm:w-40 h-52 sm:h-48 bg-[#fff] rounded-[12px] px-2 sm:px-2 py-2">
-        <div className="flex items-center justify-center bg-[#f4f1f1] p-4 rounded-t-lg">
+      <div className="flex flex-col justify-between w-full sm:w-48 h-52 sm:h-60
+                       bg-[#fff] rounded-2xl px-2 sm:px-2 py-2
+                        border-5 border-gray-300/60  
+                        shadow-[0_0_20px_rgba(0,0,0,0.1)]
+
+
+      ">
+        <div className="flex items-center justify-center  p-4 rounded-t-lg">
           {/* Animated circular progress */}
           {progress < 90 ? (
             <CircularProgressBar progress={progress} color="#5af47b" />
@@ -54,7 +62,7 @@ const LessonCardNew = ({ lessonId, index,currentLesson }) => {
             <Tick />
           )}
         </div>
-        <div className="p-2 bg-[#f4f1f1] rounded-b-lg h-full flex flex-col justify-end">
+        <div className="p-2  rounded-b-lg h-full flex flex-col justify-end">
           <h3 className="text-base sm:text-md font-[600] text-gray-800">
             Lesson {lessonId}
           </h3>
@@ -63,6 +71,14 @@ const LessonCardNew = ({ lessonId, index,currentLesson }) => {
               <p>{currentLesson.difficulty}</p>
           </div>
         </div>
+      <button className='text-sm text-white 
+                         mx-1 py-1 px-3 rounded-xl
+                        border-2 border-indigo-700 bg-indigo-700
+                        cursor-pointer hover:bg-white hover:text-indigo-700
+                        transition-all duration-300
+      '>
+        Start now
+      </button>
       </div>
     </motion.div>
   );

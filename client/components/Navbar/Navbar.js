@@ -6,20 +6,30 @@ import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import {logoutUser, selectIsAuthenticated, selectUser} from '../../app/store/slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
-
-let render = 0;
-console.log('NAVBAR : navbar file loaded!');
 
 
 export default function Navbar() {
   
-  render += 1;
-  console.log(`NAVBAR : this is ${render} render of navbar!`);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectUser);
   
   const dispatch = useDispatch();
+  const [isShrunk, setIsShrunk] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsShrunk(true);
+      } else {
+        setIsShrunk(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -35,17 +45,32 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 z-50 w-full mt-0">
-      <div className="mx-auto max-w-7xl px-8 py-3">
-        <div className="flex items-center justify-between rounded-2xl border border-white/20 bg-white/60 backdrop-blur-xl shadow-sm ring-1 ring-black/5 px-4 ">
+      <div className={`mx-auto px-8 pt-1 ${isShrunk?"max-w-[60rem]" : "max-w-[84rem]"} 
+                      transition-all duration-400 ease-out
+      `}>
+        <div className={`flex items-center justify-between  rounded-2xl  px-4 ${isShrunk ? "border border-white/20 bg-white/80 backdrop-blur-xl shadow-sm ring-1 ring-black/5":"bg-transparent"}`}>
           <Link href="/" className='flex gap-1 items-center px-3' >   
-              <Image src="/brain-logo.svg"  width={92}  height={40} className='h-16 w-auto' alt='Native Lab' />  
-              <p className='text-[28px] font-[700] text-[#323131] '>Lingua <span className = 'bg-clip-text text-transparent bg-linear-to-r from-[#DD8BE1] via-[#305CED] to-[#45afe0]'>App</span></p>
+              <Image src="/brain-logo.svg"  width={80}  height={28} className='h-16 w-auto' alt='Native Lab' />  
+              <p className='text-[24px] font-[700] text-gray-800'>Lingua App<span className = 'bg-clip-text text-transparent bg-linear-to-r from-[#DD8BE1] via-[#305CED] to-[#45afe0]'></span></p>
               {/*  */}
           </Link>
-          <div className="flex items-center gap-3">
-            <Link href="/categories" className="text-sm text-gray-700/90 hover:text-gray-900 transition-colors">
-              Categories
+
+          <div className='flex-1 flex items-center justify-center gap-4 lg:gap-10
+                            font-[500] 
+          '>
+            <Link href="/practice/library" className=" text-gray-800 hover:text-gray-900 transition-colors">
+              Learning lab
             </Link>
+            <Link href="/practice/library" className=" text-gray-800 hover:text-gray-900 transition-colors">
+              Practice lab
+            </Link>
+            <Link href="/practice/library" className=" text-gray-800 hover:text-gray-900 transition-colors">
+              Speaking lab
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-3">
+
             {!isAuthenticated ? (
               <div className="flex items-center gap-2">
                 <Link

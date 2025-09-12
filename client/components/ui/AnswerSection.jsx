@@ -90,14 +90,14 @@ const AnswerSection = ({
 
   return (
     // <div className={` ${gradientBorder} rounded-2xl p-[5px] h-full `}>
-    <div className={`bg-white border-2 ${borderColor}  rounded-xl p-3 h-full ring-4 ${ringColor}`}>
-     <div className="h-full flex flex-col justify-between ">
-      <div className="space-y-2">
+    <div className={`bg-white   rounded-xl  h-full flex flex-col justify-between gap-4`}>
+     <div className=" flex flex-col flex-1 justify-between bg-[#ecececce] p-4 rounded-2xl">
+      <div className=" flex flex-col gap-2">
         {/* Status */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 ">
           <div
             className={`w-3 h-3 rounded-full ${
-              isCorrect ? "bg-green-500" : "bg-red-500"
+              isCorrect ? "bg-green-500" : "bg-red-400"
             }`}
           ></div>
           <h4 className={`text-lg font-semibold text-${statusColor}-700`}>
@@ -107,10 +107,10 @@ const AnswerSection = ({
 
         {/* User's answer */}
         <div>
-          <h4 className="text-md text-lg font-semibold text-gray-700 mb-1">Your Answer:</h4>
+          <h4 className="text-md text-lg font-semibold text-gray-700 my-1">Your Answer:</h4>
           {isCorrect?
             <p className="text-[#0c7f32] bg-[#e1f4e2]  font-[500] px-3 py-2 rounded-lg">{userAnswer}</p>
-            :<p className={`text-${statusColor}-700 bg-[#f6c4c4] text-lg px-3 py-2 rounded-lg font-medium`}>
+            :<p className={`text-${statusColor}-700 bg-[#f1bcbc] text-lg px-3 py-2 rounded-lg font-medium`}>
                 {userAnswer}   
             </p>
            }           
@@ -122,7 +122,7 @@ const AnswerSection = ({
             {isCorrect ? "Great Translation!" : "Suggested Translation:"}
           </h4>
           <p
-            className={`text-[#0c7f32] text-lg bg-[#e1f4e2] px-3 py-2 rounded-lg font-medium`}
+            className={`text-[#056e28] text-lg bg-[#cdf4ce] px-3 py-2 rounded-lg font-medium`}
           >
             {validationResult.correctTranslation}
           </p>
@@ -150,15 +150,15 @@ const AnswerSection = ({
         {/* Suggestions */}
         {validationResult.suggestions && validationResult.suggestions.length > 0 && (
           <div className="pt-2">
-            <h4 className="text-lg font-semibold text-gray-700 mb-2">Tips:</h4>
+            <h4 className="text-lg font-semibold text-gray-800 mb-2">Tips:</h4>
             <ul className="space-y-1">
               {validationResult.suggestions.map((suggestion, index) => (
                 <li
                   key={index}
                   className="text-gray-600 text-sm flex items-center  space-x-2"
                 >
-                  <span className="text-blue-600 font-extrabold mt-1 relative bottom-1 ">•</span>
-                  <span className="text-md font-[500] flex items-end">{suggestion}</span>
+                  <span className="text-blue-800 font-extrabold mt-1 relative bottom-1 ">•</span>
+                  <span className="text-[14px] font-[500] text-gray-700 flex items-end">{suggestion}</span>
                 </li>
               ))}
             </ul>
@@ -194,21 +194,25 @@ const AnswerSection = ({
 
         </div>
 
-        <div className="flex justify-center pt-2 w-full">
-          <button
-            disabled={disabled}
-            ref={buttonRef}
-            onClick={handleNextQuestion}
-            className={`px-6 py-2 w-full ${
-              isCorrect
-                ? "bg-[#67cd62] hover:bg-[#2e9932]"
-                : "bg-[#f04545] hover:bg-red-500"
-            } text-white rounded-xl font-medium hover:scale-102 transition-all cursor-pointer`}
-          >
-            {questionNo < totalQuestions - 1 ? "Next Question" : "Complete Lesson"}
-          </button>
-        </div>
       </div>
+
+{/*===================================================  Button ======================================================*/}
+      <div className="flex justify-center pt-2 w-full">
+        <button
+          disabled={disabled}
+          ref={buttonRef}
+          onClick={handleNextQuestion}
+          className={`px-6 py-2 w-full ${
+            isCorrect
+              ? "bg-[#67cd62] hover:bg-[#2e9932]"
+              : "bg-[#f04545] hover:bg-red-500"
+          } text-white rounded-xl font-medium hover:scale-102 transition-all cursor-pointer`}
+        >
+          {questionNo < totalQuestions - 1 ? "Next Question" : "Complete Lesson"}
+        </button>
+      </div>
+{/*=============================================== Button End ==============================================================*/}
+
     </div>
     // </div>
   );

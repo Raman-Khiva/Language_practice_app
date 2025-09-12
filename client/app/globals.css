@@ -8,6 +8,22 @@
 }
 
 
+/* globals.css */
+.josefin{
+  font-family: var(--font-josefin-sans);
+  font-weight: 700; /* You can also control weight */
+}
+
+.inter{
+  font-family:  var(--font-inter);
+  font-weight: 520;
+}
+
+.ubuntu{
+  font-family: var(--font-ubuntu);
+}
+
+
 #__next_dev_overlay {
   display: none;
 }

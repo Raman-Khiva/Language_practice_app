@@ -1,4 +1,5 @@
 
+import categoryModel from '../models/categoryModel.js';
 import Lesson  from '../models/lessonModel.js';
 
 
@@ -50,16 +51,47 @@ export const getLessons = async (req,res) => {
 
 
 export const addManyLessons = async (req, res) => {
-    console.log('ADD MANY LESSONS : request recived!');
-    try{
-        console.log('ADD MANY LESSONS : request recived!');
+    console.log('ADD MANY LESSONS : request received!');
+    try {
         const lessonslist = req.body; // Expecting an array of lesson objects
         console.log('ADD MANY LESSONS : Lessons to be added : ', lessonslist);
+        
+        // Insert lessons
         const insertedLessons = await Lesson.insertMany(lessonslist);
         console.log('ADD MANY LESSONS : Lessons added successfully!');
+        
+        // Count lessons by category
+        const categoryCounts = {};
+        lessonslist.forEach(lesson => {
+            if (lesson.category) {
+                categoryCounts[lesson.category] = (categoryCounts[lesson.category] || 0) + 1;
+            }
+        });
+        
+        console.log('ADD MANY LESSONS : Category counts to update:', categoryCounts);
+        
+        // Update category counts
+        const categoryUpdatePromises = Object.entries(categoryCounts).map(async ([categoryName, count]) => {
+            return categoryModel.findOneAndUpdate(
+                { category: categoryName },
+                { 
+                    $inc: { count: count },
+                    $setOnInsert: { category: categoryName } // Set category name if creating new document
+                },
+                { 
+                    upsert: true, // Create if doesn't exist
+                    new: true 
+                }
+            );
+        });
+        
+        // Execute all category updates
+        await Promise.all(categoryUpdatePromises);
+        console.log('ADD MANY LESSONS : Category counts updated successfully!');
+        
         res.status(201).json({ success: true, data: insertedLessons });
     }
-    catch(error){
+    catch(error) {
         console.error('ADD MANY LESSONS : Error adding lessons:', error);
         res.status(500).json({ success: false, message: 'Server Error' });
     }

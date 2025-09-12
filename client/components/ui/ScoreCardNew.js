@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
-const ScoreCard = () => {
+const ScoreCard = ({score=6}) => {
 
     const router = useRouter();
 
@@ -24,8 +24,12 @@ const ScoreCard = () => {
                 <h3 className='text-4xl font-[500] text-[#36a323]' >Perfect</h3>
               </div>
               <p className='text-center font-[500] text-[#646363] p-5'>Outstanding! You've mastered this lesson perfectly. Your dedication to learning is truly impressive!</p>
+             <h2 className='flex-1 flex items-center justify-center
+                            text-xl font-[500] text-gray-600
+             '>Your Score : {score}</h2>
           </div>
         {/* </div> */}
+
 
         <div className=' flex items-center justify-center gap-3'>
           <button className='text-lg text-blue-600 font-[500] border-2 border-blue-600 px-4 py-1 rounded-lg cursor-pointer hover:bg-blue-600   hover:text-white duration-500'
@@ -44,7 +48,7 @@ const ScoreCard = () => {
 
 
 // Good Performance Score Card
-const GoodScoreCard = () => {
+const GoodScoreCard = ({score=5}) => {
     const router = useRouter();
 
     const handleClick = () => {
@@ -63,6 +67,9 @@ const GoodScoreCard = () => {
                         <h3 className='text-4xl font-[500] text-[#2563eb]'>Good Job!</h3>
                     </div>
                     <p className='text-center font-[500] text-[#646363] p-5'>Well done! You've got a solid understanding of this lesson. Keep up the great work and you'll master it soon!</p>
+                    <h2 className='flex-1 flex items-center justify-center
+                            text-xl font-[500] text-gray-600
+                    '>Your Score : {score}</h2>
                 </div>
 
                 <div className='flex items-center justify-center gap-3'>
@@ -81,7 +88,7 @@ const GoodScoreCard = () => {
 }
 
 // Average Performance Score Card
-const AverageScoreCard = () => {
+const AverageScoreCard = ({score=5}) => {
     const router = useRouter();
 
     const handleClick = () => {
@@ -100,6 +107,9 @@ const AverageScoreCard = () => {
                         <h3 className='text-4xl font-[500] text-[#eab308]'>Keep Going!</h3>
                     </div>
                     <p className='text-center font-[500] text-[#646363] p-5'>You're making progress! Some concepts need more practice. Review the lesson and try again to improve your understanding.</p>
+                    <h2 className='flex-1 flex items-center justify-center
+                            text-xl font-[500] text-gray-600
+                    '>Your Score : {score}</h2>
                 </div>
 
                 <div className='flex items-center justify-center gap-3'>
@@ -118,7 +128,7 @@ const AverageScoreCard = () => {
 }
 
 // Needs Improvement Score Card
-const NeedsImprovementScoreCard = () => {
+const NeedsImprovementScoreCard = ({score=5}) => {
     const router = useRouter();
 
     const handleClick = () => {
@@ -137,6 +147,9 @@ const NeedsImprovementScoreCard = () => {
                         <h3 className='text-4xl font-[500] text-[#ef4444]'>Try Again</h3>
                     </div>
                     <p className='text-center font-[500] text-[#646363] p-5'>Don't give up! Learning takes time and practice. Review the fundamentals and take your time to understand each concept.</p>
+                    <h2 className='flex-1 flex items-center justify-center
+                            text-xl font-[500] text-gray-600
+                    '>Your Score : {score}</h2>
                 </div>
 
                 <div className='flex items-center justify-center gap-3'>

@@ -28,6 +28,10 @@ const MultiSelectDropdown = () => {
     setSelected(selected.filter((item) => item !== idx));
     dispatch(removeCategoryThunk(idx));
   };
+  
+  useEffect(()=>{
+    dispatch(toggleCategoryThunk(1));
+  },[dispatch])
 
   // 🔑 Close dropdown on outside click
   useEffect(() => {
@@ -61,7 +65,7 @@ const MultiSelectDropdown = () => {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                removeOption(item);
+                removeOption(item+1);
               }}
               className="ml-1 text-red-500 hover:text-red-700"
             >
@@ -76,10 +80,10 @@ const MultiSelectDropdown = () => {
         <div className="mt-1 border rounded-md shadow bg-white absolute right-4 p-2 z-50">
           {options.map((option, i) => (
             <div
-              key={i}
-              onClick={() => toggleOption(i)}
+              key={i+1}
+              onClick={() => toggleOption(i+1)}
               className={`p-2 cursor-pointer hover:bg-gray-100 ${
-                selected.includes(i) ? "bg-blue-50" : ""
+                selected.includes(i+1) ? "bg-blue-50" : ""
               }`}
             >
               {option}

@@ -41,7 +41,7 @@ const CircularProgressNew = ({ percentage = 65, size = 80, strokeWidth = 8, show
         <path
           d={pathData}
           fill="none"
-          stroke={fillColor || "url(#backgroundGradient)"}
+          stroke={"#ffffffd9" || "url(#backgroundGradient)"}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
         />
@@ -50,7 +50,7 @@ const CircularProgressNew = ({ percentage = 65, size = 80, strokeWidth = 8, show
         <path
           d={pathData}
           fill="none"
-          stroke={"#fff"}
+          stroke={fillColor}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
