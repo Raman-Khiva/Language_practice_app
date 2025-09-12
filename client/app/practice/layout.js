@@ -9,7 +9,7 @@ const page = ({children}) => {
     const gridCols = sideBarOpen? " grid-cols-[200px_calc(100%-200px)]": " grid-cols-[80px_calc(100%-80px)]";
 
   return (
-    <div className={`w-full h-screen p-1 pb-0
+    <div className={`w-full h-screen p-1 pb-0 pr-2
                     grid ${gridCols} grid-rows-[60px_1fr] gap-1
                     transition-all duration-500 ease-in-out
                     bg-sky-100/40 backdrop-blur-3xl

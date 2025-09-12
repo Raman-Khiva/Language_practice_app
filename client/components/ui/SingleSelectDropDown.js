@@ -1,11 +1,14 @@
-import { useState } from 'react';
+'use client'
+import { useEffect, useRef, useState } from 'react';
 import { BiChevronDown } from 'react-icons/bi'; 
 
 const SingleSelectDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('All');
+  const dropdownRef = useRef(null);
 
   // Generate values from A1-Early to C2-Pro
+
   const generateValues = () => {
     const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
     const types = ['Early', 'Basic', 'Int', 'Pro'];
@@ -31,14 +34,29 @@ const SingleSelectDropdown = () => {
     setSelectedValue(value);
     setIsOpen(false);
   };
+  
+    useEffect(() => {
+      const handleClickOutside = (e) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+          setIsOpen(false);
+        }            
+      };
+      if (open) {
+        document.addEventListener("mousedown", handleClickOutside);
+      }
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [open]);
 
   return (
       
-      <div className="relative mr-6 py-[2px]">
+      <div  ref={dropdownRef}
+            className="relative mr-6 py-[2px] w-40
+      
+      ">
         {/* Dropdown Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full px-4 py-1 text-left bg-transparent border-2 border-gray-300/80 rounded-lg shadow-sm hover:border-gray-400
+          className="w-full px-4 py-[3px] text-left bg-transparent border-2 border-gray-300/80 rounded-lg shadow-sm hover:border-gray-400
                     cursor-pointer 
                     focus:border-2 focus:border-indigo-700 focus:ring-4 focus:ring-indigo-200
                     transition-colors duration-200"

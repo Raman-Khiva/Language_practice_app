@@ -3,13 +3,9 @@ import SideBar from '@/components/SideBar'
 import React, { useEffect } from 'react'
 import { getCategories,selectCategories } from '@/app/store/slices/categoriesSlices'
 import { useDispatch, useSelector } from 'react-redux'
+import CategoryCard from '@/components/ui/CategoryCard'
 
-// const initialState = {
-//   categoriesList: [], // Array format: [{ name: "categoryName", count: number }]
-//   loading: false,
-//   dataFetced : false,
-//   error: null,
-// };
+
 
 
 
@@ -50,16 +46,51 @@ const page = () => {
 
 
   return (
-    <div className='w-full h-screen relative flex' >
-  
-       <h1>
-          categories
-       </h1>
-       <div>
-        {categories.categoriesList.map((item,i)=>(
-          <p key={i}>{item.name} : {item.count}</p>
-        ))}
-      </div>
+    <div className='w-full h-full relative
+                    grid grid-cols-10 grid-rows-1 gap-1
+    '>
+       
+       <div className=' col-span-8 row-span-1
+                        rounded-2xl 
+                        bg-white/20 border-2 border-[#c3c3c3d2]
+                        overflow-hidden
+                        pb-20
+                        
+       '>
+          <h1 className=' py-4 px-10
+                          text-xl font-[500]
+          '>
+              Choose category and start pracicing
+          </h1>
+
+          <div className='h-full overflow-hidden '>
+            <div className=' flex justify-center  flex-wrap
+                            py-8 gap-5 h-full
+                            overflow-auto
+            '>
+              
+                {categories.categoriesList.map((item,i)=>(
+                  <CategoryCard
+                    key={i}
+                    i={i}
+                    name={item.name}
+                    count={item.count}
+                  />
+                ))}
+              
+            </div>
+          </div>
+
+       </div>
+
+       <div className='col-span-2 row-span-1
+                       rounded-2xl
+                       grid place-items-center
+                       bg-white/20 border-2 border-[#c3c3c3d2]
+       '>
+         section
+       </div>
+
     </div>
   )
 }

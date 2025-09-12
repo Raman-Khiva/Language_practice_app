@@ -284,6 +284,99 @@ export const toggleCategoryThunk = createAsyncThunk(
   }
 );
 
+
+export const toggleDifficulties = createAsyncThunk(
+  'lessons/toggleDifficulties',
+
+  async (targetDifficulties, { getState, dispatch }) => {
+      console.log("SYNC-CATEGORIES ▶ Called with difficulties:", targetDifficulties);
+      
+      const state = getState().lessons;
+      const { selectedDifficulties, lessonsData, lessonsRecord, currentLessonsRecord } = state;
+      
+      // Ensure targetDifficulties is an array
+      const newSelectedDifficulties = Array.isArray(targetDifficulties) 
+        ? [...targetDifficulties] 
+        : [targetDifficulties];
+      
+      console.log("SYNC-CATEGORIES ▶ Target difficulties:", newSelectedDifficulties);
+      console.log("SYNC-CATEGORIES ▶ Current difficulties:", selectedDifficulties);
+      
+      // Check which difficulties need to be fetched
+      const missingDifficulties = [];
+      const availableDifficulties = [];
+      
+      if (newSelectedDifficulties.length === 0) {
+        // Default to difficulty 1 when none selected
+        if (!checkDifficultyExists(lessonsData, lessonsRecord, 1)) {
+          missingDifficulties.push(1); 
+        } else {
+          availableDifficulties.push(1);
+        }
+      } else {
+        newSelectedDifficulties.forEach(diff => {
+          if (checkDifficultyExists(lessonsData, lessonsRecord, diff)) {
+            availableDifficulties.push(diff);
+          } else {
+            missingDifficulties.push(diff);
+          }
+        });
+      }
+      
+      console.log("SYNC-CATEGORIES ▶ Available difficulties:", availableDifficulties);
+      console.log("SYNC-CATEGORIES ▶ Missing difficulties:", missingDifficulties);
+      
+      // Identify difficulties to remove (present in current state but not in target)
+      const difficultiesToRemove = selectedDifficulties.filter(
+        diff => !newSelectedDifficulties.includes(diff)
+      );
+      console.log("SYNC-CATEGORIES ▶ Difficulties to remove:", difficultiesToRemove);
+      
+      // Identify difficulties to add (present in target but not in current state)
+      const difficultiesToAdd = newSelectedDifficulties.filter(
+        diff => !selectedDifficulties.includes(diff)
+      );
+      console.log("SYNC-CATEGORIES ▶ Difficulties to add:", difficultiesToAdd);
+      
+      // Filter current lessons from available data
+      let currentLessons = [];
+      if (newSelectedDifficulties.length === 0) {
+        currentLessons = lessonsData.filter(item => item.difficulty === 1);
+      } else {
+        currentLessons = lessonsData.filter(item => 
+          availableDifficulties.includes(item.difficulty)
+        );
+      }
+      
+      // Fetch missing difficulties in parallel
+      if (missingDifficulties.length > 0) {
+        console.log("SYNC-CATEGORIES ▶ Fetching missing difficulties:", missingDifficulties);
+        
+        const fetchPromises = missingDifficulties.map(diff => 
+          dispatch(fetchLessons({ 
+            category: currentLessonsRecord.category || "allLessons", 
+            difficulty: diff 
+          }))
+        );
+        
+        // Don't wait for fetches to complete, they will update state when done
+        Promise.all(fetchPromises).catch(error => {
+          console.error("SYNC-CATEGORIES ▶ Error fetching missing difficulties:", error);
+        });
+      }
+      
+      return {
+        selectedDifficulties: newSelectedDifficulties,
+        currentLessons,
+        hasPendingFetches: missingDifficulties.length > 0,
+      };
+    }
+
+  )
+
+
+
+
 // New thunk for removing category with filtering
 export const removeCategoryThunk = createAsyncThunk(
   "lessons/removeCategory",
@@ -360,7 +453,7 @@ const initialState = {
         difficulty: null
     },
     loading: false,
-    lessonsData: [], // all lessons  (suppose there are lesson of difficulty 1, 2, 3, 4, 5, 6)
+    lessonsData: [], // all lessons  (suppose there are lessons of difficulty 1, 2, 3, 4, 5, 6)
     lessonsRecord: [
         {name: 'allLessons', recordList: Array(12).fill(0)}
     ],
