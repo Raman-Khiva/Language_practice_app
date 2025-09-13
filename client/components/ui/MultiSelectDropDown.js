@@ -12,8 +12,8 @@ const MultiSelectDropdown = () => {
   const [selected, setSelected] = useState([]);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const lessons = useSelector(selectLessons);
-  const dropdownRef = useRef(null);
+  
+  
 
   const toggleOption = (idx) => {
     if (selected.includes(idx)) {
@@ -34,6 +34,7 @@ const MultiSelectDropdown = () => {
   },[dispatch])
 
   // 🔑 Close dropdown on outside click
+  const dropdownRef = useRef(null);
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {

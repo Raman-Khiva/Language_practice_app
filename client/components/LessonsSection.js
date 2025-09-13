@@ -1,4 +1,3 @@
-import { selectCurrentLessons, selectCurrentLessonsRecord } from '@/app/store/slices/lessonsSlices'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import LessonCardNew from './ui/LessonCardNew';
@@ -6,6 +5,8 @@ import { BsArrowsAngleExpand } from 'react-icons/bs';
 // import { MdArrowDropDown } from 'react-icons/md';
 import MultiSelectDropdown from './ui/MultiSelectDropDown';
 import SingleSelectDropdown from './ui/SingleSelectDropDown';
+import { selectCurrentLessons, selectLessonsError, selectLessonsLoading } from '@/app/store/slices/lessonsSlices';
+
 
 
 
@@ -13,7 +14,21 @@ import SingleSelectDropdown from './ui/SingleSelectDropDown';
 const LessonsSection = ({setMainExpanded, mainExpanded}) => {
 
     const currentLessons = useSelector(selectCurrentLessons);
-    // const currentLessonsRecord = useSelector(selectCurrentLessonsRecord);   
+    // const error = useSelector(selectLessonsError);
+    // const loading = useSelector(selectLessonsLoading);
+    // const currentLessonsRecord = useSelector(selectCurrentLessonsRecord);  
+    
+    // if(loading){
+    //   return (
+    //     <div className='flex items-center justify-center'>loading please wait</div>
+    //   )
+
+    // }
+    // if(error){
+    //   return (
+    //     <div className='flex items-center justify-center'>{error}</div>
+    //   )
+    // }
   return (
     <div className=' h-full'>
       <BsArrowsAngleExpand className='absolute -right-2 -top-2  p-3 w-12 h-12 text-gray-700 font-[400] z-50 opacity-0 hover:opacity-100 cursor-pointer duration-300'
@@ -25,7 +40,7 @@ const LessonsSection = ({setMainExpanded, mainExpanded}) => {
               </div>
               <div className='flex-1 h-full overflow-auto p-3 w-full '>
                 <div className='w-full  flex gap-4 flex-wrap my-1.5 justify-center pt-6 pb-20'>
-                  {currentLessons.map((currentLesson,i)=>(
+                  {currentLessons?.map((currentLesson,i)=>(
                     <LessonCardNew key={i} lessonId={i+1} index={i} currentLesson={currentLesson}/>
                   ))}
                 </div>

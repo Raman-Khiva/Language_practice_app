@@ -4,40 +4,30 @@ import Lesson  from '../models/lessonModel.js';
 
 
 
-
-export const getLessonsByDifficulty = async (req, res) => {
-    
-    try {
-        const { difficulty } = req.params;
-        const lessons = await Lesson.find({ difficulty: Number(difficulty) });
-        res.status(200).json({ success: true, data: lessons });
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Server Error' });
-    }
-}
-
-export const getLessonsByDifficultyAndCategory = async (req, res) => {
-    try{
-        const {difficulty, category} = req.params;
-        const lessons = await Lesson.find({ difficulty: Number(difficulty), category });
-        res.status(200).json({ success: true, lessons: lessons });
-    }
-    catch(error){
-        res.status(500).json({ success: false, message: 'Server Error' });
-    }
-}
-
 export const getLessons = async (req,res) => {
     try{
         console.log("GET_LESSONS : Request recieved");
         const {difficulty,category} = req.query;
+        let difficultyInt = Number(difficulty);
+        difficultyInt+=1;
+
+        console.log("GET_LESSONS : difficultyInt :",difficultyInt);
+        if(difficultyInt<1 || difficultyInt>12){
+            res.status(500).json({
+                success : false,
+                error : "Invalid difficulty"
+            })
+        };
         const filter = {};
-        if(difficulty) filter.difficulty = Number(difficulty);
+        if(difficulty) filter.difficulty = difficultyInt;
         if(category) filter.category = category;
+        
+        
 
         console.log("GET_LESSONS : filter -",filter);
 
         const lessons = await Lesson.find(filter);
+        console.log("GET LESSONS : This is data sent : " ,lessons);
         res.status(200).json({success:true, lessons: lessons});
 
 

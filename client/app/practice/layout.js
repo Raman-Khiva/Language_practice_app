@@ -26,14 +26,17 @@ const page = ({children}) => {
                        col-span-1 row-span-1
       '>
         
-          <div className='w-full h-[60px] z-50 bg-white/20  px-4 flex items-center justify-center
+          <div className='w-full h-[60px] z-50 bg-white/20  px-4 
+                          flex items-center justify-center gap-8
                           shadow-[0_0_10px_rgba(0,0,0,0.1)] border-2 border-[#c3c3c3d2]
-                          rounded-xl cursor-pointer gap-24 text-lg font-[500]
+                          rounded-xl cursor-pointer  font-[500]
                 '
           >
             <Link href='/'>Home</Link>
-            <Link href='/'>Learn</Link>
-            <Link href='/'>Read</Link>
+            <Link href='/'>Learning lab</Link>
+            <Link href='/practice/library'>Practice lab</Link>
+            <Link href='/'>Reading lab</Link>
+            <Link href='/'>Speaking lab</Link>
           </div>
         
        </div>
