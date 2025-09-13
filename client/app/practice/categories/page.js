@@ -52,7 +52,7 @@ const page = () => {
        
        <div className=' col-span-8 row-span-1
                         rounded-2xl 
-                        bg-white/20 border-2 border-[#c3c3c3d2]
+                        bg-violet-50/40 border-2 border-[#c3c3c3d2]
                         overflow-hidden
                         pb-20
                         

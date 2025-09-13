@@ -47,14 +47,18 @@ const LessonCardNew = ({ lessonId, index,currentLesson }) => {
       "
       onClick={handleClick}
     >
-      <div className="flex flex-col justify-between w-full sm:w-48 h-52 sm:h-60
-                       bg-[#fff] rounded-2xl px-2 sm:px-2 py-2
-                        border-5 border-gray-300/60  
-                        shadow-[0_0_20px_rgba(0,0,0,0.1)]
-
-
+      <div className="flex flex-col justify-between 
+                      w-full sm:w-48 h-52 sm:h-60
+                      rounded-2xl px-2 sm:px-2 
+                     border-5 border-[#fff] 
+                      shadow-[0_0_20px_rgba(0,0,0,0.13)]
+                      bg-gradient-to-bl from-blue-200/50 via-gray-100/80 via-30%  to-gray-100/80
+                      backdrop:backdrop-blur-3xl 
       ">
-        <div className="flex items-center justify-center  p-4 rounded-t-lg">
+        <div className='flex justify-between pt-1 px-1'>
+          <h3 className='text-xl font-bold  bg-clip-text text-transparent bg-gradient-to-b from-indigo-600 to-white' >{index+1}</h3>
+        </div>
+        <div className="flex items-center justify-center  p-1 rounded-t-lg">
           {/* Animated circular progress */}
           {progress < 90 ? (
             <CircularProgressBar progress={progress} color="#5af47b" />
@@ -71,14 +75,17 @@ const LessonCardNew = ({ lessonId, index,currentLesson }) => {
               <p>{currentLesson.difficulty}</p>
           </div>
         </div>
-      <button className='text-sm text-white 
-                         mx-1 py-1 px-3 rounded-xl
-                        border-2 border-indigo-700 bg-indigo-700
-                        cursor-pointer hover:bg-white hover:text-indigo-700
-                        transition-all duration-300
-      '>
-        Start now
-      </button>
+        <div className='pb-2 flex items-center justify-center w-full'>
+          <button className='text-sm text-white 
+                            w-full
+                            mx-1 py-1 px-3 rounded-4xl
+                            border-2 border-indigo-700/90 bg-indigo-700/90 
+                            cursor-pointer hover:bg-white hover:text-indigo-700
+                            transition-all duration-300
+          '>
+            Start now
+          </button>
+        </div>
       </div>
     </motion.div>
   );

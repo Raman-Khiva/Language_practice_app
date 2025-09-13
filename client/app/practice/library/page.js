@@ -87,7 +87,7 @@ const page = () => {
                             relative row-span-10 col-span-8 
                             shadow-[0_0_10px_rgba(0,0,0,0.1)] 
                             transition-all duration-800 ease-in-out
-                            bg-white/60 border-2 border-[#c3c3c3d2]
+                            bg-violet-50/40 border-2 border-[#c3c3c3d2]
                             backdrop-blur-3xl backdrop-saturate-50
                             
                           ` + displayPropertyMain}

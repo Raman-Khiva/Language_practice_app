@@ -2,6 +2,8 @@
 'use client';
 
 import { useEffect, useRef } from "react";
+import { FaHandsClapping } from "react-icons/fa6";
+import {LuTarget} from "react-icons/lu"
 
 const AnswerSection = ({
   isValidating,
@@ -71,7 +73,7 @@ const AnswerSection = ({
 
 
   const isCorrect = validationResult.status === "CORRECT";
-  const statusColor = isCorrect ? "green" : "red";
+  const statusColor = isCorrect ? "text-green-700" : "text-red-700";
   const ringColor = isCorrect ? "ring-[#daf5da] " : "ring-red-50";
   const borderColor = isCorrect ? "border-[#29d116]" : "border-red-600";
 
@@ -91,16 +93,19 @@ const AnswerSection = ({
   return (
     // <div className={` ${gradientBorder} rounded-2xl p-[5px] h-full `}>
     <div className={`bg-white   rounded-xl  h-full flex flex-col justify-between gap-4`}>
-     <div className=" flex flex-col flex-1 justify-between bg-[#ecececce] p-4 rounded-2xl">
+     <div className=" flex flex-col flex-1 justify-between bg-gray-50 p-4 rounded-2xl">
       <div className=" flex flex-col gap-2">
         {/* Status */}
         <div className="flex items-center space-x-2 ">
-          <div
-            className={`w-3 h-3 rounded-full ${
-              isCorrect ? "bg-green-500" : "bg-red-400"
-            }`}
-          ></div>
-          <h4 className={`text-lg font-semibold text-${statusColor}-700`}>
+           {isCorrect?
+             (
+              <FaHandsClapping className="text-green-700/90 relative bottom-0.5 text-2xl"/>
+             )
+             :(
+               <LuTarget className="text-red-700 text-xl"/>
+             )
+          }
+          <h4 className={`text-lg font-semibold ${statusColor}`}>
             {isCorrect ? "Correct!" : "Needs Improvement"}
           </h4>
         </div>
@@ -109,8 +114,8 @@ const AnswerSection = ({
         <div>
           <h4 className="text-md text-lg font-semibold text-gray-700 my-1">Your Answer:</h4>
           {isCorrect?
-            <p className="text-[#0c7f32] bg-[#e1f4e2]  font-[500] px-3 py-2 rounded-lg">{userAnswer}</p>
-            :<p className={`text-${statusColor}-700 bg-[#f1bcbc] text-lg px-3 py-2 rounded-lg font-medium`}>
+            <p className="text-[#0c7f32] bg-[#cdf4ce] text-lg  font-[500] px-3 py-2 rounded-lg">{userAnswer}</p>
+            :<p className={`text-${statusColor}-700 bg-[#feaaaa] text-lg px-3 py-2 rounded-lg font-medium`}>
                 {userAnswer}   
             </p>
            }           

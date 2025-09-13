@@ -28,10 +28,10 @@ const CategoryCard = ({name,count,i}) => {
     const Icon = categoryIcons[name];
 
   return (
-    <div className=' bg-[#fff] border-5 border-gray-500/20 
-                      rounded-3xl 
+    <div className=' bg-gray-100/80 border-5 border-[#fff] 
+                      rounded-2xl 
                       flex flex-col justify-between
-                      shadow-[0_0_20px_rgba(0,0,0,0.2)]
+                      shadow-[0_0_20px_rgba(0,0,0,0.12)]
                       w-92 h-52 p-1
 
     '>
@@ -62,11 +62,8 @@ const CategoryCard = ({name,count,i}) => {
                 `}>
                     {name}
                 </h2>
-                <Icon className={`text-3xl ${categoryColors[name]}
-                                  
-                `}
-                      size={40}
-                />
+                
+
             </div>
 
             <div className='flex justify-between

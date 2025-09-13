@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { GoSidebarCollapse } from "react-icons/go";
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
+import { FaUserCircle } from "react-icons/fa";
 import { BookOpen, LayoutGrid, BookMarked, PenTool, ClipboardList } from "lucide-react";
 
 
@@ -91,11 +92,13 @@ const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
               </motion.div>
             </div>
             
-            <div className={`flex items-center gap-2 transition-opacity duration-300 ${isSideBarOpen ? 'opacity-100 delay-300' : 'opacity-0'}`}>
-              <div className='bg-black w-10 h-10 rounded-full' />
+            <div className={`flex items-center gap-2 pb-4 transition-opacity duration-300 
+                             text-gray-800
+                              ${isSideBarOpen ? 'opacity-100 delay-300' : 'opacity-0'}`}>
+              <FaUserCircle className='text-[2.1rem]' />
               <div className='overflow-hidden whitespace-nowrap'>
-                <h4 className='text-lg font-normal leading-none'>Person</h4>
-                <p className='text-sm font-[400]'>person@gmail.com</p>
+                <h4 className='text-[16px]  font-bold leading-none'>Person</h4>
+                <p className='text-sm font-[500] text-gray-700'>person@gmail.com</p>
               </div>
             </div>
           </div>
@@ -151,7 +154,9 @@ const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
              </div>
             </div>
 
-            <div className={`w-10 h-10 bg-gray-700 rounded-full transition-opacity duration-300 ${!isSideBarOpen ? 'opacity-100 delay-300' : 'opacity-0'}`} />
+            <div className='pb-4 text-[2.1rem] text-gray-800'>
+              <FaUserCircle/>
+            </div>
           </div>
         )
       }
