@@ -2,10 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import LessonCardNew from './ui/LessonCardNew';
 import { BsArrowsAngleExpand } from 'react-icons/bs';
-// import { MdArrowDropDown } from 'react-icons/md';
-import MultiSelectDropdown from './ui/MultiSelectDropDown';
 import SingleSelectDropdown from './ui/SingleSelectDropDown';
-import { selectCurrentLessons, selectLessonsError, selectLessonsLoading } from '@/app/store/slices/lessonsSlices';
+import { selectCurrentLessons} from '@/app/store/slices/lessonsSlices';
 
 
 
@@ -16,7 +14,7 @@ const LessonsSection = ({setMainExpanded, mainExpanded}) => {
     const currentLessons = useSelector(selectCurrentLessons);
     // const error = useSelector(selectLessonsError);
     // const loading = useSelector(selectLessonsLoading);
-    // const currentLessonsRecord = useSelector(selectCurrentLessonsRecord);  
+
     
     // if(loading){
     //   return (

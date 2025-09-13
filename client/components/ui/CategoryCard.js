@@ -28,9 +28,10 @@ const CategoryCard = ({name,count,i}) => {
     const Icon = categoryIcons[name];
 
   return (
-    <div className=' bg-[#fff] border-5 border-gray-300/60 
+    <div className=' bg-[#fff] border-5 border-gray-500/20 
                       rounded-3xl 
                       flex flex-col justify-between
+                      shadow-[0_0_20px_rgba(0,0,0,0.2)]
                       w-92 h-52 p-1
 
     '>
