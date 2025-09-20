@@ -4,10 +4,11 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 const PriceCard = ({title,price,features,i}) => {
   return (
     <div className={`w-88 h-[30rem] px-7 py-6 
-                    border-3  rounded-2xl
+                    border-2   rounded-2xl
+                    ring-3
                     flex flex-col justify-center gap-4
-                    bg-white/80
-                    shadow-xl ${i==1?"border-blue-600":"border-black/10"}
+                    bg-gray-50/80
+                    shadow-xl ${i==1?"border-blue-600 ring-blue-100":"border-gray-400/60 ring-gray-200"}
     
     `}>
       <div className='flex flex-col gap-3' >

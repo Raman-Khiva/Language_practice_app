@@ -5,10 +5,9 @@ import { GoSidebarCollapse } from "react-icons/go";
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { FaUserCircle } from "react-icons/fa";
 import { BookOpen, LayoutGrid, BookMarked, PenTool, ClipboardList } from "lucide-react";
-
-
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+
+
 
 
 const sideBarOptions = [
@@ -21,6 +20,7 @@ const sideBarOptions = [
 
 
 const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
+  
   const [selectedItemIdx, setSelectedItemIdx] = useState(0);
   const router = useRouter();
   const handleClick = (index) =>{
@@ -51,14 +51,11 @@ const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
               Logo Here
             </div>
             
-            <div className='flex-grow my-16
+            <div className='flex-grow my-10
                             transition-opacity duration-800 
             '>
-              <motion.div
-                          className={`font-[500] flex flex-col items-start gap-4  
-                          
-                          `}
-              >
+              <motion.div className={`font-[500] flex flex-col items-start gap-4  
+              `}>
                 {sideBarOptions.map((option,index)=>{
                   
                     const Icon = option.icon;
@@ -124,11 +121,8 @@ const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
 
              '>
 
-              <GoSidebarCollapse 
-                className='text-xl cursor-pointer h-20'
-                onClick={() => setSideBarOpen(prv=>!prv)}  
-              />
-              <div className='flex flex-col items-center gap-1.5 px-2  h-full w-full '>
+              
+              <div className='flex flex-col items-center gap-1.5 px-2  h-full w-full my-12'>
                 {sideBarOptions.map((option,index)=>{
                   const Icon = option.icon
                   return(
@@ -151,6 +145,10 @@ const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
                   )
                 })}
               </div>
+              <GoSidebarCollapse 
+                className='text-xl cursor-pointer h-24'
+                onClick={() => setSideBarOpen(prv=>!prv)}  
+              />
              </div>
             </div>
 

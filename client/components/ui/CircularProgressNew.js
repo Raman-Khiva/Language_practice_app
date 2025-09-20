@@ -30,13 +30,18 @@ const CircularProgressNew = ({ percentage = 65, size = 80, strokeWidth = 8, show
   const pathData = `M ${x1} ${y1} A ${radius} ${radius} 0 1 1 ${x2} ${y2}`;
   
   return (
-    <div className="relative inline-flex items-center justify-center ">
+    <div className="relative inline-flex items-center justify-center z-20">
       <svg 
         width={size} 
         height={size} 
         viewBox={`0 0 ${size} ${size}`}
         className="transform -rotate-90"
       >
+        <defs >
+          <filter id="shadow" >
+            <feDropShadow dx="2" dy="2" stdDeviation="1" floodColor="rgba(0,0,0,0.2)" />
+          </filter>
+        </defs>
         {/* Background arc */}
         <path
           d={pathData}
@@ -55,7 +60,9 @@ const CircularProgressNew = ({ percentage = 65, size = 80, strokeWidth = 8, show
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
-          className="transition-all duration-1000 ease-out bg-[#]"
+          filter="url(#shadow)"
+          
+          className="transition-all duration-2000  ease-out "
         //   style={{
         //     filter: 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.4))'
         //   }}
@@ -75,7 +82,7 @@ const CircularProgressNew = ({ percentage = 65, size = 80, strokeWidth = 8, show
       {showLabel && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            <div className="text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+            <div className="text-xl font-bold text-gray-600">
               {percentage}%
             </div>
           </div>

@@ -4,7 +4,9 @@ import HomeCard, { HomeCard2, HomeCard3 } from './HomeCard';
 const CircularComponent = () => {
   return (
 
-    <div className='flex w-full  items-center justify-center  '>
+    <div className='flex w-full  items-center justify-center 
+                    z-30
+     '>
         
         <div className='grid place-items-center relative'>
             <HomeCard className="absolute -top-10  translate-x-10" />
