@@ -3,6 +3,8 @@ import Button from "../Button/button";
 import Link from "next/link";
 import ModernBackground from "../ui/Background";
 import CircularComponent from "../ui/circularComponent";
+import Badge from "../ui/Badge";
+import { MdOutlineAutoAwesome } from "react-icons/md";
 
 //bg-linear-to-r from-[#eae1faf4] via-[#f4d2dcea] to-[#ede2c1f0]     textbg : bg-gradient-to-r from-[#305CED] to-[#DD8BE1] bg-clip-text text-transparent
 const Home = () => {
@@ -13,7 +15,9 @@ const Home = () => {
     ">
         
         <div className="flex flex-col justify-center items-center text-center gap-3 w-full max-w-3xl z-20">
-
+            <Badge tag="For Everyone" 
+              icon={MdOutlineAutoAwesome}
+            />
             <h1 className="text-4xl text-black  font-[400] sm:text-5xl md:text-5xl 
                             leading-tight
             ">

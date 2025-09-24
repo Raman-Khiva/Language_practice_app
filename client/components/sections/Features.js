@@ -7,6 +7,8 @@ import { IoBookOutline } from "react-icons/io5";
 import { GiPathDistance } from "react-icons/gi";
 import { FaRegLightbulb } from "react-icons/fa";
 import FeatureCard from '../ui/FeatureCard';
+import Badge from '../ui/Badge';
+import { BsFillPuzzleFill } from 'react-icons/bs';
 
 const features = [
   {
@@ -36,10 +38,7 @@ const Features = () => {
   return (
     <div className='min-h-screen flex items-start justify-center py-28  px-8 md:px-32 gap-8 '>
       <div className='text-wrap text-start flex flex-col flex-2/5 sticky top-60'>
-        <p className='px-2 py-1 my-1 border-2 rounded-3xl bg-gray-50 
-                      w-fit border-gray-300/90 text-sm font-[600] text-gray-800 shadow-[0_0_10px_rgba(0,0,0,0.1)]
-        '>Special differentiators</p>
-
+        <Badge tag="Key Differentiators" icon={BsFillPuzzleFill}/>
         <h2 className=' text-6xl font-[600] text-wrap my-3
         '>Features That Make Learning Smarter</h2>
 
