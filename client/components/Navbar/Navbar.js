@@ -1,12 +1,13 @@
 'use client'
 import Link from 'next/link'
 // import { useContext } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 // import { ProductContext } from '@/app/context/ProductContext'
 import Image from 'next/image'
-import {logoutUser, selectIsAuthenticated, selectUser} from '../../app/store/slices/authSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import {selectIsAuthenticated, selectUser} from '../../app/store/slices/authSlice';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import ProfileDropdown from '../ui/ProfileDropdown';
 
 
 
@@ -15,7 +16,6 @@ export default function Navbar() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectUser);
   
-  const dispatch = useDispatch();
   const [isShrunk, setIsShrunk] = useState(false);
 
   useEffect(() => {
@@ -32,16 +32,8 @@ export default function Navbar() {
   }, []);
 
   const pathname = usePathname();
-  const router = useRouter();
 
 
-  const handleLogout = () => {
-    console.log("NAVBAR : logout request is made!")
-    dispatch(logoutUser());
-    if (pathname.startsWith('/categories')) {
-      router.push('/')
-    }
-  }
 
   return (
     <nav className="fixed top-0 z-50 w-full mt-0">
@@ -86,15 +78,7 @@ export default function Navbar() {
                   Sign up
                 </Link>
               </div>) : (
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-700/90">Hi, {user?.name || 'User'}</span>
-                <button
-                  onClick={handleLogout}
-                  className="px-4 py-2 rounded-full text-sm text-gray-800 bg-white/70 border border-gray-200 hover:bg-white transition-colors"
-                >
-                  Logout
-                </button>
-              </div>
+              <ProfileDropdown user={user} />
             )} 
           </div>
         </div>
