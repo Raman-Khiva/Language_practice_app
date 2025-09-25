@@ -1,5 +1,7 @@
 import React from 'react'
 import PriceCard from '../ui/PriceCard';
+import Badge from '../ui/Badge';
+import { LuCrown } from 'react-icons/lu';
 
 const pricingPlans = [
   {
@@ -51,7 +53,8 @@ const Pricing = () => {
 
       <div className='flex flex-col gap-4 items-center
       '>
-        <h2 className='text-6xl font-bold'>Pricing Options</h2>
+        <Badge tag="Premium learning for everyone" icon={LuCrown} />
+        <h2 className='text-[50px] leading-tight font-[400]'>Pricing Options</h2>
         <p className='text-lg font-[600] text-[#414141]'>Choose the subscription plan that suits your needs</p>
       </div>
 

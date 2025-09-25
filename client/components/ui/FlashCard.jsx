@@ -142,8 +142,7 @@ export default function FlashCard({
               </div>
             </button>
           ) : (
-            renderContent(fact)
-          )}
+            renderContent(fact)          )}
         </div>
 
         {hasBack && (

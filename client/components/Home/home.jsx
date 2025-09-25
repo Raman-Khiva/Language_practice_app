@@ -2,7 +2,7 @@
 import Button from "../Button/button";
 import Link from "next/link";
 import ModernBackground from "../ui/Background";
-import CircularComponent from "../ui/circularComponent";
+import OrbitalFlashcards from "../ui/OrbitalFlashcards";
 import Badge from "../ui/Badge";
 import { MdOutlineAutoAwesome } from "react-icons/md";
 
@@ -67,7 +67,7 @@ const Home = () => {
             
             
         </div>
-        <CircularComponent/>
+        <OrbitalFlashcards/>
     </section>
   )
 }
