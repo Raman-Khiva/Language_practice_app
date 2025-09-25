@@ -1,17 +1,14 @@
 'use client'
 
 import React from 'react'
+import { motion } from 'framer-motion'
 import FlashCardNew from './NewFlashCard'
-import {
-  HiOutlineSparkles,
-  HiOutlineChatBubbleBottomCenterText,
-} from 'react-icons/hi2'
-import { FiMic, FiBookOpen, FiTrendingUp } from 'react-icons/fi'
-import { BiWorld } from 'react-icons/bi'
+import { HiOutlineSparkles } from 'react-icons/hi2'
+import { FiMic, FiBookOpen } from 'react-icons/fi'
 
 const orbitCards = [
   {
-    id: 'speaking-daily',
+    id: 'daily-speaking',
     tag: 'Daily Speaking',
     fact: 'Practice real-world conversations with instant AI feedback.',
     icon: FiMic,
@@ -19,9 +16,8 @@ const orbitCards = [
     borderColor: '#c7b7ff',
     iconClassName: 'text-indigo-600',
     iconWrapperClassName: 'bg-white/90 shadow-sm',
-    top: '7%',
-    left: '76%',
-    rotation: 18,
+    angle: 100,
+    radius: 20,
   },
   {
     id: 'vocab-power',
@@ -32,35 +28,8 @@ const orbitCards = [
     borderColor: '#ffcba4',
     iconClassName: 'text-orange-500',
     iconWrapperClassName: 'bg-white/90 shadow-sm',
-    top: '32%',
-    left: '8%',
-    rotation: -28,
-  },
-  {
-    id: 'listening-lab',
-    tag: 'Listening Lab',
-    fact: 'Tune your ears with immersive clips and comprehension checks.',
-    icon: HiOutlineChatBubbleBottomCenterText,
-    accentColor: 'rgba(235, 249, 255, 0.95)',
-    borderColor: '#9fd5ff',
-    iconClassName: 'text-sky-600',
-    iconWrapperClassName: 'bg-white/90 shadow-sm',
-    top: '86%',
-    left: '28%',
-    rotation: 212,
-  },
-  {
-    id: 'confidence-tracker',
-    tag: 'Confidence Tracker',
-    fact: 'Track streaks, milestones, and celebrate every win.',
-    icon: FiTrendingUp,
-    accentColor: 'rgba(255, 240, 246, 0.95)',
-    borderColor: '#f7aede',
-    iconClassName: 'text-pink-500',
-    iconWrapperClassName: 'bg-white/90 shadow-sm',
-    top: '70%',
-    left: '90%',
-    rotation: 48,
+    angle: 255,
+    radius: 55,
   },
   {
     id: 'cultural-bites',
@@ -71,11 +40,25 @@ const orbitCards = [
     borderColor: '#b9efc5',
     iconClassName: 'text-emerald-600',
     iconWrapperClassName: 'bg-white/90 shadow-sm',
-    top: '25%',
-    left: '55%',
-    rotation: -6,
+    angle: 180,
+    radius: 80,
   },
 ]
+
+const orbitTransition = { repeat: Infinity, duration: 20, ease: 'linear' }
+
+
+const getOrbitPosition = (angle, radius) => {
+  const angleInRadians = (angle * Math.PI) / 180
+  const top =  45+ radius * Math.sin(angleInRadians)
+  const left = 50+ radius * Math.cos(angleInRadians)
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+  }
+}
+
 
 const ringStyle = (thickness = 4, opacity = 0.9) => ({
   background: 'conic-gradient(from 140deg, #8b5cf6, #ec4899, #f97316, #8b5cf6)',
@@ -93,49 +76,56 @@ const OrbitalFlashcards = () => {
   return (
     <div className='relative flex w-full items-center justify-center px-4'>
       <div className='relative h-[26rem] w-[26rem] md:h-[32rem] md:w-[32rem]'>
-        <div className='absolute inset-0 rounded-full opacity-80' style={ringStyle(6, 0.8)} />
+        <div className='absolute inset-0 rounded-full opacity-80' style={ringStyle(6, 0.9)} />
         <div className='absolute inset-[12%] rounded-full opacity-70' style={ringStyle(6, 0.6)} />
         <div className='absolute inset-[25%] rounded-full opacity-60' style={ringStyle(6, 0.45)} />
 
         <div className='absolute inset-[38%] flex flex-col items-center justify-center gap-2 rounded-full bg-white shadow-[0_25px_60px_-35px_rgba(36,33,66,0.35)]'>
           <div className='flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg'>
-            <span className='text-xl font-semibold'>Lingua</span>
+            <span className='text-xl font-semibold'>Native</span>
           </div>
-          <p className='px-8 text-center text-sm font-[600] text-black/70'>
-            Everything you need, orbiting your goals.
-          </p>
+         
         </div>
 
-        {orbitCards.map((card) => (
-          <div
-            key={card.id}
-            className='absolute w-[11.5rem] max-w-[12rem] transition-transform duration-500 hover:scale-[1.03]'
-            style={{
-              top: card.top,
-              left: card.left,
-              transform: `translate(-50%, -50%) rotate(${card.rotation}deg)`,
-            }}
-          >
-            <div
-              className='drop-shadow-xl'
-              style={{
-                transform: `rotate(${-card.rotation}deg)`,
-              }}
-            >
-              <FlashCardNew
-                fact={card.fact}
-                tag={card.tag}
-                icon={card.icon}
-                accentColor={card.accentColor}
-                borderColor={card.borderColor}
-                iconClassName={card.iconClassName}
-                iconWrapperClassName={card.iconWrapperClassName}
-                containerClassName='w-full'
-                headerClassName='text-[13px] font-[600] tracking-tight'
-              />
-            </div>
-          </div>
-        ))}
+        <motion.div className='absolute inset-0 
+                      
+        '
+        initial={{ rotate: 0 }} animate={{ rotate: 360 }} transition={orbitTransition} 
+        >
+          {orbitCards.map((card) => {
+            const { top, left } = getOrbitPosition(card.angle, card.radius)
+
+            return (
+              <motion.div
+                key={card.id}
+                className='absolute flex items-center justify-center p-2 hover:scale-[1.03]'
+                style={{
+                  top,
+                  left,
+                  transform: 'translate(-50%, -50%)',
+                }}
+               initial={{ rotate: 0 }} animate={{ rotate: -360 }} transition={orbitTransition}
+                
+               
+              >
+                
+                
+                  <FlashCardNew
+                    fact={card.fact}
+                    tag={card.tag}
+                    icon={card.icon}
+                    accentColor={card.accentColor}
+                    borderColor={card.borderColor}
+                    iconClassName={card.iconClassName}
+                    iconWrapperClassName={card.iconWrapperClassName}
+                    containerClassName='w-64 md:w-72'
+                    headerClassName='text-[13px] font-[600] tracking-tight'
+                  />
+                
+              </motion.div>
+            )
+          })}
+        </motion.div>
       </div>
     </div>
   )

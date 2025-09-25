@@ -7,10 +7,11 @@ import Pricing from "@/components/sections/Pricing";
 import Footer from "@/components/sections/Footer";
 
 export default function page() {
-  return ( //bg-[#fbfaf8]
+  return ( //bg-[#fbfaf8] best fit :#f2f4f3
     <div className="min-h-screen w-screen
                     scroll-auto ubuntu
-                    bg-[#f6efea]
+                    bg-[#fffff9]
+
                     z-20 
                     
     ">
