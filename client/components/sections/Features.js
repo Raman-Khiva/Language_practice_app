@@ -9,6 +9,7 @@ import { FaRegLightbulb } from "react-icons/fa";
 import FeatureCard from '../ui/FeatureCard';
 import Badge from '../ui/Badge';
 import { BsFillPuzzleFill } from 'react-icons/bs';
+import { LuBadgeCheck } from 'react-icons/lu';
 
 const features = [
   {
@@ -37,9 +38,9 @@ const features = [
 const Features = () => {
   return (
     <div className='min-h-screen flex items-start justify-center py-28  px-8 md:px-32 gap-8 '>
-      <div className='text-wrap text-start flex flex-col flex-2/5 sticky top-60'>
-        <Badge tag="Key Differentiators" icon={BsFillPuzzleFill}/>
-        <h2 className=' text-6xl font-[600] text-wrap my-3
+      <div className='text-wrap text-start flex flex-col flex-2/5 gap-5 sticky top-60'>
+        <Badge tag="Key Differentiators" icon={LuBadgeCheck}/>
+        <h2 className='text-[50px] leading-tight font-[400]
         '>Features That Make Learning Smarter</h2>
 
         <h5 className='text-xl font-[600] text-start text-wrap text-gray-800'

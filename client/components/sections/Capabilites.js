@@ -126,9 +126,12 @@ const Capabilites = () => {
                      rounded-3xl'
         >
         </motion.div>
-        <div className='flex flex-col items-start gap-4 w-[45%] py-2'>
+        <div className='flex flex-col items-start gap-4 w-[45%] py-2
+                        behavior: smooth;
+        '>
+          
           <Badge tag="Key Capabilites" icon={RiStackLine} />
-          <h2 className='text-[54px] leading-tight font-[700]'>
+          <h2 className='text-[50px] leading-tight font-[400]'>
             Essential Capabilities for Lasting Language Mastery
           </h2>
           <p className='text-lg font-[500] text-[#3c3c3c]'>

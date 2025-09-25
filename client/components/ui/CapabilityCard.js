@@ -3,27 +3,27 @@ import { GoArrowRight } from 'react-icons/go'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
 
 const CapabilityCard = ({ badgeColor, badge, title, description, points, index, totalCards }) => {
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+//   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
-useEffect(() => {
-  const handleResize = () => setViewportHeight(window.innerHeight);
-  window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
+// useEffect(() => {
+//   const handleResize = () => setViewportHeight(window.innerHeight);
+//   window.addEventListener("resize", handleResize);
+//   return () => window.removeEventListener("resize", handleResize);
+// }, []);
 
 
-  // Calculate scale and position based on scroll and card index
-  const cardPosition = index * viewportHeight;
-const scrollProgress = Math.max(
-  0,
-  Math.min(1, (scrollY - cardPosition) / viewportHeight)
-);
+//   // Calculate scale and position based on scroll and card index
+//   const cardPosition = index * viewportHeight;
+// const scrollProgress = Math.max(
+//   0,
+//   Math.min(1, (scrollY - cardPosition) / viewportHeight)
+// );
 
   
   // Scale decreases for cards that are stacked behind
-  const baseScale = 1;
-    const maxScaleReduction = 0.2; // up to 20% smaller
-    const scale = baseScale - scrollProgress * maxScaleReduction;
+  // const baseScale = 1;
+  //   const maxScaleReduction = 0.2; // up to 20% smaller
+  //   const scale = baseScale - scrollProgress * maxScaleReduction;
 
   
 
@@ -42,18 +42,16 @@ const scrollProgress = Math.max(
       }}
     >
       <div
-        className={`rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.1)] overflow-hidden  
-                   relative border-[2px] border-blue-700 ring-3 ring-blue-200/60
-                   bg-white/90 backdrop-blur-3xl transition-all duration-300 ease-out
-                   w-[58rem] mx-4 h-[36rem]
+        className={`rounded-2xl  overflow-hidden  
+                   relative 
+                   bg-[rgb(247,247,247)]
+                   shadow-[0_0_5px_rgba(0,0,0,0.05)]
+
+                  transition-all duration-300 ease-out
+                   w-[70rem] mx-4 h-[36rem]
                    flex items-center justify-between
                    
                    `}
-        style={{
-          transform: `translateY(${index * 10}px) scale(${scale})`,
-          transformOrigin: 'center top',
-          
-        }}
       >
         <div className="flex 
                         w-full h-full
@@ -100,7 +98,7 @@ const scrollProgress = Math.max(
           
           {/* Right Image Section - Skeleton Placeholder */}
           <div className='w-[50%] p-5 flex items-center justify-center'>
-            <div className='h-[100%] w-[100%] bg-violet-300/90 rounded-lg backdrop-blur-[10rem]'>
+            <div className='h-[100%] w-[100%] bg-violet-200/50 rounded-lg backdrop-blur-[10rem]'>
               {/* Placeholder for future image/content */}
             </div>
           </div>

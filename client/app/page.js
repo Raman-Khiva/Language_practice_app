@@ -5,10 +5,12 @@ import Features from "@/components/sections/Features";
 import Pricing from "@/components/sections/Pricing";
 
 export default function page() {
-  return (
+  return ( //bg-[#fbfaf8]
     <div className="min-h-screen w-screen
-                    scroll-auto
+                    scroll-auto ubuntu
+                    bg-[#f8f9fa]
                     z-20 
+                    
     ">
       
 

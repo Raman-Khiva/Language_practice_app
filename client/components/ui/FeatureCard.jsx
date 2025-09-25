@@ -4,9 +4,8 @@ import React from 'react'
 
 const FeatureCard = ({title,description,icon:Icon}) => {
   return (
-    // border-2 border-[rgb(229,229,232)]
-    <div className='bg-[rgb(249,249,249)] 
-                      border-2 border-gray-300 ring-3 ring-gray-100/90
+    // border-2 border-[]
+    <div className='bg-[rgb(246,246,246)] 
                       px-6 py-6 rounded-2xl 
                       flex gap-7 items-start
     '>
