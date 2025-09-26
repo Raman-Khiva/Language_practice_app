@@ -17,7 +17,7 @@ const orbitCards = [
     iconClassName: 'text-indigo-600',
     iconWrapperClassName: 'bg-white/90 shadow-sm',
     angle: 100,
-    radius: 20,
+    radius: 22,
   },
   {
     id: 'vocab-power',
@@ -98,7 +98,9 @@ const OrbitalFlashcards = () => {
             return (
               <motion.div
                 key={card.id}
-                className='absolute flex items-center justify-center p-2 hover:scale-[1.03]'
+                className='absolute flex items-center justify-center hover:scale-[1.03] rounded-2xl
+                            bg-[radial-gradient(ellipse_200px_100px_at_center,_#fffff9_70%,_#fffff9_88%,_#fffff9)] p-2
+                '
                 style={{
                   top,
                   left,

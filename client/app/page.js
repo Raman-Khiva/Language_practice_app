@@ -5,12 +5,13 @@ import Features from "@/components/sections/Features";
 import Testimonials from "@/components/sections/Testimonials";
 import Pricing from "@/components/sections/Pricing";
 import Footer from "@/components/sections/Footer";
+import StoryCard from "@/components/ui/StoryCard";
 
 export default function page() {
   return ( //bg-[#fbfaf8] best fit :#f2f4f3
     <div className="min-h-screen w-screen
                     scroll-auto ubuntu
-                    bg-[#fffff9]
+                    bg-[#fffffb]
 
                     z-20 
                     
@@ -31,6 +32,7 @@ export default function page() {
         <Pricing/>
         <div className="h-screen">
           nothing
+          <StoryCard/>
         </div>
       </div>
       <Footer/>

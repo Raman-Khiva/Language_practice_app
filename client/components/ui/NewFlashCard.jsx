@@ -14,7 +14,7 @@ const FlashCardNew = ({
   bodyClassName = '',
 }) => {
   const containerClasses = [
-    'flex flex-col w-72 md:w-80 backdrop-blur-xl rounded-xl border-2 shadow-2xl overflow-hidden transition-transform duration-500',
+    'flex flex-col w-72 md:w-80 backdrop-blur-xl rounded-xl border-2  overflow-hidden transition-transform duration-500',
     containerClassName,
   ]
     .filter(Boolean)
