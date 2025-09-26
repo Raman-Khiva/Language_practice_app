@@ -36,14 +36,14 @@ export default function Navbar() {
 
 
   return (
-    <nav className="fixed top-0 z-50 w-full mt-0">
+    <nav className="fixed top-0 z-50 w-full mt-0 ubuntu">
       <div className={`mx-auto px-8 pt-1 ${isShrunk?"max-w-[60rem]" : "max-w-[84rem]"} 
                       transition-all duration-400 ease-out
       `}>
-        <div className={`flex items-center justify-between  rounded-2xl  px-4 ${isShrunk ? "border border-white/20 bg-white/80 backdrop-blur-xl shadow-sm ring-1 ring-black/5":"bg-transparent"}`}>
-          <Link href="/" className='flex gap-1 items-center px-3' >   
-              <Image src="/brain-logo.svg"  width={80}  height={28} className='h-16 w-auto' alt='Native Lab' />  
-              <p className='text-[24px] font-[700] text-gray-800'>Lingua App<span className = 'bg-clip-text text-transparent bg-linear-to-r from-[#DD8BE1] via-[#305CED] to-[#45afe0]'></span></p>
+        <div className={`flex items-center justify-between  rounded-2xl  px-4 py-2 ${isShrunk ? "border border-white/20 bg-white/80 backdrop-blur-xl shadow-sm ring-1 ring-black/5":"bg-transparent"}`}>
+          <Link href="/" className='flex gap-4 items-center px-3' >   
+              <Image src="/brain-logo.svg"  width={40}  height={20} className='h-10 w-auto' alt='Native Lab' />  
+              <p className='text-[23px] font-[500] text-gray-900'>Native<span className='font-[300]'>labs</span></p>
               {/*  */}
           </Link>
 
@@ -59,10 +59,12 @@ export default function Navbar() {
             <Link href="/practice/library" className=" text-gray-800 hover:text-gray-900 transition-colors">
               Speaking lab
             </Link>
+            <Link href="/stories" className=" text-gray-800 hover:text-gray-900 transition-colors">
+              Reading lab
+            </Link>
           </div>
 
           <div className="flex items-center gap-3">
-
             {!isAuthenticated ? (
               <div className="flex items-center gap-2">
                 <Link
@@ -77,9 +79,13 @@ export default function Navbar() {
                 >
                   Sign up
                 </Link>
-              </div>) : (
-              <ProfileDropdown user={user} />
-            )} 
+              </div>
+            ) : (
+              
+                
+                <ProfileDropdown user={user} showAvatarOnly />
+              
+            )}
           </div>
         </div>
       </div>

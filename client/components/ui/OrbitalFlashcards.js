@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import FlashCardNew from './NewFlashCard'
 import { HiOutlineSparkles } from 'react-icons/hi2'
 import { FiMic, FiBookOpen } from 'react-icons/fi'
+import Image from 'next/image'
 
 const orbitCards = [
   {
@@ -25,7 +26,7 @@ const orbitCards = [
     fact: 'Unlock curated word decks that match your current lesson.',
     icon: FiBookOpen,
     accentColor: 'rgba(255, 243, 237, 0.95)',
-    borderColor: '#ffcba4',
+   borderColor: '#ffcba4',
     iconClassName: 'text-orange-500',
     iconWrapperClassName: 'bg-white/90 shadow-sm',
     angle: 255,
@@ -76,13 +77,14 @@ const OrbitalFlashcards = () => {
   return (
     <div className='relative flex w-full items-center justify-center px-4'>
       <div className='relative h-[26rem] w-[26rem] md:h-[32rem] md:w-[32rem]'>
-        <div className='absolute inset-0 rounded-full opacity-80' style={ringStyle(6, 0.9)} />
+        <div className='absolute shadow-2xl inset-0 rounded-full opacity-80' style={ringStyle(6, 0.9)} />
         <div className='absolute inset-[12%] rounded-full opacity-70' style={ringStyle(6, 0.6)} />
         <div className='absolute inset-[25%] rounded-full opacity-60' style={ringStyle(6, 0.45)} />
 
         <div className='absolute inset-[38%] flex flex-col items-center justify-center gap-2 rounded-full bg-white shadow-[0_25px_60px_-35px_rgba(36,33,66,0.35)]'>
-          <div className='flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg'>
-            <span className='text-xl font-semibold'>Native</span>
+          <div className='flex h-22 w-22 items-center justify-center rounded-full  shadow-xl'>
+ 
+            <Image src="/brain-logo.svg" width={60} height={25} className='' alt="Nativelabs" />
           </div>
          
         </div>

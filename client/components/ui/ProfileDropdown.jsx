@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../app/store/slices/authSlice';
 import { useRouter, usePathname } from 'next/navigation';
+import { FaUserCircle } from 'react-icons/fa';
 
 export default function ProfileDropdown({ user }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,22 +44,14 @@ export default function ProfileDropdown({ user }) {
       {/* Profile Button */}
       <button
         onClick={toggleDropdown}
-        className="flex items-center space-x-2 p-2 rounded-full hover:bg-white/10 transition-colors"
+        className="flex items-center cursor-pointer space-x-3 p-2 rounded-full hover:bg-white/10 transition-colors"
       >
-        <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
-          {user?.name?.charAt(0)?.toUpperCase() || 'U'}
-        </div>
-        <span className="text-sm text-gray-700 hidden sm:block">
+        
+        <span className="text-[16px] text-gray-800 hidden sm:block">
           {user?.name || 'User'}
         </span>
-        <svg
-          className={`w-4 h-4 text-gray-600 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <FaUserCircle className='text-3xl  text-gray-800'/>
+        
       </button>
 
       {/* Dropdown Menu */}

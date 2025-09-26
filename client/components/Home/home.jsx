@@ -1,7 +1,7 @@
 'use client'
-import Button from "../Button/button";
+
 import Link from "next/link";
-import ModernBackground from "../ui/Background";
+
 import OrbitalFlashcards from "../ui/OrbitalFlashcards";
 import Badge from "../ui/Badge";
 import { MdOutlineAutoAwesome } from "react-icons/md";

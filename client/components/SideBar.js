@@ -6,6 +6,8 @@ import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { FaUserCircle } from "react-icons/fa";
 import { BookOpen, LayoutGrid, BookMarked, PenTool, ClipboardList } from "lucide-react";
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
 
 
 
@@ -36,7 +38,7 @@ const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
                           shadow-[0_0_10px_rgba(0,0,0,0.1)] border-2 border-[#c3c3c3d2]
                           w-full h-full
                           flex flex-col justify-between
-                          text-lg font-bold relative
+                          text-lg font-bold relative ubuntu
                           transition-all duration-800 ease-in-out
                           overflow-hidden'>
 
@@ -45,11 +47,17 @@ const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
               onClick={() => setSideBarOpen(prv=>!prv)}
             />
 
-            <div className={`transition-opacity duration-300 text-center
+            <Link className={`transition-opacity duration-300 text-center
                              h-10
-                             ${isSideBarOpen ? 'opacity-100 delay-300' : 'opacity-0'}`}>
-              Logo Here
-            </div>
+                             ${isSideBarOpen ? 'opacity-100 delay-300' : 'opacity-0'}`}
+                             href="/"
+            > 
+              <p className='text-[23px] font-[600] text-gray-900'>Native<span className='font-[400]'>labs</span></p>
+            
+              
+           
+
+            </Link>
             
             <div className='flex-grow my-10
                             transition-opacity duration-800 
@@ -112,7 +120,7 @@ const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
                              text-center h-10 text-lg font-bold
                               
                               `}>
-              Logo
+              <Image src="/brain-logo.svg" width={35} height={17} className='' alt="Nativelabs" />
             </div>
 
             <div className='h-full w-full'>
