@@ -1,13 +1,13 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { useInView } from "motion/react"
+import { useInView } from "framer-motion"
 import { annotate } from "rough-notation"
 
 const DEFAULT_OPTIONS = {
   action: "highlight",
   color: "#ffd1dc",
-  strokeWidth: 1.5,
+  strokeWidth: 10,
   animationDuration: 600,
   iterations: 2,
   padding: 2,
@@ -15,7 +15,7 @@ const DEFAULT_OPTIONS = {
   isView: false,
 }
 
-export function Highlighter(props) {
+export default function Highlighter(props) {
   const {
     children,
     action = DEFAULT_OPTIONS.action,

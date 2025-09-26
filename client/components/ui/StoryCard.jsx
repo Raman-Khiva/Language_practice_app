@@ -1,5 +1,6 @@
 import React from 'react'
 import { LuCompass } from 'react-icons/lu'
+import CheckpointStrip from '../elements/CheckpointStrip'
 
 const statusStyles = {
   completed: {
@@ -86,7 +87,10 @@ const StoryCard = ({
           <span>{checkpointLabel} {checkpointsCompleted}/{totalCheckpoints}</span>
         </div>
 
-        <div className="mt-5 flex w-full items-center justify-between">
+       <div className='w-full pt-5 pb-2'>
+        <CheckpointStrip />
+       </div>
+        {/* <div className="mt-5 flex w-full items-center justify-between">
           {normalizedStages.map((stage, index) => {
             const styleSet = statusStyles[stage.status] || statusStyles.upcoming
             const isLast = index === normalizedStages.length - 1
@@ -107,7 +111,7 @@ const StoryCard = ({
               </React.Fragment>
             )
           })}
-        </div>
+        </div> */}
 
         <button
           type="button"

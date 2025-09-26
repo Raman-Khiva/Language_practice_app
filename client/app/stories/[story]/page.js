@@ -1,10 +1,9 @@
-
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import { storiesMock } from '@/mock/stories'
-import Navbar from '@/components/Navbar/Navbar'
+import Highlighter from '@/components/ui/Highlighter'
 
 const paragraphClass = 'text-2xl font-medium  '
-const translationClass = 'text-xl font-medium bg-white px-4 py-3 rounded-2xl text-slate-700 shadow-[0_16px_40px_rgba(79,114,205,0.15)]'
 
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
@@ -43,15 +42,23 @@ const renderHighlightedText = (text, highlights = []) => {
     }
 
     const { highlight, text: value } = segment
-    const { className = '', info = {} } = highlight || {}
+    const { className = '', info = {}, style = {} } = highlight || {}
     const { type, meaning, pronunciation } = info
     const hasInfo = Boolean(type || meaning || pronunciation)
 
+    let styledValue = <span className={className}>{value}</span>
+
+    if (style?.mode === 'highlighter') {
+      styledValue = (
+        <Highlighter {...(style.options || {})}>
+          <span className={className}>{value}</span>
+        </Highlighter>
+      )
+    }
+
     return (
       <span key={`highlight-${index}`} className='relative inline-block group'>
-        <span className={className}>
-          {value}
-        </span>
+        {styledValue}
         {hasInfo && (
           <span className='pointer-events-none absolute left-1/2 top-full z-30 mt-3 w-64 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 opacity-0 shadow-[0_16px_48px_rgba(15,23,42,0.15)] transition-opacity duration-200 group-hover:opacity-100'>
             {type && (
@@ -81,7 +88,17 @@ const highlightConfigs = [
     text: [
       {
         word: 'aprendiendo',
-        className: 'text-violet-700 font-semibold cursor-pointer',
+        className: 'font-semibold cursor-pointer',
+        style: {
+          mode: 'highlighter',
+          options: {
+            action: 'highlight',
+            color: '#fff44f',
+            animationDuration: 500,
+            iterations: 1,
+            padding: 4,
+          },
+        },
         info: {
           type: 'Verb',
           meaning: 'Learning',
@@ -90,7 +107,8 @@ const highlightConfigs = [
       },
       {
         word: 'culturas',
-        className: 'text-yellow-500 font-semibold underline decoration-dashed cursor-pointer',
+        className:
+          'font-semibold text-amber-500 underline decoration-amber-400 decoration-2 leading-tight cursor-pointer',
         info: {
           type: 'Noun',
           meaning: 'Cultures',
@@ -99,7 +117,7 @@ const highlightConfigs = [
       },
       {
         word: 'fluidez',
-        className: 'text-violet-700 font-semibold cursor-pointer',
+        className: 'font-semibold text-violet-600 cursor-pointer',
         info: {
           type: 'Noun',
           meaning: 'Fluency',
@@ -112,7 +130,7 @@ const highlightConfigs = [
     text: [
       {
         word: 'conversación',
-        className: 'text-violet-700 font-semibold cursor-pointer',
+        className: 'font-semibold text-purple-600 cursor-pointer',
         info: {
           type: 'Noun',
           meaning: 'Conversation',
@@ -122,7 +140,7 @@ const highlightConfigs = [
       {
         word: 'palabras nuevas',
         className:
-          'text-indigo-600 bg-indigo-100/40 border-2 border-indigo-200 px-2 pb-1 rounded-lg cursor-pointer',
+          'font-semibold text-indigo-700 bg-indigo-100/70 border border-indigo-200 px-2 py-1 rounded-lg cursor-pointer',
         info: {
           type: 'Phrase',
           meaning: 'New words',
@@ -131,7 +149,8 @@ const highlightConfigs = [
       },
       {
         word: 'reforzar',
-        className: 'text-violet-700 font-semibold cursor-pointer',
+        className:
+          'font-semibold text-purple-600 underline decoration-purple-400 decoration-2 leading-tight cursor-pointer',
         info: {
           type: 'Verb',
           meaning: 'To reinforce',
@@ -144,7 +163,18 @@ const highlightConfigs = [
     text: [
       {
         word: 'errores',
-        className: 'text-violet-700 font-semibold cursor-pointer',
+        className: 'font-semibold leading-tight cursor-pointer',
+        style: {
+          mode: 'highlighter',
+          options: {
+            action: 'underline',
+            color: '#fff44f',
+            strokeWidth: 3,
+            padding: 0,
+            animationDuration: 500,
+            iterations: 1,
+          },
+        },
         info: {
           type: 'Noun',
           meaning: 'Mistakes',
@@ -153,7 +183,8 @@ const highlightConfigs = [
       },
       {
         word: 'exactamente',
-        className: 'text-yellow-500 font-semibold underline decoration-dashed cursor-pointer',
+        className:
+          'font-semibold text-amber-500 underline decoration-dotted decoration-2 leading-tight cursor-pointer',
         info: {
           type: 'Adverb',
           meaning: 'Exactly',
@@ -162,7 +193,17 @@ const highlightConfigs = [
       },
       {
         word: 'concentrarnos',
-        className: 'text-violet-700 font-semibold cursor-pointer',
+        className: 'font-semibold cursor-pointer',
+        style: {
+          mode: 'highlighter',
+          options: {
+            action: 'highlight',
+            color: '#fff44f',
+            animationDuration: 500,
+            iterations: 1,
+            padding: 4,
+          },
+        },
         info: {
           type: 'Verb',
           meaning: 'To focus ourselves',
@@ -175,7 +216,17 @@ const highlightConfigs = [
     text: [
       {
         word: 'historias',
-        className: 'text-violet-700 blur-[0.2px] font-semibold underline decoration-dashed cursor-pointer',
+        className: 'font-semibold cursor-pointer',
+        style: {
+          mode: 'highlighter',
+          options: {
+            action: 'highlight',
+            color: '#fff44f',
+            animationDuration: 500,
+            iterations: 1,
+            padding: 4,
+          },
+        },
         info: {
           type: 'Noun',
           meaning: 'Stories',
@@ -184,7 +235,7 @@ const highlightConfigs = [
       },
       {
         word: 'motivación',
-        className: 'text-violet-700 font-semibold cursor-pointer',
+        className: 'font-semibold text-orange-500 cursor-pointer',
         info: {
           type: 'Noun',
           meaning: 'Motivation',
@@ -193,7 +244,8 @@ const highlightConfigs = [
       },
       {
         word: 'acompañados',
-        className: 'text-violet-700 font-semibold cursor-pointer',
+        className:
+          'font-semibold text-fuchsia-600 underline decoration-wavy decoration-fuchsia-400 decoration-2 leading-tight cursor-pointer',
         info: {
           type: 'Adjective',
           meaning: 'Accompanied',
@@ -206,7 +258,17 @@ const highlightConfigs = [
     text: [
       {
         word: 'Seguimos adelante',
-        className: 'text-violet-700 font-semibold cursor-pointer',
+        className: 'font-semibold cursor-pointer',
+        style: {
+          mode: 'highlighter',
+          options: {
+            action: 'highlight',
+            color: '#fff44f',
+            animationDuration: 500,
+            iterations: 1,
+            padding: 6,
+          },
+        },
         info: {
           type: 'Phrase',
           meaning: 'We keep moving forward',
@@ -215,7 +277,7 @@ const highlightConfigs = [
       },
       {
         word: 'paciencia',
-        className: 'text-violet-700 font-semibold cursor-pointer',
+        className: 'font-semibold text-emerald-600 cursor-pointer',
         info: {
           type: 'Noun',
           meaning: 'Patience',
@@ -224,7 +286,7 @@ const highlightConfigs = [
       },
       {
         word: 'constancia',
-        className: 'text-violet-700 font-semibold cursor-pointer',
+        className: 'font-semibold text-violet-600 bg-violet-100/60 border border-violet-200 px-2 py-1 rounded-lg cursor-pointer',
         info: {
           type: 'Noun',
           meaning: 'Consistency',
@@ -239,6 +301,14 @@ const highlightConfigs = [
 
 const page = ({ params }) => {
   
+  const [idx, setIdx] = useState(0);
+
+  const handleNext = () => {
+    if(idx === storiesMock[0].paragraphs.length - 1) return;
+    setIdx((prev) => prev + 1);
+  }
+
+
 
   return (
     <section className='w-full min-h-screen
@@ -261,37 +331,26 @@ const page = ({ params }) => {
 
 
 
-        <section className='w-full flex flex-col  
+        <section className='w-full h-full flex flex-col  
                             border-[2px_2px_0_2px] px-12 pt-4 
                             border-blue-500 rounded-t-2xl 
                             ring-5 ring-blue-200/60
                             
                             bg-[#fff]'>
 
-            <div className='w-full h-full 
+            <div className='w-full min-h-[86vh]
                             flex flex-col gap-8 
                             pt-5 pb-12
                             
             '>
 
             
-           {storiesMock[0].paragraphs.map((block,index)=>(
-             <div key={index} 
-                className='flex h-max gap-8 leading-relaxed'
-             >
-              <p className={`flex-1 h-full leading-relaxed
-                            ` + paragraphClass
-              }>
-                {renderHighlightedText(block.text, highlightConfigs[index]?.text)}
-              </p>
-              <p className={`flex-1 h-full leading-relaxed
-                          ` + paragraphClass
-              }>
-                {block.translation}
-              </p>
-             </div>
-           ))}
-           {storiesMock[0].paragraphs.map((block,index)=>(
+          
+
+           {storiesMock[0].paragraphs.map((block,index)=>{
+
+            if(index <= idx){
+              return(
              <div key={`${index}-duplicate`} 
                 className='flex h-max gap-8'
              >
@@ -300,13 +359,28 @@ const page = ({ params }) => {
               }>
                 {renderHighlightedText(block.text, highlightConfigs[index]?.text)}
               </p>
-              <p className={`flex-1 h-full leading-relaxed
-                          ` + paragraphClass
+              <div
+               className={`flex-1 h-full leading-relaxed
+                            flex flex-col gap-2
+                           ` + paragraphClass
               }>
-                {block.translation}
-              </p>
-             </div>
-           ))}
+                <p>
+                  {block.translation}
+                </p>
+                {(index != storiesMock[0].paragraphs.length - 1) && (index==idx) && (
+                 <div className='flex justify-end items-center py-2 px-8'>
+                   <button onClick={handleNext}
+                        className='text-lg bg-blue-600 text-white px-8 py-1 rounded-lg'
+                   >
+                     Next
+                   </button>
+                 </div>
+
+              )}
+              </div>
+            </div>
+            )}
+            })}
           </div>
 
         </section>
