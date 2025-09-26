@@ -1,47 +1,48 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+
+import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
-const LOADER_DURATION = 3000 // 3 seconds
+const LOADER_DURATION = 1000 // 3 seconds
 
-const MainLoader = () => {
-  const [progress, setProgress] = useState(0)
+const MainLoader = ({children}) => {
+
+  const [showLoader, setShowLoader] = useState(true)
 
   useEffect(() => {
-    let animationFrame
-    const start = performance.now()
-
-    const animate = (timestamp) => {
-      const elapsed = timestamp - start
-      const nextProgress = Math.min((elapsed / LOADER_DURATION) * 100, 100)
-      setProgress(nextProgress)
-
-      if (elapsed < LOADER_DURATION) {
-        animationFrame = requestAnimationFrame(animate)
-      }
-    }
-
-    animationFrame = requestAnimationFrame(animate)
-
-    return () => {
-      cancelAnimationFrame(animationFrame)
-    }
+    const timer = setTimeout(() => {
+      setShowLoader(false)
+    }, LOADER_DURATION)
+    return () => clearTimeout(timer)
   }, [])
 
+  if (!showLoader) {
+    return children
+  }
+  
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-white'>
-      <div className='flex w-full max-w-xs flex-col items-center gap-10 px-8'>
-        <Image src='/brain-logo.svg' alt='Nativelabs' width={140} height={140} priority />
+      <div className='flex w-full max-w-xs flex-col items-center gap-4 px-8'>
+        <div className='flex flex-col items-center'>  
+        <Image src='/brain-logo.svg' alt='Nativelabs' width={60} height={40} priority />
+        <p className='text-[23px] font-[600] ubuntu'>Native<span className='font-[300]'>labs</span></p>
+       </div>
+       {/* <div className='flex items-center justify-center p-3 h-fit w-fit rounded-full shadow-2xl'>
 
-        <div className='flex w-full flex-col items-center gap-2'>
-          <div className='relative h-2 w-full overflow-hidden rounded-full bg-gray-200'>
-            <div
-              className='absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-[width] duration-150 ease-out'
-              style={{ width: `${progress}%` }}
-            />
+       </div> */}
+
+        <div className='flex w-32
+         shadow-2xl flex-col items-center gap-2'>
+          <div className='relative h-[6px] w-full overflow-hidden rounded-full bg-gray-200'>
+            <motion.div
+              className='absolute inset-y-0 left-0 rounded-full bg-blue-600'
+              initial={{ width: 0 }}
+              animate={{ width: '100%' }}
+              transition={{ duration: LOADER_DURATION / 1000 }}
+            ></motion.div>
           </div>
-          <span className='text-sm font-medium text-gray-600'>{Math.round(progress)}%</span>
         </div>
       </div>
     </div>

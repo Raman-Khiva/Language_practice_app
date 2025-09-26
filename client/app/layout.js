@@ -2,6 +2,7 @@
 'use client'
 import "./globals.css";
 import { Inter, Josefin_Sans, Ubuntu} from "next/font/google"
+import MainLoader from "@/components/ui/MainLoader"
 // import Navbar from "@/components/Navbar/Navbar";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
@@ -108,7 +109,9 @@ export default function RootLayout({ children }) {
       <body className="antialiased">
         <Provider store={store}>
           <AuthLoader>
-            {children}
+            <MainLoader>
+              {children}
+            </MainLoader>
           </AuthLoader>
         </Provider>
       </body>
