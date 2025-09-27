@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import FlashCardNew from './NewFlashCard'
+import FlashCardNew from '../cards/NewFlashCard'
 import { HiOutlineSparkles } from 'react-icons/hi2'
 import { FiMic, FiBookOpen } from 'react-icons/fi'
 import Image from 'next/image'

@@ -2,7 +2,7 @@
 'use client'
 import "./globals.css";
 import { Inter, Josefin_Sans, Ubuntu} from "next/font/google"
-import MainLoader from "@/components/ui/MainLoader"
+import MainLoader from "@/components/common/MainLoader"
 // import Navbar from "@/components/Navbar/Navbar";
 import { Provider } from "react-redux";
 import { store } from "./store/store";

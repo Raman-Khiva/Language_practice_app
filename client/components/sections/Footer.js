@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { FaFacebookF, FaLinkedinIn, FaTwitter, FaYoutube } from 'react-icons/fa'
-import Badge from '../ui/Badge'
+import Badge from '../common/Badge'
 import { HiOutlineSparkles } from 'react-icons/hi'
 
 const navigation = [

@@ -1,11 +1,11 @@
-import Home from "@/components/Home/home.jsx";
-import Navbar from "@/components/Navbar/Navbar";
+import Home from "@/components/pages/home.jsx";
+import Navbar from "@/components/layout/Navbar/Navbar";
 import Capabilites from "@/components/sections/Capabilites";
 import Features from "@/components/sections/Features";
 import Testimonials from "@/components/sections/Testimonials";
 import Pricing from "@/components/sections/Pricing";
 import Footer from "@/components/sections/Footer";
-import StoryCard from "@/components/ui/StoryCard";
+import StoryCard from "@/components/cards/StoryCard";
 
 export default function page() {
   return ( //bg-[#fbfaf8] best fit :#f2f4f3

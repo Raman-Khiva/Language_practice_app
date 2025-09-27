@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import LessonCardNew from './ui/LessonCardNew';
+import LessonCardNew from '../cards/LessonCardNew';
 import { BsArrowsAngleExpand } from 'react-icons/bs';
-import SingleSelectDropdown from './ui/SingleSelectDropDown';
+import SingleSelectDropdown from '../forms/SingleSelectDropDown';
 import { selectCurrentLessons} from '@/app/store/slices/lessonsSlices';
 
 

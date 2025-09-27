@@ -1,6 +1,6 @@
 import React from 'react'
 import { LuCompass } from 'react-icons/lu'
-import CheckpointStrip from '../elements/CheckpointStrip'
+import CheckpointStrip from '../progress/CheckpointStrip'
 
 const statusStyles = {
   completed: {

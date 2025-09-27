@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { storiesMock } from '@/mock/stories'
-import Highlighter from '@/components/ui/Highlighter'
+import Highlighter from '@/components/visuals/Highlighter'
 
 const paragraphClass = 'text-2xl font-medium  '
 
@@ -57,10 +57,10 @@ const renderHighlightedText = (text, highlights = []) => {
     }
 
     return (
-      <span key={`highlight-${index}`} className='relative inline-block group'>
+      <div key={`highlight-${index}`} className='relative inline-block group'>
         {styledValue}
         {hasInfo && (
-          <span className='pointer-events-none absolute left-1/2 top-full z-30 mt-3 w-64 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 opacity-0 shadow-[0_16px_48px_rgba(15,23,42,0.15)] transition-opacity duration-200 group-hover:opacity-100'>
+          <div className='pointer-events-none absolute left-1/2 top-full z-30 mt-3 w-64 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 opacity-0 shadow-[0_16px_48px_rgba(15,23,42,0.15)] transition-opacity duration-200 group-hover:opacity-100'>
             {type && (
               <p className='text-xs font-semibold uppercase tracking-[0.2em] text-slate-400'>
                 {type}
@@ -76,9 +76,9 @@ const renderHighlightedText = (text, highlights = []) => {
                 <span className='font-semibold text-slate-600'>Pronunciation:</span> {pronunciation}
               </p>
             )}
-          </span>
+          </div>
         )}
-      </span>
+      </div>
     )
   })
 }
@@ -295,11 +295,11 @@ const highlightConfigs = [
       },
     ],
   },
-]
+] 
 
 
 
-const page = ({ params }) => {
+const page = () => {
   
   const [idx, setIdx] = useState(0);
 
@@ -311,8 +311,9 @@ const page = ({ params }) => {
 
 
   return (
-    <section className='w-full min-h-screen
-                        px-36 pt-6  bg-[#f6f6f6]
+    <section className='w-full h-screen overflow-y-hidden
+                        px-36 pt-6  bg-[#f4f4ed] border-b 
+
     '>
      
       
@@ -338,10 +339,10 @@ const page = ({ params }) => {
                             
                             bg-[#fff]'>
 
-            <div className='w-full min-h-[86vh]
+            <div className='w-full  min-h-fit
                             flex flex-col gap-8 
-                            pt-5 pb-12
-                            
+                            pt-5 overflow-auto 
+                            scrollbar-hidden
             '>
 
             
@@ -354,11 +355,45 @@ const page = ({ params }) => {
              <div key={`${index}-duplicate`} 
                 className='flex h-max gap-8'
              >
-              <p className={`flex-1 h-full leading-relaxed
+              <div className={`flex-1 h-full leading-relaxed
                             ` + paragraphClass
               }>
                 {renderHighlightedText(block.text, highlightConfigs[index]?.text)}
-              </p>
+              </div>
+              <div
+               className={`flex-1 h-full leading-relaxed
+                            flex flex-col gap-2
+                           ` + paragraphClass
+              }>
+                <p>
+                  {block.translation}
+                </p>
+                {(index != storiesMock[0].paragraphs.length - 1) && (index==idx) && (
+                 <div className='flex justify-end items-center py-2 px-8'>
+                   <button onClick={handleNext}
+                        className='text-lg bg-blue-600 text-white px-8 py-1 rounded-lg'
+                   >
+                     Next
+                   </button>
+                 </div>
+
+              )}
+              </div>
+            </div>
+            )}
+            })}
+           {storiesMock[0].paragraphs.map((block,index)=>{
+
+            if(index <= idx){
+              return(
+             <div key={`${index}-duplicate`} 
+                className='flex h-max gap-8'
+             >
+              <div className={`flex-1 h-full leading-relaxed
+                            ` + paragraphClass
+              }>
+                {renderHighlightedText(block.text, highlightConfigs[index]?.text)}
+              </div>
               <div
                className={`flex-1 h-full leading-relaxed
                             flex flex-col gap-2

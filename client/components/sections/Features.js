@@ -6,8 +6,8 @@ import { BiLibrary } from "react-icons/bi";
 import { IoBookOutline } from "react-icons/io5";
 import { GiPathDistance } from "react-icons/gi";
 import { FaRegLightbulb } from "react-icons/fa";
-import FeatureCard from '../ui/FeatureCard';
-import Badge from '../ui/Badge';
+import FeatureCard from '../cards/FeatureCard';
+import Badge from '../common/Badge';
 import { BsFillPuzzleFill } from 'react-icons/bs';
 import { LuBadgeCheck } from 'react-icons/lu';
 

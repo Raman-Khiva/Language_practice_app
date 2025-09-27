@@ -1,6 +1,5 @@
 // Circular progress indicator
 // - Accepts size, strokeWidth, progress (0-100), and color
-import { percent } from "framer-motion";
 import React from "react";
 
 const CircularProgress = ({ size = 90, strokeWidth = 7, progress = 0, color = "#56adff" }) => {

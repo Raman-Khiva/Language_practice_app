@@ -1,12 +1,12 @@
 'use client'
 import React from 'react'
-import CircularProgressBar from '../ProgessBar/circularProgressBar';
+import CircularProgressBar from '../progress/ProgessBar/circularProgressBar';
 import { easeOut, motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { setLesson } from '@/app/store/slices/currentLessonSlice'; // adjust path
+import { setLesson } from '@/app/store/slices/currentLessonSlice';
 
-import DottedBackground from './DotedBackground';
+import DottedBackground from '../visuals/DotedBackground';
 
 const Tick = () => {
   return (

@@ -4,10 +4,10 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 // import { ProductContext } from '@/app/context/ProductContext'
 import Image from 'next/image'
-import {selectIsAuthenticated, selectUser} from '../../app/store/slices/authSlice';
+import {selectIsAuthenticated, selectUser} from '@/app/store/slices/authSlice';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import ProfileDropdown from '../ui/ProfileDropdown';
+import ProfileDropdown from '../ProfileDropdown';
 
 
 

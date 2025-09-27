@@ -1,9 +1,9 @@
 'use client'
-import SideBar from '@/components/SideBar'
+import SideBar from '@/components/layout/SideBar'
 import React, { useEffect } from 'react'
 import { getCategories,selectCategories } from '@/app/store/slices/categoriesSlices'
 import { useDispatch, useSelector } from 'react-redux'
-import CategoryCard from '@/components/ui/CategoryCard'
+import CategoryCard from '@/components/cards/CategoryCard'
 
 
 

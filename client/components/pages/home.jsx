@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 
-import OrbitalFlashcards from "../ui/OrbitalFlashcards";
-import Badge from "../ui/Badge";
+import OrbitalFlashcards from "../visuals/OrbitalFlashcards";
+import Badge from "../common/Badge";
 import { MdOutlineAutoAwesome } from "react-icons/md";
 
 //bg-linear-to-r from-[#eae1faf4] via-[#f4d2dcea] to-[#ede2c1f0]     textbg : bg-gradient-to-r from-[#305CED] to-[#DD8BE1] bg-clip-text text-transparent

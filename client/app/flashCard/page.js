@@ -1,4 +1,4 @@
-import FlashCard from '../../components/ui/FlashCard'
+import FlashCard from '@/components/cards/FlashCard'
 
 const flashCards = [
   {

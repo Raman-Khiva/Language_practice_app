@@ -1,14 +1,14 @@
 //in new file
 'use client'
-import ProgressHeader from '@/components/ui/ProgressHeader'
+import ProgressHeader from '@/components/progress/ProgressHeader'
 import React, { useEffect, useState } from 'react'
 // import { motion } from 'framer-motion'
-import ActionButtons from '@/components/ui/ActionButtons'
-import AnswerInput from '@/components/ui/AnswerInput'
+import ActionButtons from '@/components/forms/ActionButtons'
+import AnswerInput from '@/components/forms/AnswerInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentLesson } from '../store/slices/currentLessonSlice'
-import {ScoreCard, GoodScoreCard, AverageScoreCard, NeedsImprovementScoreCard} from '@/components/ui/ScoreCardNew'
-import AnswerSection from '@/components/ui/AnswerSection'
+import {ScoreCard, GoodScoreCard, AverageScoreCard, NeedsImprovementScoreCard} from '@/components/cards/ScoreCardNew'
+import AnswerSection from '@/components/feedback/AnswerSection'
 import { addLessonToProgress } from '../store/slices/userProgressSlice'
 
 const cards = [<ScoreCard/>, <GoodScoreCard/>, <AverageScoreCard/>, <NeedsImprovementScoreCard/>];
@@ -16,8 +16,8 @@ const cards = [<ScoreCard/>, <GoodScoreCard/>, <AverageScoreCard/>, <NeedsImprov
 const page = () => {
     const currentLesson = useSelector(selectCurrentLesson);
     const [currentIdx, setIdx] = useState(0);
-    const [userAnswer, setUserAnswer] = useState(""); // Added missing state
-    const [showAnswer, setShowAnswer] = useState(false); // Added missing state
+    const [userAnswer, setUserAnswer] = useState("");
+    const [showAnswer, setShowAnswer] = useState(false);
     const [validationResult, setValidationResult] = useState(null);
     const [isValidating, setIsValidating] = useState(false);
     const [validationError, setValidationError] = useState(null);

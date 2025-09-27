@@ -1,5 +1,5 @@
 'use client'
-import SideBar from '@/components/SideBar';
+import SideBar from '@/components/layout/SideBar';
 import Link from 'next/link';
 import React, { useState } from 'react'
 

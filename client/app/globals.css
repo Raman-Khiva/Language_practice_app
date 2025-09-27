@@ -28,6 +28,6 @@
   display: none;
 }
 
-.scrollbar-hide::-webkit-scrollbar {
+.scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }

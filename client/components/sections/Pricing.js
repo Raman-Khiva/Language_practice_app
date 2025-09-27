@@ -1,6 +1,6 @@
 import React from 'react'
-import PriceCard from '../ui/PriceCard';
-import Badge from '../ui/Badge';
+import PriceCard from '../cards/PriceCard';
+import Badge from '../common/Badge';
 import { LuCrown } from 'react-icons/lu';
 
 const pricingPlans = [

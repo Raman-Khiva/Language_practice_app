@@ -1,27 +1,26 @@
 'use client'
 
-import SideBar from '@/components/SideBar'
-// import LessonCardNew from '@/components/ui/LessonCardNew';
-import LineGraph from '@/components/ui/lineGraph';
+import SideBar from '@/components/layout/SideBar'
+// import LessonCardNew from '@/components/cards/LessonCardNew';
+import LineGraph from '@/components/visuals/lineGraph';
 // import { MdKeyboardDoubleArrowLeft } from "react-icons/md"
 // import { BsArrowsAngleExpand } from "react-icons/bs";
 // import { FaExpandAlt } from "react-icons/fa";
-//import CircularProgress from '@/components/ProgessBar/circularProgressBar';
-// import CircularProgressNew from '@/components/ui/CircularProgressNew';
+//import CircularProgress from '@/components/progress/ProgessBar/circularProgressBar';
+// import CircularProgressNew from '@/components/progress/CircularProgressNew';
 import { useEffect, useState } from 'react';
-import ProgressCardsBar from '@/components/ui/ProgressCardsBar';
+import ProgressCardsBar from '@/components/progress/ProgressCardsBar';
 import { selectSideBarOpen } from '@/app/store/slices/sideBarSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLessons, selectLoading, selectCurrentLessons } from '@/app/store/slices/lessonsSlices';
 
-import LessonsSection from '@/components/LessonsSection';
+import LessonsSection from '@/components/sections/LessonsSection';
 // import { MdArrowDropDown } from 'react-icons/md';
-// import MultiSelectDropdown from '@/components/ui/MultiSelectDropDown';
+// import MultiSelectDropdown from '@/components/forms/MultiSelectDropDown';
+
 import Link from 'next/link';
 
-
 const page = () => {
-
   const barOpen = useSelector(selectSideBarOpen);
   const currentLessons = useSelector(selectCurrentLessons);
   const [mainExpanded, setMainExpanded] = useState(true);

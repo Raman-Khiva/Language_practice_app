@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { FaListCheck } from "react-icons/fa6";
-import ProgressCard from './ProgressCard';
+import ProgressCard from '../cards/ProgressCard';
 // import CircularProgressNew from './CircularProgressNew'
 const ProgressCardsBar = ({className}) => {
   return (

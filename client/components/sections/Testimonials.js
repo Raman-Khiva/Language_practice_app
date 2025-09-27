@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import Badge from '../ui/Badge'
+import Badge from '../common/Badge'
 import { HiOutlineChatBubbleLeftRight } from 'react-icons/hi2'
 import { FaStar } from 'react-icons/fa'
 

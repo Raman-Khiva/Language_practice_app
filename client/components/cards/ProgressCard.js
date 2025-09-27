@@ -1,5 +1,5 @@
 import React from 'react'
-import CircularProgressNew from './CircularProgressNew'
+import CircularProgressNew from '../progress/CircularProgressNew'
 
 const ProgressCard = ({children, className,color, fillColor,text}) => {
   return (

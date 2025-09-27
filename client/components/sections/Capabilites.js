@@ -2,15 +2,14 @@
 import React from 'react'
 import { motion, useAnimation, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import CapabilityCard from '../ui/CapabilityCard';
+import CapabilityCard from '../cards/CapabilityCard';
 import { RiStackLine } from 'react-icons/ri';
-import Badge from '../ui/Badge';
+import Badge from '../common/Badge';
 
 const capabilites = [
   {
     title: "Supports All Aspects of Language Learning",
     description: "Learn, practice, speak, and read with a complete all-in-one language learning platform.",
-    color: "from-blue-500 to-purple-600",
     badge: "Complete Learning Solution",
     badgeColor: "bg-blue-100 text-blue-800",
     points: [

@@ -1,7 +1,7 @@
 
 
 
-import StoryCard from '@/components/ui/StoryCard'
+import StoryCard from '@/components/cards/StoryCard'
 import { storyCardData } from '@/mock/storyCards'
 import React from 'react'
 
