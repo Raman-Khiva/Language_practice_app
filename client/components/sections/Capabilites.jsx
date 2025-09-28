@@ -119,7 +119,7 @@ const Capabilites = () => {
         <motion.div 
           ref={ref}
           initial={{ x: -200, opacity: 0 }}
-          animate={controls}
+          imate={controls}
           className='h-[34rem] w-[29rem] bg-violet-300/30
                      flex items-center justify-center
                      rounded-3xl'

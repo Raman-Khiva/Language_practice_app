@@ -16,13 +16,13 @@ const CheckpointStrip = () => {
                       flex items-center justify-between gap-1
       ' >
         <div className='h-1.5 w-full  rounded-full absolute top-0 left-0 z-0 
-                        bg-gradient-to-r from-green-600 via-green-600 via-40% to-transparent to-100%
+                        bg-gradient-to-r from-[#1db97b] via-[#1db97b] via-40% to-transparent to-95%
         ' />
         {Array.from({ length: 4 }, (_, index) => (
           <div
             key={index}
             className={`h-6.5 w-6.5 rounded-full z-10 
-                        ${index <=2 ? 'bg-green-600' : 'bg-gray-100'} border-3 border-white
+                        ${index <=2 ? 'bg-[#1db97b]' : 'bg-gray-100'} border-3 border-white
                         flex items-center justify-center
                         shadow-sm
                         

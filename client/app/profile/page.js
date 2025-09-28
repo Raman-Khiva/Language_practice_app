@@ -1,9 +1,9 @@
 'use client'
 import { useSelector } from 'react-redux';
-import { selectUser, selectIsAuthenticated } from '../store/slices/authSlice';
+import { selectUser, selectIsAuthenticated } from '@/app/store/slices/authSlice';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import ProfilePage from '../../components/Profile/ProfilePage';
+import ProfilePage from '@/components/pages/ProfilePage';
 
 export default function Profile() {
   const user = useSelector(selectUser);

@@ -43,7 +43,7 @@ export default function Navbar() {
         <div className={`flex items-center justify-between  rounded-2xl  px-4 py-2 ${isShrunk ? "border border-white/20 bg-white/80 backdrop-blur-xl shadow-sm ring-1 ring-black/5":"bg-transparent"}`}>
           <Link href="/" className='flex gap-4 items-center px-3' >   
               <Image src="/brain-logo.svg"  width={40}  height={20} className='h-10 w-auto' alt='Native Lab' />  
-              <p className='text-[23px] font-[500] text-gray-900'>Native<span className='font-[300]'>labs</span></p>
+              <p className='text-[23px] font-[500] text-gray-900'>Lingua<span className='font-[300]'>App</span></p>
               {/*  */}
           </Link>
 

@@ -7,6 +7,7 @@ const statusStyles = {
     circle: 'bg-[#fbbf24] border-[#fbbf24] text-white shadow-[0_4px_10px_rgba(251,191,36,0.35)]',
     connector: 'bg-[#fbbf24]'
   },
+  
   current: {
     circle: 'bg-white border-[#fbbf24] text-[#fbbf24] shadow-[0_4px_10px_rgba(251,191,36,0.25)]',
     connector: 'bg-[#fbbf24]'
@@ -38,7 +39,7 @@ const StoryCard = ({
   iconColor = '#f59e0b',
   badgeBackground = '#e7ecff',
   badgeTextColor = '#5562ff',
-  cardBackground = 'linear-gradient(180deg, #f6f8ff 0%, #ffffff 45%)',
+  cardBackground = '#ffffff',
   className = '',
 }) => {
   const normalizedStages = Array.isArray(journeyStages) && journeyStages.length
@@ -52,28 +53,31 @@ const StoryCard = ({
 
   return (
     <article
-      className={`w-full max-w-[320px] rounded-3xl bg-white shadow-[0_20px_50px_rgba(71,101,176,0.16)] ${className}`}
-      style={{ border: '1px solid rgba(226, 232, 240, 0.6)' }}
-    >
-      <div className="rounded-3xl p-6 pb-4" style={{ background: cardBackground }}>
-        <div className="flex items-start justify-between gap-4">
+      className={`w-full max-w-[320px] rounded-xl border-2 border-gray-200/80 bg-white
+                  shadow-lg
+                  flex flex-col gap-3
+                  px-3 pt-3 pb-4
+    `}
+  >
+      <div className="rounded-xl bg-white 
+      ">
+        <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-4">
             <span
-              className="flex h-12 w-12 items-center justify-center rounded-2xl"
-              style={{ backgroundColor: iconBackground, color: iconColor }}
+              className="flex h-10 w-10 items-center justify-center rounded-xl
+              bg-[#1db97b] text-white"
             >
-              <Icon className="text-2xl" />
+              <Icon className="text-xl" />
             </span>
             <div className="flex flex-col">
-              <span className="text-sm font-semibold uppercase tracking-[0.18em] text-[#475569]">
+              <span className="text-[10px] leading-tight font-semibold uppercase tracking-[0.15em] text-[#475569]">
                 {lessonLabel}
               </span>
-              <span className="text-3xl font-semibold text-[#1f2a5a]">{lessonNumber}</span>
-              <span className="text-xs text-[#94a3b8]">{lessonSubtitle}</span>
+              <span className="text-xl font-[600] leading-tight text-[#1f2a5a]">{lessonNumber}</span>
             </div>
           </div>
           <span
-            className="rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.18em]"
+            className="rounded-full px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.15em]"
             style={{ backgroundColor: badgeBackground, color: badgeTextColor }}
           >
             {level}
@@ -81,13 +85,14 @@ const StoryCard = ({
         </div>
       </div>
 
-      <div className="px-6 pb-6">
-        <div className="mt-4 flex items-center justify-between text-xs font-semibold uppercase tracking-[0.18em] text-[#94a3b8]">
-          <span className="text-[#1f2a5a] tracking-[0.18em]">{journeyHeading}</span>
+      <span className="text-lg font-[500]">{lessonSubtitle}</span>
+      <div className="">
+        <div className="mt-3 flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.10em] text-[#94a3b8]">
+          <span className="text-[#1f2a5a] tracking-[0.10em]">{journeyHeading}</span>
           <span>{checkpointLabel} {checkpointsCompleted}/{totalCheckpoints}</span>
         </div>
 
-       <div className='w-full pt-5 pb-2'>
+       <div className='w-full py-4'>
         <CheckpointStrip />
        </div>
         {/* <div className="mt-5 flex w-full items-center justify-between">
@@ -115,7 +120,7 @@ const StoryCard = ({
 
         <button
           type="button"
-          className="mt-8 w-full rounded-2xl bg-[#fbbf24] py-3 text-sm font-semibold text-[#1f2937] shadow-[0_16px_30px_rgba(251,191,36,0.32)] transition hover:brightness-105"
+          className="mt-3 w-full rounded-xl bg-[#1DB97B] py-2 text-sm font-semibold text-[#1f2937] transition hover:brightness-105"
         >
           {ctaLabel}
         </button>

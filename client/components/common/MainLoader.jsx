@@ -4,19 +4,21 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 const LOADER_DURATION = 1000 // 3 seconds
 
-const MainLoader = ({children}) => {
-
+const MainLoader = ({ children }) => {
+  const pathname = usePathname()
   const [showLoader, setShowLoader] = useState(true)
 
   useEffect(() => {
+    setShowLoader(true)
     const timer = setTimeout(() => {
       setShowLoader(false)
     }, LOADER_DURATION)
     return () => clearTimeout(timer)
-  }, [])
+  }, [pathname])
 
   if (!showLoader) {
     return children

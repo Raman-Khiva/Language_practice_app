@@ -7,7 +7,7 @@ const PriceCard = ({title,price,features,i}) => {
                     border-2   rounded-2xl
                     ring-3
                     flex flex-col justify-center gap-4
-                    bg-[rgb(246,246,246)]
+                    bg-[rgb(251,251,251)]
                     shadow-[0_0_10px_rgba(0,0,0,0.07)] ${i==1?"border-blue-600 ring-blue-100":"border-gray-400/60 ring-gray-200"}
     
     `}>

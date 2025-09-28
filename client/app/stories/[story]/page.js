@@ -1,9 +1,10 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { storiesMock } from '@/mock/stories'
 import Highlighter from '@/components/visuals/Highlighter'
 
-const paragraphClass = 'text-2xl font-medium  '
+const paragraphClass = 'text-2xl font-[700] ubuntu '
+const TYPING_INTERVAL = 32
 
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
@@ -295,131 +296,148 @@ const highlightConfigs = [
       },
     ],
   },
-] 
+]
 
+
+const ParagraphRow = ({
+  block,
+  highlightConfig,
+  isActive,
+  onTypingStart,
+  onTypingComplete,
+  showNext,
+  onNext,
+}) => {
+  const { text = '', translation = '' } = block || {}
+  const [displayedText, setDisplayedText] = useState(isActive ? '' : text)
+  const [isTyping, setIsTyping] = useState(false)
+
+  useEffect(() => {
+    let intervalId
+
+    if (!isActive) {
+      setDisplayedText(text)
+      setIsTyping(false)
+      return () => {
+        if (intervalId) window.clearInterval(intervalId)
+      }
+    }
+
+    setIsTyping(true)
+    onTypingStart?.()
+    setDisplayedText('')
+
+    if (!text?.length) {
+      setIsTyping(false)
+      onTypingComplete?.()
+      return () => {}
+    }
+
+    let charIndex = 0
+    intervalId = window.setInterval(() => {
+      charIndex += 1
+      const nextSlice = text.slice(0, charIndex)
+      setDisplayedText(nextSlice)
+
+      if (charIndex >= text.length) {
+        window.clearInterval(intervalId)
+        setIsTyping(false)
+        onTypingComplete?.()
+      }
+    }, TYPING_INTERVAL)
+
+    return () => {
+      if (intervalId) window.clearInterval(intervalId)
+    }
+  }, [isActive, text, onTypingStart, onTypingComplete])
+
+  return (
+    <div className='flex h-max gap-8'>
+      <div className={`flex-1 h-full leading-relaxed text-[#2c2c2d] ${paragraphClass}`}>
+        {renderHighlightedText(displayedText, highlightConfig)}
+      </div>
+      <div className={`flex-1 h-full leading-relaxed flex flex-col gap-2 ${paragraphClass}`}>
+        <p>{translation}</p>
+        {showNext && (
+          <div className='flex justify-end items-center py-2 px-8'>
+            <button
+              type='button'
+              onClick={isTyping ? undefined : onNext}
+              disabled={isTyping}
+              className={`text-lg px-8 py-1 rounded-lg transition-colors duration-150 ${
+                isTyping
+                  ? 'bg-blue-200 text-blue-500 cursor-not-allowed'
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
+              }`}
+            >
+              {isTyping ? 'Typing…' : 'Next'}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
 
 
 const page = () => {
-  
-  const [idx, setIdx] = useState(0);
+  const story = useMemo(() => storiesMock?.[0] ?? null, [])
+  const paragraphs = useMemo(() => story?.paragraphs ?? [], [story])
 
-  const handleNext = () => {
-    if(idx === storiesMock[0].paragraphs.length - 1) return;
-    setIdx((prev) => prev + 1);
-  }
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isTyping, setIsTyping] = useState(true)
 
+  const handleTypingStart = useCallback(() => {
+    setIsTyping(true)
+  }, [])
 
+  const handleTypingComplete = useCallback(() => {
+    setIsTyping(false)
+  }, [])
+
+  useEffect(() => {
+    if (!paragraphs.length) {
+      setIsTyping(false)
+    }
+  }, [paragraphs.length])
+
+  const handleNext = useCallback(() => {
+    if (isTyping) return
+
+    setActiveIndex((prev) => {
+      if (prev >= paragraphs.length - 1) return prev
+      return prev + 1
+    })
+  }, [isTyping, paragraphs.length])
 
   return (
-    <section className='w-full h-screen overflow-y-hidden
-                        px-36 pt-6  bg-[#f4f4ed] border-b 
-
-    '>
-     
-      
-      <section className='w-full h-full 
-                          flex flex-col 
-      '>
-
-
-        <header className='flex  gap-3
-                           w-full pb-8
-        '>
-          
-          <p className='text-3xl text-blue-700 uppercase font-bold'>1. </p>
-          <p className='text-3xl font-semibold text-blue-700'>{storiesMock[0].title}</p>
+    <section className='w-full h-screen overflow-y-hidden px-36 pt-6 bg-[#f4f4ed] border-b'>
+      <section className='flex h-full w-full flex-col'>
+        <header className='flex w-full gap-3 pb-8'>
+          <p className='text-3xl font-bold uppercase text-blue-700'>1.</p>
+          <p className='text-3xl font-semibold text-blue-700'>{story?.title ?? 'Story'}</p>
         </header>
 
+        <section className='flex h-full w-full flex-col rounded-t-2xl border-[2px_2px_0_2px] border-blue-500 bg-white px-12 pt-4 ring-5 ring-blue-200/60'>
+          <div className='scrollbar-hidden mb-20 flex h-full w-full flex-col gap-8 overflow-auto scroll-smooth'>
+            {paragraphs.map((block, index) => {
+              if (index > activeIndex) return null
 
-
-        <section className='w-full h-full flex flex-col  
-                            border-[2px_2px_0_2px] px-12 pt-4 
-                            border-blue-500 rounded-t-2xl 
-                            ring-5 ring-blue-200/60
-                            
-                            bg-[#fff]'>
-
-            <div className='w-full  min-h-fit
-                            flex flex-col gap-8 
-                            pt-5 overflow-auto 
-                            scrollbar-hidden
-            '>
-
-            
-          
-
-           {storiesMock[0].paragraphs.map((block,index)=>{
-
-            if(index <= idx){
-              return(
-             <div key={`${index}-duplicate`} 
-                className='flex h-max gap-8'
-             >
-              <div className={`flex-1 h-full leading-relaxed
-                            ` + paragraphClass
-              }>
-                {renderHighlightedText(block.text, highlightConfigs[index]?.text)}
-              </div>
-              <div
-               className={`flex-1 h-full leading-relaxed
-                            flex flex-col gap-2
-                           ` + paragraphClass
-              }>
-                <p>
-                  {block.translation}
-                </p>
-                {(index != storiesMock[0].paragraphs.length - 1) && (index==idx) && (
-                 <div className='flex justify-end items-center py-2 px-8'>
-                   <button onClick={handleNext}
-                        className='text-lg bg-blue-600 text-white px-8 py-1 rounded-lg'
-                   >
-                     Next
-                   </button>
-                 </div>
-
-              )}
-              </div>
-            </div>
-            )}
-            })}
-           {storiesMock[0].paragraphs.map((block,index)=>{
-
-            if(index <= idx){
-              return(
-             <div key={`${index}-duplicate`} 
-                className='flex h-max gap-8'
-             >
-              <div className={`flex-1 h-full leading-relaxed
-                            ` + paragraphClass
-              }>
-                {renderHighlightedText(block.text, highlightConfigs[index]?.text)}
-              </div>
-              <div
-               className={`flex-1 h-full leading-relaxed
-                            flex flex-col gap-2
-                           ` + paragraphClass
-              }>
-                <p>
-                  {block.translation}
-                </p>
-                {(index != storiesMock[0].paragraphs.length - 1) && (index==idx) && (
-                 <div className='flex justify-end items-center py-2 px-8'>
-                   <button onClick={handleNext}
-                        className='text-lg bg-blue-600 text-white px-8 py-1 rounded-lg'
-                   >
-                     Next
-                   </button>
-                 </div>
-
-              )}
-              </div>
-            </div>
-            )}
+              return (
+                <ParagraphRow
+                  key={`story-paragraph-${index}`}
+                  block={block}
+                  highlightConfig={highlightConfigs[index]?.text}
+                  isActive={index === activeIndex}
+                  onTypingStart={handleTypingStart}
+                  onTypingComplete={handleTypingComplete}
+                  showNext={index === activeIndex && index < paragraphs.length - 1}
+                  onNext={handleNext}
+                />
+              )
             })}
           </div>
-
         </section>
-        
       </section>
     </section>
   )
