@@ -53,8 +53,8 @@ const StoryCard = ({
 
   return (
     <article
-      className={`w-full max-w-[320px] rounded-xl border-2 border-gray-200/80 bg-white
-                  shadow-lg
+      className={`w-full max-w-[320px] rounded-2xl border-2 border-gray-200/80
+                  shadow-sm bg-white
                   flex flex-col gap-3
                   px-3 pt-3 pb-4
     `}
@@ -65,7 +65,7 @@ const StoryCard = ({
           <div className="flex items-center gap-4">
             <span
               className="flex h-10 w-10 items-center justify-center rounded-xl
-              bg-[#1db97b] text-white"
+              bg-[#1e52f1] text-white"
             >
               <Icon className="text-xl" />
             </span>
@@ -120,7 +120,7 @@ const StoryCard = ({
 
         <button
           type="button"
-          className="mt-3 w-full rounded-xl bg-[#1DB97B] py-2 text-sm font-semibold text-[#1f2937] transition hover:brightness-105"
+          className="mt-3 w-full rounded-xl bg-[#1e52f1] py-2 text-sm font-semibold text-white transition hover:brightness-105"
         >
           {ctaLabel}
         </button>

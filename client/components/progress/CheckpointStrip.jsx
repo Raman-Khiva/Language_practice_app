@@ -11,24 +11,24 @@ import React from 'react'
 const CheckpointStrip = () => {
   return (
     
-      <div className='h-1.5 w-full bg-gray-100 rounded-full
+      <div className='h-1 w-full  rounded-full
                       relative
-                      flex items-center justify-between gap-1
+                      flex items-center justify-between 
       ' >
-        <div className='h-1.5 w-full  rounded-full absolute top-0 left-0 z-0 
-                        bg-gradient-to-r from-[#1db97b] via-[#1db97b] via-40% to-transparent to-95%
+        <div className='h-1 w-full  rounded-full absolute top-0 left-0 z-0 
+                        bg-gradient-to-r from-[#2dc653] via-[#2dc653] via-40% to-transparent to-95%
         ' />
         {Array.from({ length: 4 }, (_, index) => (
           <div
             key={index}
-            className={`h-6.5 w-6.5 rounded-full z-10 
-                        ${index <=2 ? 'bg-[#1db97b]' : 'bg-gray-100'} border-3 border-white
+            className={`h-5.5 w-5.5 rounded-full z-10 
+                        ${index <=2 ? 'bg-[#2dc653]' : 'bg-gray-100'} border-3 border-white
                         flex items-center justify-center
                         shadow-sm
                         
            `}
           >
-            <div className='h-2 w-2  z-10 rounded-full bg-gray-200' />
+            <div className='h-1.5 w-1.5  z-10 rounded-full bg-gray-200' />
           </div>
         ))}
          

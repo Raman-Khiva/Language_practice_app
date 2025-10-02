@@ -35,7 +35,9 @@ const CapabilityCard = ({ badgeColor, badge, title, description, points, index, 
 
   return (
     <div 
-      className="h-screen flex items-center sticky top-0 justify-center"
+      className="h-screen w-fit flex items-center sticky top-0 justify-center
+                 overflow-x-hidden
+      "
       style={{
         zIndex: zIndex,
       
@@ -43,10 +45,7 @@ const CapabilityCard = ({ badgeColor, badge, title, description, points, index, 
     >
       <div
         className={`rounded-2xl  overflow-hidden  
-                   relative 
-                   bg-[rgb(247,247,247)]
-                   shadow-[0_0_5px_rgba(0,0,0,0.05)]
-
+                   relative card-bg
                   transition-all duration-300 ease-out
                    w-[70rem] mx-4 h-[36rem]
                    flex items-center justify-between

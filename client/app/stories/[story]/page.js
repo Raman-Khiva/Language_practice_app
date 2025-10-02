@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { storiesMock } from '@/mock/stories'
 import Highlighter from '@/components/visuals/Highlighter'
+import Image from 'next/image'
 
 const paragraphClass = 'text-2xl font-[700] ubuntu '
 const TYPING_INTERVAL = 32
@@ -307,6 +308,8 @@ const ParagraphRow = ({
   onTypingComplete,
   showNext,
   onNext,
+  sourceLang,
+  targetLang,
 }) => {
   const { text = '', translation = '' } = block || {}
   const [displayedText, setDisplayedText] = useState(isActive ? '' : text)
@@ -352,28 +355,55 @@ const ParagraphRow = ({
   }, [isActive, text, onTypingStart, onTypingComplete])
 
   return (
-    <div className='flex h-max gap-8'>
-      <div className={`flex-1 h-full leading-relaxed text-[#2c2c2d] ${paragraphClass}`}>
-        {renderHighlightedText(displayedText, highlightConfig)}
-      </div>
-      <div className={`flex-1 h-full leading-relaxed flex flex-col gap-2 ${paragraphClass}`}>
-        <p>{translation}</p>
-        {showNext && (
-          <div className='flex justify-end items-center py-2 px-8'>
-            <button
-              type='button'
-              onClick={isTyping ? undefined : onNext}
-              disabled={isTyping}
-              className={`text-lg px-8 py-1 rounded-lg transition-colors duration-150 ${
-                isTyping
-                  ? 'bg-blue-200 text-blue-500 cursor-not-allowed'
-                  : 'bg-blue-600 text-white hover:bg-blue-700'
-              }`}
-            >
-              {isTyping ? 'Typing…' : 'Next'}
-            </button>
+    <div className='flex h-max gap-6'>
+      
+
+      <div className='flex flex-1 gap-8'>
+        <div className='flex flex-1 items-start gap-2'>
+          <div className='mt-2 flex shrink-0 items-center justify-center rounded-full border-2 border-slate-600 p-[1.2px]'>
+            <Image
+              src='/spain.png'
+              alt='Spain flag'
+              width={32}
+              height={32}
+              className='h-7 w-7 shrink-0 rounded-full object-cover'
+            />
           </div>
-        )}
+          <div className={`h-full leading-relaxed text-[#2c2c2d] ${paragraphClass}`}>
+            {renderHighlightedText(displayedText, highlightConfig)}
+          </div>
+        </div>
+
+        <div className={`flex flex-1 items-start gap-2 ${paragraphClass}`}>
+          <div className='mt-2 flex shrink-0 items-center justify-center rounded-full border-2 border-slate-600 p-[1.2px]'>
+            <Image
+              src='/uk.png'
+              alt='United Kingdom flag'
+              width={32}
+              height={32}
+              className='h-7 w-7 shrink-0 rounded-full object-cover'
+            />
+          </div>
+          <div className='flex h-full flex-1 flex-col gap-2 leading-relaxed'>
+            <p>{translation}</p>
+            {showNext && (
+              <div className='flex justify-end items-center py-2 px-8'>
+                <button
+                  type='button'
+                  onClick={isTyping ? undefined : onNext}
+                  disabled={isTyping}
+                  className={`text-lg px-8 py-1 rounded-lg transition-colors duration-150 ${
+                    isTyping
+                      ? 'bg-blue-200 text-blue-500 cursor-not-allowed'
+                      : 'bg-blue-600 text-white hover:bg-blue-700'
+                  }`}
+                >
+                  {isTyping ? 'Typing…' : 'Next'}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -433,6 +463,8 @@ const page = () => {
                   onTypingComplete={handleTypingComplete}
                   showNext={index === activeIndex && index < paragraphs.length - 1}
                   onNext={handleNext}
+                  sourceLang={story?.sourceLanguage}
+                  targetLang={story?.targetLanguage}
                 />
               )
             })}

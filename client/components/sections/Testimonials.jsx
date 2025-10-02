@@ -61,7 +61,7 @@ const testimonialsBottom = [
 ]
 
 const TestimonialCard = ({ name, role, rating, quote }) => (
-  <div className='min-w-[18rem] max-w-xs bg-[rgb(246,246,246)] border border-black/5 rounded-2xl px-6 py-6 flex flex-col gap-4 shadow-[0_12px_30px_-10px_rgba(25,25,25,0.15)]'>
+  <div className='min-w-[18rem] max-w-xs  card-bg order border-black/5 rounded-2xl px-6 py-6 flex flex-col gap-4 '>
     <div className='flex items-center justify-between gap-4'>
       <div className='flex flex-col'>
         <h4 className='text-lg font-[600] text-black/85'>{name}</h4>
@@ -107,7 +107,7 @@ const TestimonialRow = ({ testimonials, direction }) => {
   }), [animateX])
 
   return (
-    <div className='overflow-hidden w-full'>
+    <div className='overflow-hidden h-max py-1 w-full'>
       <motion.div
         className='flex gap-6'
         initial={{ x: initialX }}

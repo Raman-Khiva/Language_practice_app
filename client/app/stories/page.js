@@ -94,26 +94,42 @@ const recentStoryActivity = [
   },
 ]
 
-const paddingX = 'px-3 sm:px-6 lg:px-10';
+const paddingX = 'px-3 sm:px-6 lg:px-16';
 
 const page = () => {
   return (
-    <div className='min-h-screen w-full bg-[#f4f2ff]'>
+    <div className='min-h-screen pb-20 w-full bg-[#fffefa]'>
       <Navbar />
-      <div className='pt-28 overflow-x-hidden pl-10 pr-5 grid grid-rows-[9rem_30rem_1fr] grid-cols-[auto_22rem] gap-2'>
-      <section className={`row-start-1 row-end-2 col-start-1 col-end-2 
-                        grid grid-cols-1 gap-3  
+      <div className={`pt-24 overflow-x-hidden grid grid-rows-[11rem_30rem_1fr] grid-cols-[auto_22rem] 
+                      gap-4 xl:gap-7   ${paddingX}
+      
+      `}>
+      
+
+      <section className={`row-start-1 row-end-2 col-start-1 col-end-2
+               flex flex-col gap-4 justify-between w-full  pl-4
+      `}>
+      <div className='w-full h-full flex flex-col items-start justify-start
+                      
+      '>
+        <h2 className='text-3xl font-semibold text-slate-900'>Discover your next story</h2>
+      </div>
+
+      <div className={`w-full h-full 
+                        grid grid-cols-1 gap-3 xl:gap-4 
                          sm:grid-cols-2 xl:grid-cols-4
-                         ${paddingX}`
-      }>
+      `}>
+
+
+        
         {storyStats.map((stat) => {
           const Icon = stat.icon
           return (
             <article
               key={stat.id}
-              className='flex flex-col items-start gap-3  
+              className='flex flex-col items-start gap-3  w-full
                           rounded-xl bg-white border-2 border-slate-300/40 
-                          h-32 max-w-60 pt-3 pb-1 pl-4 pr-2 
+                          h-max max-w-64 py-2 pl-4 pr-2  
                           shadow-[0_0_6px_rgba(0,0,0,0.06)] backdrop-blur-sm'
             >
              <div className='flex items-center gap-4'>
@@ -132,8 +148,10 @@ const page = () => {
             </article>
           )
         })}
+
+      </div>
       </section>
-      <section className='row-start-1 row-end-4 col-start-2 col-end-3 flex h-full w-full flex-col gap-10 overflow-hidden pr-2'>
+      <section className='row-start-1 row-end-4 col-start-2 col-end-3 flex h-full w-full flex-col  gap-10 overflow-hidden pr-2'>
         <div className='space-y-4'>
           <div className='flex flex-col gap-1'>
             <p className='text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-500'>Recommended Stories</p>
@@ -184,9 +202,9 @@ const page = () => {
         </div>
       </section>
       <section className={`row-start-2 row-end-4 col-start-1 col-end-2
-                          h-full w-full
-                          flex flex-wrap justify-between py-10  gap-4
-                          ${paddingX}
+                          h-full w-full pl-4
+                          flex flex-wrap justify-between  gap-4
+                          
       `}>
         {storyCardData.map((card, index) => (
             <StoryCard key={index} {...card} />

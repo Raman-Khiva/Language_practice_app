@@ -14,6 +14,12 @@
   font-weight: 700; /* You can also control weight */
 }
 
+.card-bg{
+  background-color: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.06);
+}
+
+
 .inter{
   font-family:  var(--font-inter);
   font-weight: 520;

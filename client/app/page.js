@@ -2,6 +2,7 @@ import Home from "@/components/pages/home.jsx";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Capabilites from "@/components/sections/Capabilites";
 import Features from "@/components/sections/Features";
+import WorkflowSection from "@/components/sections/WorkflowSection";
 import Testimonials from "@/components/sections/Testimonials";
 import Pricing from "@/components/sections/Pricing";
 import Footer from "@/components/sections/Footer";
@@ -27,13 +28,10 @@ export default function page() {
       ">
         <Capabilites/>
         <Features/>
+        <WorkflowSection/>
         <Testimonials/>
         
         <Pricing/>
-        <div className="h-screen">
-          nothing
-          <StoryCard/>
-        </div>
       </div>
       <Footer/>
        </div>

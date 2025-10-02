@@ -44,7 +44,7 @@ const policies = [
 
 const Footer = () => {
   return (
-    <footer className='w-full bg-[rgb(246,246,246)] text-black/80 pt-20 pb-10 px-8 md:px-24'>
+    <footer className='w-full bg-[rgb(249,249,249)] text-black/80 pt-20 pb-10 px-8 md:px-24'>
       <div className='max-w-6xl mx-auto flex flex-col gap-16'>
         <div className='grid grid-cols-1 md:grid-cols-4 gap-10 items-start'>
           <div className='flex flex-col gap-5'>
