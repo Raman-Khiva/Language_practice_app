@@ -1,6 +1,7 @@
 import React from 'react'
 import { LuCompass } from 'react-icons/lu'
 import CheckpointStrip from '../progress/CheckpointStrip'
+import Link from 'next/link'
 
 const statusStyles = {
   completed: {
@@ -86,7 +87,7 @@ const StoryCard = ({
       </div>
 
       <span className="text-lg font-[500]">{lessonSubtitle}</span>
-      <div className="">
+      <div className="w-full flex flex-col justify-between">
         <div className="mt-3 flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.10em] text-[#94a3b8]">
           <span className="text-[#1f2a5a] tracking-[0.10em]">{journeyHeading}</span>
           <span>{checkpointLabel} {checkpointsCompleted}/{totalCheckpoints}</span>
@@ -118,12 +119,12 @@ const StoryCard = ({
           })}
         </div> */}
 
-        <button
-          type="button"
-          className="mt-3 w-full rounded-xl bg-[#1e52f1] py-2 text-sm font-semibold text-white transition hover:brightness-105"
+        <Link
+          href="/stories/story"
+          className="mt-3 w-full text-center rounded-xl bg-[#1e52f1] py-2 text-sm font-semibold text-white transition hover:brightness-105"
         >
           {ctaLabel}
-        </button>
+        </Link>
       </div>
     </article>
   )
