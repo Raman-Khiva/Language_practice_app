@@ -52,12 +52,12 @@ const CapabilityCard = ({ badgeColor, badge, title, description, points, index, 
                    
                    `}
       >
-        <div className="flex 
+        <div className="flex
                         w-full h-full
          ">
           {/* Left Content Section */}
-          <div className="flex-1 px-10 py04
-                          flex flex-col
+          <div className="flex-1 px-10 py-12
+                          
                           items-start justify-center
           ">
             {/* Badge */}
@@ -97,9 +97,7 @@ const CapabilityCard = ({ badgeColor, badge, title, description, points, index, 
           
           {/* Right Image Section - Skeleton Placeholder */}
           <div className='w-[50%] p-5 flex items-center justify-center'>
-            <div className='h-[100%] w-[100%] bg-violet-200/50 rounded-lg backdrop-blur-[10rem]'>
-              {/* Placeholder for future image/content */}
-            </div>
+             <img src='/Feature2.avif' alt=""   className='h-full w-full object-cover rounded-xl' /> 
           </div>
         </div>
       </div>

@@ -1,59 +1,30 @@
 'use client'
 
-import SideBar from '@/components/layout/SideBar'
 // import LessonCardNew from '@/components/cards/LessonCardNew';
 import LineGraph from '@/components/visuals/lineGraph';
-// import { MdKeyboardDoubleArrowLeft } from "react-icons/md"
-// import { BsArrowsAngleExpand } from "react-icons/bs";
-// import { FaExpandAlt } from "react-icons/fa";
-//import CircularProgress from '@/components/progress/ProgessBar/circularProgressBar';
-// import CircularProgressNew from '@/components/progress/CircularProgressNew';
-import { useEffect, useState } from 'react';
+
+
+import { useState } from 'react';
 import ProgressCardsBar from '@/components/progress/ProgressCardsBar';
 import { selectSideBarOpen } from '@/app/store/slices/sideBarSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchLessons, selectLoading, selectCurrentLessons } from '@/app/store/slices/lessonsSlices';
+import {selectCurrentLessons } from '@/app/store/slices/lessonsSlices';
 
 import LessonsSection from '@/components/sections/LessonsSection';
-// import { MdArrowDropDown } from 'react-icons/md';
-// import MultiSelectDropdown from '@/components/forms/MultiSelectDropDown';
 
-import Link from 'next/link';
 
 const page = () => {
   const barOpen = useSelector(selectSideBarOpen);
-  const currentLessons = useSelector(selectCurrentLessons);
   const [mainExpanded, setMainExpanded] = useState(true);
-  const dispatch = useDispatch();
   // const loading = useSelector(selectLoading);
-  const [difficulty , setDifficulty ] = useState(1);
 
   
   
-  let gridCols = barOpen ? 'grid-cols-[224px_1fr]': 'grid-cols-[70px_1fr]';
   let displayPropertyGraphs = mainExpanded ? ' hidden' : '';
   let displayPropertyMain = mainExpanded ? ' col-start-1 col-end-9 row-start-1 row-end-11' : ' col-start-1 col-end-8 row-start-3 row-end-11';
   let displayPropertyStatsBar = mainExpanded ? ' col-start-9 col-end-11 row-start-1 row-end-11 flex-col py-16 justify-evenly' : 'col-start-1 col-end-8 row-start-1 row-end-3';
   
-  // useEffect(()=>{
-  //   console.log('ENTERED USE-EFFECT TO DISAPATCH fetchLessons');
-  //   dispatch(fetchLessons({difficulty : difficulty}));
-  // },[dispatch,difficulty]);
-
-  // const handleChange = () =>{
-  //    const idx = 1 + Math.ceil(Math.random()*10);
-  //    setDifficulty(idx);
-  //    return ;
-  // }
   
-
-  // if(loading){
-  //   return (<div className='h-screen w-full grid place-items-center'>
-  //       loading lessons
-  //   </div>)
-  // }
-  
-
   return (
         
         <div className={`  text-3xl font-[500] 
@@ -69,7 +40,7 @@ const page = () => {
                               transition-all duration-800 ease-in-out
                              ` + displayPropertyStatsBar} />
             
-            <div className={`col-span-3 row-span-3 grid place-items-center rounded-xl 
+          <div className={`col-span-3 row-span-3 grid place-items-center rounded-xl 
                             min-h-0 bg-white/20
                             shadow-[0_0_10px_rgba(0,0,0,0.1)] border-2 border-[#c3c3c3d2]
                             transition-all duration-800 ease-in-out

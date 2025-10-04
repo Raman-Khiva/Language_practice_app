@@ -7,6 +7,7 @@ import Testimonials from "@/components/sections/Testimonials";
 import Pricing from "@/components/sections/Pricing";
 import Footer from "@/components/sections/Footer";
 import StoryCard from "@/components/cards/StoryCard";
+import LessonCard from "@/components/cards/LessonCard";
 
 export default function page() {
   return ( //bg-[#fbfaf8] best fit :#f2f4f3
@@ -17,20 +18,16 @@ export default function page() {
                     z-20 
                     
     ">
-      
-
-
       <Navbar/>
       <Home/>
       <div className="w-screen 
-                      rounded-t-[10rem]
-                      
+                      rounded-t-[10rem]                
       ">
+        
+        <LessonCard index={0} />
         <Capabilites/>
         <Features/>
-        <WorkflowSection/>
         <Testimonials/>
-        
         <Pricing/>
       </div>
       <Footer/>

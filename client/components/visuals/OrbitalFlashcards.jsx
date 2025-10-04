@@ -6,6 +6,7 @@ import FlashCardNew from '../cards/NewFlashCard'
 import { HiOutlineSparkles } from 'react-icons/hi2'
 import { FiMic, FiBookOpen } from 'react-icons/fi'
 import Image from 'next/image'
+import OrbitCard from '../cards/OrbitCard'
 
 const orbitCards = [
   {
@@ -114,17 +115,8 @@ const OrbitalFlashcards = () => {
               >
                 
                 
-                  <FlashCardNew
-                    fact={card.fact}
-                    tag={card.tag}
-                    icon={card.icon}
-                    accentColor={card.accentColor}
-                    borderColor={card.borderColor}
-                    iconClassName={card.iconClassName}
-                    iconWrapperClassName={card.iconWrapperClassName}
-                    containerClassName='w-64 md:w-72'
-                    headerClassName='text-[13px] font-[600] tracking-tight'
-                  />
+                  <OrbitCard />
+                     
                 
               </motion.div>
             )

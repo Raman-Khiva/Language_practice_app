@@ -116,15 +116,15 @@ const Capabilites = () => {
   return (
     <div className='flex flex-col items-center justify-center px-32 py-40'>
       <div className='flex items-start justify-evenly gap-10'>
-        <motion.div 
-          ref={ref}
-          initial={{ x: -200, opacity: 0 }}
-          imate={controls}
-          className='h-[34rem] w-[29rem] bg-violet-300/30
-                     flex items-center justify-center
-                     rounded-3xl'
-        >
-        </motion.div>
+        
+          
+       
+          <img src='/Feature1.avif' alt="" 
+              className='h-[34rem] w-[29rem]
+                        flex items-center justify-center
+                        rounded-3xl'
+          />
+        
         <div className='flex flex-col items-start gap-4 w-[45%] py-2
                         behavior: smooth;
         '>
