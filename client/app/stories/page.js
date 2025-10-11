@@ -96,7 +96,7 @@ const recentStoryActivity = [
 
 const paddingX = 'px-3 sm:px-6 lg:px-16';
 
-const page = () => {
+const StoriesPage = () => {
   return (
     <div className='min-h-screen pb-20 w-full bg-[#fffefa]'>
       <Navbar />
@@ -215,4 +215,4 @@ const page = () => {
   )
 }
 
-export default page
+export default StoriesPage

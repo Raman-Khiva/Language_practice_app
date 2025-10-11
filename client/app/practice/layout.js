@@ -3,16 +3,16 @@ import SideBar from '@/components/layout/SideBar';
 import Link from 'next/link';
 import React, { useState } from 'react'
 
-const page = ({children}) => {
+const Layout = ({children}) => {
     const [sideBarOpen, setSideBarOpen] = useState(true);
 
     const gridCols = sideBarOpen? " grid-cols-[200px_calc(100%-200px)]": " grid-cols-[80px_calc(100%-80px)]";
 
   return (
-    <div className={`w-full h-screen p-1 pb-0 pr-2
+    <div className={`w-full h-screen overflow-hidden
                     grid ${gridCols} grid-rows-[60px_1fr] gap-1
                     transition-all duration-500 ease-in-out
-                    bg-sky-100/40 backdrop-blur-3xl
+                      bg-[#fffefa] backdrop-blur-3xl 
     `}>
       <div className='flex items-center justify-center
                       col-span-1 row-span-2
@@ -33,10 +33,8 @@ const page = ({children}) => {
                 '
           >
             <Link href='/'>Home</Link>
-            <Link href='/'>Learning lab</Link>
             <Link href='/practice/library'>Practice lab</Link>
-            <Link href='/'>Reading lab</Link>
-            <Link href='/'>Speaking lab</Link>
+            <Link href='/stories'>Reading lab</Link>
           </div>
         
        </div>
@@ -50,4 +48,4 @@ const page = ({children}) => {
   )
 }
 
-export default page
+export default Layout

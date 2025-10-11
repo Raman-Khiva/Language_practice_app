@@ -1,5 +1,5 @@
 'use client'
-import { useContext, useState } from 'react'
+import {useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -10,15 +10,20 @@ export default function SignupPage() {
   const auth = useSelector(selectAuth);
   const dispatch = useDispatch();
   const router = useRouter()
-  if(auth.isAuthenticated){
-    router.back();
-    return null;
-  }
   const search = useSearchParams()
   const next = search.get('next') || '/'
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+   
+ 
+  if(auth.isAuthenticated){
+    router.back();
+    return null;
+  }
+  
+
+
 
   const signinHref = `/login?next=${encodeURIComponent(next)}`
 

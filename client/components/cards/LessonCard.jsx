@@ -13,9 +13,9 @@ export default function LessonCard({
   difficulty = 'Intermediate',
   title = 'Podcast Discussions',
   completionPercentage = 100,
-  lessonId,
   index,
-  
+  lessonId,
+  currentLesson,
 }){
 
     const dispatch = useDispatch();
@@ -32,36 +32,30 @@ export default function LessonCard({
 
 
   return (
-    <div className={` bg-white rounded-3xl shadow-xl p-4 w-full max-w-[16rem] `}>
+    <div className={` bg-white rounded-3xl shadow-xl p-3 w-full max-w-[14rem]
+                      flex flex-col justify-between gap-1.5
+    `}>
       {/* Header Section */}
-      <div className=" p-3">
-        <div className="flex items-center justify-between mb-1">
-          <h2 className="text-md font-bold leading-tight text-gray-900">Lesson {index+1}</h2>
-          <div clllassName="flex gap-1 text-sm text-yellow-500">
-            {/* <Zap className="w-5 h-5 fill-yellow-500" /> */}
-            <span className="font-bold text-gray-900">{xp} XP</span>
-          </div>
+      <div className=""> 
+        <div className="flex items-center justify-between mb-1 ">
+          <h2 className="text-lg font-bold leading-tight text-gray-900">Lesson {index+1}</h2>
+          <span className="text-sm leading-tight font-bold text-gray-900">{currentLesson.difficulty}</span>
         </div>
         
-        <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-gray-700" />
-            <span className=" text-gray-900">{difficulty}</span>
+        <div className="flex items-center justify-betjween text-sm ">
+          <div className="flex items-center gap-1">
+            <TrendingUp className=" h-4 w-4 text-gray-700" />
+            <span className=" text-gray-900">{currentLesson.category}</span>
           </div>
           <span className="text-gray-600">{lessonId}</span>
         </div>
       </div>
 
       {/* Title */}
-      <h3 className="text-md pb-4 pt-2 font-bold text-gray-900 mb-4">{title}</h3>
-       
-      <CheckpointStrip/>
-
-
-      
+      <h3 className="text-lg pb-1 pt-2 font-bold text-gray-900 ">{title}</h3>
 
       {/* Completion Section */}
-      <div className="bg-white rounded-2xl  py-6 px-3 flex items-center justify-between">
+      <div className="bg-white rounded-2xl  py-2 px-3 flex items-center justify-between">
         <div>
           <div className="text-lg font-bold text-gray-900 ">{completionPercentage}%</div>
           <div className="text-sm text-gray-600">Complete</div>
@@ -72,6 +66,9 @@ export default function LessonCard({
             <Award className="w-6 h-6 text-yellow-500 fill-yellow-500" />
           </div>
         </div>
+      </div>
+      <div className="pt-4 pb-6">
+        <CheckpointStrip />
       </div>
 
       <Button 

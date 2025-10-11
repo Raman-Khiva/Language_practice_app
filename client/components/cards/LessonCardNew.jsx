@@ -31,11 +31,9 @@ const LessonCardNew = ({ lessonId, index,currentLesson }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleClick = () => {
-    // Dispatch thunk with index
+  const handleClick = () => { 
     console.log('LESSON CARD : Thunk dispatched')
     dispatch(setLesson({ index: index }));
-    // Navigate to practice/field
     router.push('/field');
   };
 
@@ -44,10 +42,8 @@ const LessonCardNew = ({ lessonId, index,currentLesson }) => {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: easeOut }}
-      className="  rounded-xl   h-fit sm:w-auto cursor-pointer 
-                   
-                   
-      "
+      className="  rounded-xl   h-fit sm:w-auto cursor-pointer "
+
       onClick={handleClick}
     >
       {/* blue gradient top
@@ -55,7 +51,7 @@ const LessonCardNew = ({ lessonId, index,currentLesson }) => {
       <div className="flex flex-col justify-between 
                       w-full sm:w-48 h-52 sm:h-60
                       rounded-2xl px-2 sm:px-2 
-                      border-5 border-[#fff] 
+     K                 border-5 border-[#fff] 
                       shadow-[0_0_20px_rgba(0,0,0,0.13)]
                       bg-gray-100/60 backdrop-blur-3xl
                       relative overflow-hidden

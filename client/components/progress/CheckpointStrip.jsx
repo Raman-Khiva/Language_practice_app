@@ -8,13 +8,14 @@ import React from 'react'
 //     "right-1/3 translate-x-[50%]",
 //     "right-0 translate-x-[50%]",
 // ]
-const CheckpointStrip = () => {
+const CheckpointStrip = ({className}) => {
   return (
     
-      <div className='h-1 w-full  rounded-full
+      <div className={`h-1 w-full  rounded-full
                       relative
                       flex items-center justify-between 
-      ' >
+                      ` + className}
+      >
         <div className='h-1 w-full  rounded-full absolute top-0 left-0 z-0 
                         bg-gradient-to-r from-[#2dc653] via-[#2dc653] via-40% to-transparent to-95%
         ' />

@@ -28,7 +28,11 @@ const LessonsSection = ({setMainExpanded, mainExpanded}) => {
               <div className='flex-1 h-full overflow-auto p-3 w-full '>
                 <div className='w-full  flex gap-4 flex-wrap my-1.5 justify-center pt-6 pb-20'>
                   {currentLessons?.map((currentLesson,i)=>(
-                    <LessonCard key={i} index={i} />
+                    <LessonCard 
+                      key={i} 
+                      index={i} 
+                      currentLesson={currentLesson}
+                    />
                   ))}
                 </div>
               </div>

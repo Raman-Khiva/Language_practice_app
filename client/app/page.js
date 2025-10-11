@@ -24,7 +24,7 @@ export default function page() {
                       rounded-t-[10rem]                
       ">
         
-        <LessonCard index={0} />
+       
         <Capabilites/>
         <Features/>
         <Testimonials/>

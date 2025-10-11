@@ -9,7 +9,7 @@ import CategoryCard from '@/components/cards/CategoryCard'
 
 
 
-const page = () => {
+const CategoriesPage = () => {
   const dispatch = useDispatch();
   const categories = useSelector(selectCategories);
 
@@ -95,4 +95,4 @@ const page = () => {
   )
 }
 
-export default page
+export default CategoriesPage

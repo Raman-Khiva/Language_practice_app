@@ -410,7 +410,7 @@ const ParagraphRow = ({
 }
 
 
-const page = () => {
+const StoryPage = () => {
   const story = useMemo(() => storiesMock?.[0] ?? null, [])
   const paragraphs = useMemo(() => story?.paragraphs ?? [], [story])
 
@@ -475,4 +475,4 @@ const page = () => {
   )
 }
 
-export default page
+export default StoryPage

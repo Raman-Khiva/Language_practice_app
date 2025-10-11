@@ -11,9 +11,9 @@ import {ScoreCard, GoodScoreCard, AverageScoreCard, NeedsImprovementScoreCard} f
 import AnswerSection from '@/components/feedback/AnswerSection'
 import { addLessonToProgress } from '../store/slices/userProgressSlice'
 
-const cards = [<ScoreCard/>, <GoodScoreCard/>, <AverageScoreCard/>, <NeedsImprovementScoreCard/>];
 
-const page = () => {
+
+const FieldPage = () => {
     const currentLesson = useSelector(selectCurrentLesson);
     const [currentIdx, setIdx] = useState(0);
     const [userAnswer, setUserAnswer] = useState("");
@@ -26,11 +26,6 @@ const page = () => {
     const [borderStyling , setBorderStyling] = useState('border-violet-600/90 ring-5 ring-violet-300/50');
     const dispatch = useDispatch();
     
-    // const changeCard = ()=>{
-    //     const idx = Math.ceil(Math.random()*3);
-    //     setCurrentCard(idx);
-    // }
-    // Validate translation function
     const validateTranslation = async (originalText, spanishTranslation) => {
         try {
             setIsValidating(true);
@@ -108,17 +103,18 @@ const page = () => {
 
         }
     };
-
+    
+    const status = validationResult.status || "NULL";
 
     useEffect(() => {
-      if (validationResult && validationResult.status === "CORRECT") {
+      if (status === "CORRECT") {
         setBorderStyling('ring-5 border-green-600 ring-[#b2f1b6d9]')
       }
-      else if(validationResult && validationResult.status === "WRONG"){
+      else if(status === "WRONG"){
         setBorderStyling('ring-4 border-red-500 ring-red-200');
       }
       else setBorderStyling('border-violet-600/90 ring-5 ring-violet-300/50')
-    }, [validationResult?.status]);
+    }, [status]);
 
 
 
@@ -234,4 +230,4 @@ const page = () => {
     )
 }
 
-export default page
+export default FieldPage

@@ -3,7 +3,7 @@ import { BiBulb } from 'react-icons/bi'
 
 const OrbitCard = () => {
   return (
-         <div className=" relative w-76 h-44 p-0.5  shadow-md rounded-2xl ">
+         <div className=" relative w-76 h-44 p-0.5  shadow-md rounded-2xl  ">
             
             <div className="absolute inset-0  rounded-2xl z-[1] opacity-60 group-hover:opacity-100 blur-xl  transition duration-500 will-change-transform
                bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"

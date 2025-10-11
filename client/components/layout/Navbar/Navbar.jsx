@@ -51,14 +51,9 @@ export default function Navbar() {
                             font-[500] 
           '>
             <Link href="/practice/library" className=" text-gray-800 hover:text-gray-900 transition-colors">
-              Learning lab
-            </Link>
-            <Link href="/practice/library" className=" text-gray-800 hover:text-gray-900 transition-colors">
               Practice lab
             </Link>
-            <Link href="/practice/library" className=" text-gray-800 hover:text-gray-900 transition-colors">
-              Speaking lab
-            </Link>
+
             <Link href="/stories" className=" text-gray-800 hover:text-gray-900 transition-colors">
               Reading lab
             </Link>

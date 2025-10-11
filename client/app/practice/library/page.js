@@ -13,7 +13,7 @@ import {selectCurrentLessons } from '@/app/store/slices/lessonsSlices';
 import LessonsSection from '@/components/sections/LessonsSection';
 
 
-const page = () => {
+const LibraryPage = () => {
   const barOpen = useSelector(selectSideBarOpen);
   const [mainExpanded, setMainExpanded] = useState(true);
   // const loading = useSelector(selectLoading);
@@ -35,8 +35,7 @@ const page = () => {
             
             <ProgressCardsBar className={` flex place-items-center justify-evenly
                               px-5  rounded-xl 
-                              shadow-[0_0_10px_rgba(0,0,0,0.1)] 
-                              border-2 border-[#c3c3c3d2] bg-white/20  gap-2 min-h-0 
+                                gap-2 min-h-0 
                               transition-all duration-800 ease-in-out
                              ` + displayPropertyStatsBar} />
             
@@ -55,10 +54,8 @@ const page = () => {
             {/*main content area*/}
             <div className={` flex flex-col gap-2  rounded-xl 
                             relative row-span-10 col-span-8 
-                            shadow-[0_0_10px_rgba(0,0,0,0.1)] 
                             transition-all duration-800 ease-in-out
-                            bg-violet-50/40 border-2 border-[#c3c3c3d2]
-                            backdrop-blur-3xl backdrop-saturate-50
+                            
                             
                           ` + displayPropertyMain}
             >
@@ -84,4 +81,4 @@ const page = () => {
   )
 }
 
-export default page
+export default LibraryPage

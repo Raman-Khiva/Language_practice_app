@@ -34,8 +34,8 @@ const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
     <>
       {isSideBarOpen ?
         (
-          <div className='bg-[#ffffff] py-4 px-3 rounded-xl 
-                          shadow-[0_0_10px_rgba(0,0,0,0.1)] border-2 border-[#c3c3c3d2]
+          <div className='bg-[#ffffff] py-4 px-3
+                           border-r-2 border-[#c3c3c3d2]
                           w-full h-full
                           flex flex-col justify-between
                           text-lg font-bold relative ubuntu
@@ -108,11 +108,10 @@ const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
             </div>
           </div>
         ) : (
-          <div className=' bg-white  rounded-xl py-4 px-1
+          <div className='bg-white py-4 px-1
                           h-full w-full
                           flex flex-col justify-between items-center
-
-                           shadow-[0_0_10px_rgba(0,0,0,0.1)] border-2 border-[#c3c3c3d2]
+                          border-r-2 border-[#c3c3c3d2]
                           
             '>
             
