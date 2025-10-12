@@ -67,9 +67,6 @@ const AuthLoader = ({ children }) => {
     }
   }, [isInitialized, isAuthenticated, userProgress?.isFetched, userProgress?.isLoading, dispatch]);
 
-//   useEffect(() => {
-//     dispatch(fetchLessons({ difficulty: 10 }));
-// }, [dispatch]);
 
   // ---- conditional returns after hooks ----
   if (!isInitialized) {

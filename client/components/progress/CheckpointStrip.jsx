@@ -2,28 +2,50 @@ import React from 'react'
 
 
 
-// const xPosition = [
-//     "left-0 -translate-x-[50%]",
-//     "left-1/3 -translate-x-[50%]",
-//     "right-1/3 translate-x-[50%]",
-//     "right-0 translate-x-[50%]",
-// ]
-const CheckpointStrip = ({className}) => {
+
+const CheckpointStrip = ({className,percentage}) => {
+
+  // 1 10 30 50
+
+  let points = 0;
+  if(percentage >= 50){
+    points = 4;
+  }else if(percentage >= 30){
+    points = 3;
+  }else if(percentage >= 10){
+    points = 2;
+  }else if(percentage >= 1){
+    points = 1;
+  }
+
+  const first = percentage >= 10 ? 10 : percentage;
+  percentage -= first;
+  const second = percentage >= 20 ? 20 : percentage;
+  percentage -= second;
+  const third = percentage >= 20 ? 20 : percentage;
+  percentage -= third;
+
+  const width = (first/10 * 100/3) + (second/20 * 100/3) + (third/20 * 100/3);
+ 
+
+  
   return (
     
       <div className={`h-1 w-full  rounded-full
-                      relative
+                      relative bg-gray-50
                       flex items-center justify-between 
                       ` + className}
       >
-        <div className='h-1 w-full  rounded-full absolute top-0 left-0 z-0 
-                        bg-gradient-to-r from-[#2dc653] via-[#2dc653] via-40% to-transparent to-95%
-        ' />
+        <div className={`h-1 rounded-full absolute top-0 left-0 z-0 
+                        bg-[#2dc653] `
+        }
+          style={{width: `${width}%`}}
+        />
         {Array.from({ length: 4 }, (_, index) => (
           <div
             key={index}
             className={`h-5.5 w-5.5 rounded-full z-10 
-                        ${index <=2 ? 'bg-[#2dc653]' : 'bg-gray-100'} border-3 border-white
+                        ${index < points ? 'bg-[#2dc653]' : 'bg-gray-100'} border-3 border-white
                         flex items-center justify-center
                         shadow-sm
                         

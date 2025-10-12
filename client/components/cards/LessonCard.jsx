@@ -5,21 +5,23 @@ import { Zap, TrendingUp, Award } from 'lucide-react';
 import CheckpointStrip from '../progress/CheckpointStrip';
 import Button from '../common/Button';
 import { setLesson } from '@/app/store/slices/currentLessonSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { selectLessonsStats } from '@/app/store/slices/userProgressSlice';
 
 export default function LessonCard({
   xp = 150,
   difficulty = 'Intermediate',
   title = 'Podcast Discussions',
-  completionPercentage = 100,
   index,
   lessonId,
   currentLesson,
 }){
-
+    
+    
     const dispatch = useDispatch();
     const router = useRouter();
+    const lessonsStats = useSelector(selectLessonsStats);
     
 
     const handleClick = () => { 
@@ -27,9 +29,12 @@ export default function LessonCard({
       dispatch(setLesson({ index: index }));
       router.push('/field');
     };
+
+    const currentLessonStats = lessonsStats?.find(stat => stat.lessonId === currentLesson._id) || {};
+    const attempts = currentLessonStats.totalSuccAttempts || 0;
+    const bestScore = currentLessonStats.bestScore || 0;
+
     
-
-
 
   return (
     <div className={` bg-white rounded-3xl shadow-xl p-3 w-full max-w-[14rem]
@@ -57,7 +62,7 @@ export default function LessonCard({
       {/* Completion Section */}
       <div className="bg-white rounded-2xl  py-2 px-3 flex items-center justify-between">
         <div>
-          <div className="text-lg font-bold text-gray-900 ">{completionPercentage}%</div>
+          <div className="text-lg font-bold text-gray-900 ">{bestScore}%</div>
           <div className="text-sm text-gray-600">Complete</div>
         </div>
         
@@ -68,7 +73,7 @@ export default function LessonCard({
         </div>
       </div>
       <div className="pt-4 pb-6">
-        <CheckpointStrip />
+        <CheckpointStrip percentage={attempts} />
       </div>
 
       <Button 

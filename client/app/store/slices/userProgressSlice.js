@@ -2,33 +2,30 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Async thunks for user progress
 const baseApi = 'http://localhost:5000/api'
+
+
+
 export const getUserProgress = createAsyncThunk(
-  'userProgress/getUserProgress',
+  "userProgress/getUserProgress",
   async (_, { getState, rejectWithValue }) => {
     try {
       console.log("GET-USER-PROGRESS: Thunk called");
 
       const state = getState();
       console.log("GET-USER-PROGRESS: Current state -", state);
-
-      console.log("GET-USER-PROGRESS : AUTH STATE BEFORE ACCESSING TOKEN ,", state.auth);
       const token = state.auth.token;
       console.log("GET-USER-PROGRESS: Extracted token -", token);
-
       if (!token) {
         console.log("GET-USER-PROGRESS: No token found, rejecting");
         return rejectWithValue('No token found');
       }
 
-      console.log("GET-USER-PROGRESS: Sending request to", `${baseApi}/progress`);
-
-      const response = await fetch(`${baseApi}/progress`, {
+      const response = await fetch(`${baseApi}/progress/getUserProgress`, {
         headers: {
           'Authorization': `Bearer ${token}`,
-        },
+          'Content-Type': 'application/json',
+        }
       });
-
-      console.log("GET-USER-PROGRESS: Response status -", response.status);
 
       const data = await response.json();
       console.log("GET-USER-PROGRESS: Response data -", data);
@@ -37,25 +34,76 @@ export const getUserProgress = createAsyncThunk(
         console.log("GET-USER-PROGRESS: API returned failure");
         return rejectWithValue(data.message || 'Failed to fetch progress');
       }
-
-      console.log("GET-USER-PROGRESS: Successfully fetched progress");
-      console.log("GET-USER-PROGRESS: Progress- TotalCount",data.progress.totalCount);
-      console.log("GET-USER-PROGRESS: Progress - DailyCount",data.progress.dailyCount);
-      console.log("GET-USER-PROGRESS: Progress - LessonsList", data.progress.lessonsList);
-
       return {
-        totalCount: data.progress.totalCount,
-        dailyCount: data.progress.dailyCount,
-        lessonsList: data.progress.lessonsList,
-        success: data.success
-      };
+        lessonsStats: data.lessonsStats,
+        dailyCount: data.dailyCount,
+        categoryStats: data.categoryStats, 
+      }
 
-    } catch (error) {
-      console.log("GET-USER-PROGRESS: Error occurred -", error.message);
-      return rejectWithValue(error.message || 'Failed to fetch progress');
+
+    }catch (error) {
+      return rejectWithValue(error.message || 'Network error');
     }
+
   }
 );
+
+
+
+// export const getUserProgress = createAsyncThunk(
+//   'userProgress/getUserProgress',
+//   async (_, { getState, rejectWithValue }) => {
+//     try {
+//       console.log("GET-USER-PROGRESS: Thunk called");
+
+//       const state = getState();
+//       console.log("GET-USER-PROGRESS: Current state -", state);
+
+//       console.log("GET-USER-PROGRESS : AUTH STATE BEFORE ACCESSING TOKEN ,", state.auth);
+//       const token = state.auth.token;
+//       console.log("GET-USER-PROGRESS: Extracted token -", token);
+
+//       if (!token) {
+//         console.log("GET-USER-PROGRESS: No token found, rejecting");
+//         return rejectWithValue('No token found');
+//       }
+
+//       console.log("GET-USER-PROGRESS: Sending request to", `${baseApi}/progress`);
+
+//       const response = await fetch(`${baseApi}/progress`, {
+//         headers: {
+//           'Authorization': `Bearer ${token}`,
+//         },
+//       });
+
+//       console.log("GET-USER-PROGRESS: Response status -", response.status);
+
+//       const data = await response.json();
+//       console.log("GET-USER-PROGRESS: Response data -", data);
+
+//       if (!data.success) {
+//         console.log("GET-USER-PROGRESS: API returned failure");
+//         return rejectWithValue(data.message || 'Failed to fetch progress');
+//       }
+
+//       console.log("GET-USER-PROGRESS: Successfully fetched progress");
+//       console.log("GET-USER-PROGRESS: Progress- TotalCount",data.progress.totalCount);
+//       console.log("GET-USER-PROGRESS: Progress - DailyCount",data.progress.dailyCount);
+//       console.log("GET-USER-PROGRESS: Progress - LessonsList", data.progress.lessonsList);
+
+//       return {
+//         totalCount: data.progress.totalCount,
+//         dailyCount: data.progress.dailyCount,
+//         lessonsList: data.progress.lessonsList,
+//         success: data.success
+//       };
+
+//     } catch (error) {
+//       console.log("GET-USER-PROGRESS: Error occurred -", error.message);
+//       return rejectWithValue(error.message || 'Failed to fetch progress');
+//     }
+//   }
+// );
 
 
 // Async thunk for adding lesson progress (FnF style)
@@ -113,16 +161,13 @@ export const addLessonToProgress = createAsyncThunk(
 
 // Initial state
 const initialState = {
-  totalCount:[], //list of objects each having category (string) and difficulty (list of size 12 representing each difficulty)
-  dailyCount:[],
-  lessonsList : [], //list of ids (stings)
+  lessonsStats           : [],
+  dailyCount             : [],
+  categoryStats          : [],
   difficultyWiseProgress : [],
-  totalLessons : [10,12,13,12,18,14,20,22,19,23,25,21],
-  totalDone : 0,
-  totalAce : 0,
-  isFetched : false,
-  isLoading: false,
-  error: null,
+  isFetched              : false,
+  isLoading              : false,
+  error                  : null,
 };
 
 
@@ -137,11 +182,11 @@ const userProgressSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(getUserProgress.fulfilled, (state, action) => {
-        state.isLoading = false;
+      .addCase(getUserProgress.fulfilled, (state, action)=>{
+        state.lessonsStats = action.payload.lessonsStats;
+        state.categoryStats = action.payload.categoryStats;
         state.dailyCount = action.payload.dailyCount;
-        state.lessonsList = action.payload.lessonsList;
-        state.totalCount = action.payload.totalCount;
+        state.isLoading = false;
         state.error = null;
         state.isFetched = true;
       })
@@ -150,43 +195,18 @@ const userProgressSlice = createSlice({
         state.error = action.payload;
         state.isFetched = true;
       })
-
-      
-      // Add lesson (FnF style) - Updated fulfilled case
-      .addCase(addLessonToProgress.fulfilled, (state, action) => {
-        const { lessonId, category, difficulty } = action.meta.arg; // Get original arguments
-        
-        console.log('NEW LESSONS LIST BEFORE UPDATES :',state.lessonsList);
-        
-        if (!state.lessonsList.includes(lessonId)) {
-          state.lessonsList.push(lessonId);
-        }
-        
-        console.log('NEW LESSONS LIST AFTER UPDATES :',state.lessonsList);
-
-      })
-
-      .addCase(addLessonToProgress.rejected, (state, action) => {
-        state.error = action.payload;
-      });
       
   },
 });
 
-export const {
-  clearProgressError,
-  resetProgress,
-  updateProgressStats,
-  addToRecentActivity,
-  calculateCompletionPercentage
-} = userProgressSlice.actions;
 
 // Selectors
-export const selectUserProgress = (state) => state.userProgress;
-export const selectProgressLoading = (state) => state.userProgress.isLoading;
+export const selectUserProgress      = (state) => state.userProgress;
+export const selectProgressLoading   = (state) => state.userProgress.isLoading;
 export const selectProgressIsFetched = (state) => state.userProgress.isFetched;
-export const selectProgressError = (state) => state.userProgress.error;
-export const selectProgressStats = (state) => state.userProgress.progressStats;
-
+export const selectProgressError     = (state) => state.userProgress.error;
+export const selectLessonsStats      = (state) => state.userProgress.lessonsStats;
+export const selectDailyCount        = (state) => state.userProgress.dailyCount;
+export const selectCategoryStats     = (state) => state.userProgress.categoryStats;
 
 export default userProgressSlice.reducer;
