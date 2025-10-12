@@ -48,13 +48,13 @@ export default function Navbar() {
           </Link>
 
           <div className='flex-1 flex items-center justify-center gap-4 lg:gap-10
-                            font-[500] 
+                            
           '>
-            <Link href="/practice/library" className=" text-gray-800 hover:text-gray-900 transition-colors">
+            <Link href="/practice/library" className=" text-gray-900 hover:text-gray-600 transition-colors ">
               Practice lab
             </Link>
 
-            <Link href="/stories" className=" text-gray-800 hover:text-gray-900 transition-colors">
+            <Link href="/stories" className=" text-gray-900 hover:text-gray-600 transition-colors ">
               Reading lab
             </Link>
           </div>

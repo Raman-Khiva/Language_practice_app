@@ -2,7 +2,7 @@
 import express from 'express';
 
 import { protect } from '../middleswares/auth.js';
-import { addToProgress, getProgress } from '../controllers/progressControllers.js';
+import { getUserProgress, updateProgressStats } from '../controllers/progressControllers.js';
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 
-router.get('/',protect, getProgress);
-router.post('/addToProgress',protect, addToProgress);
+router.get("/getUserProgress", protect, getUserProgress );
+router.post('/addToProgress',protect, updateProgressStats);
 
 export default router;

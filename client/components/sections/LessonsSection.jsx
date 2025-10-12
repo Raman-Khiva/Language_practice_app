@@ -19,7 +19,7 @@ const LessonsSection = ({setMainExpanded, mainExpanded}) => {
       <BsArrowsAngleExpand className='absolute -right-2 -top-2  p-3 w-12 h-12 text-gray-700 font-[400] z-50 opacity-0 hover:opacity-100 cursor-pointer duration-300'
                 onClick={() => { setMainExpanded(!mainExpanded) }}  
               />
-              <div className='border-b-2 border-gray-300 py-2 px-10 text-lg flex-shrink-0 flex flex-row-reverse items-center justify-between'>
+              <div className='border-t-1 mx-6 border-gray-300 py-2 px-10 text-lg flex-shrink-0 flex flex-row-reverse items-center justify-between'>
                   {/* <p>Cureent difficulty is {currentLessonsRecord.difficulty}</p> */}
                   <SingleSelectDropdown/>
               </div>

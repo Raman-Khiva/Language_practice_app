@@ -1,23 +1,22 @@
 //in new file
 'use client'
-import ProgressHeader from '@/components/progress/ProgressHeader'
+import ProgressHeader from '@/components/ui/ProgressHeader'
 import React, { useEffect, useState } from 'react'
-// import { motion } from 'framer-motion'
-import ActionButtons from '@/components/forms/ActionButtons'
-import AnswerInput from '@/components/forms/AnswerInput'
+import ActionButtons from '@/components/ui/ActionButtons'
+import AnswerInput from '@/components/ui/AnswerInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentLesson } from '../store/slices/currentLessonSlice'
-import {ScoreCard, GoodScoreCard, AverageScoreCard, NeedsImprovementScoreCard} from '@/components/cards/ScoreCardNew'
-import AnswerSection from '@/components/feedback/AnswerSection'
+import {ScoreCard, GoodScoreCard, AverageScoreCard, NeedsImprovementScoreCard} from '@/components/ui/ScoreCardNew'
+import AnswerSection from '@/components/ui/AnswerSection'
 import { addLessonToProgress } from '../store/slices/userProgressSlice'
 
+const cards = [<ScoreCard/>, <GoodScoreCard/>, <AverageScoreCard/>, <NeedsImprovementScoreCard/>];
 
-
-const FieldPage = () => {
+const page = () => {
     const currentLesson = useSelector(selectCurrentLesson);
     const [currentIdx, setIdx] = useState(0);
-    const [userAnswer, setUserAnswer] = useState("");
-    const [showAnswer, setShowAnswer] = useState(false);
+    const [userAnswer, setUserAnswer] = useState(""); // Added missing state
+    const [showAnswer, setShowAnswer] = useState(false); // Added missing state
     const [validationResult, setValidationResult] = useState(null);
     const [isValidating, setIsValidating] = useState(false);
     const [validationError, setValidationError] = useState(null);
@@ -26,6 +25,11 @@ const FieldPage = () => {
     const [borderStyling , setBorderStyling] = useState('border-violet-600/90 ring-5 ring-violet-300/50');
     const dispatch = useDispatch();
     
+    // const changeCard = ()=>{
+    //     const idx = Math.ceil(Math.random()*3);
+    //     setCurrentCard(idx);
+    // }
+    // Validate translation function
     const validateTranslation = async (originalText, spanishTranslation) => {
         try {
             setIsValidating(true);
@@ -103,18 +107,17 @@ const FieldPage = () => {
 
         }
     };
-    
-    const status = validationResult.status || "NULL";
+
 
     useEffect(() => {
-      if (status === "CORRECT") {
+      if (validationResult && validationResult.status === "CORRECT") {
         setBorderStyling('ring-5 border-green-600 ring-[#b2f1b6d9]')
       }
-      else if(status === "WRONG"){
+      else if(validationResult && validationResult.status === "WRONG"){
         setBorderStyling('ring-4 border-red-500 ring-red-200');
       }
       else setBorderStyling('border-violet-600/90 ring-5 ring-violet-300/50')
-    }, [status]);
+    }, [validationResult?.status]);
 
 
 
@@ -230,4 +233,4 @@ const FieldPage = () => {
     )
 }
 
-export default FieldPage
+export default page
