@@ -1,18 +1,17 @@
 //in new file
 'use client'
-import ProgressHeader from '@/components/ui/ProgressHeader'
+import ProgressHeader from '@/components/progress/ProgressHeader'
 import React, { useEffect, useState } from 'react'
-import ActionButtons from '@/components/ui/ActionButtons'
-import AnswerInput from '@/components/ui/AnswerInput'
+import ActionButtons from '@/components/forms/ActionButtons'
+import AnswerInput from '@/components/forms/AnswerInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentLesson } from '../store/slices/currentLessonSlice'
-import {ScoreCard, GoodScoreCard, AverageScoreCard, NeedsImprovementScoreCard} from '@/components/ui/ScoreCardNew'
-import AnswerSection from '@/components/ui/AnswerSection'
+import {ScoreCard, GoodScoreCard, AverageScoreCard, NeedsImprovementScoreCard} from '@/components/cards/ScoreCardNew'
+import AnswerSection from '@/components/feedback/AnswerSection'
 import { addLessonToProgress } from '../store/slices/userProgressSlice'
 
-const cards = [<ScoreCard/>, <GoodScoreCard/>, <AverageScoreCard/>, <NeedsImprovementScoreCard/>];
 
-const page = () => {
+const Field = () => {
     const currentLesson = useSelector(selectCurrentLesson);
     const [currentIdx, setIdx] = useState(0);
     const [userAnswer, setUserAnswer] = useState(""); // Added missing state
@@ -233,4 +232,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Field
