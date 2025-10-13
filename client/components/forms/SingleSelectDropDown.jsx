@@ -9,7 +9,6 @@ const SingleSelectDropdown = () => {
   const [selectedValueIdx, setSelectedValueIdx] = useState(0);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
-  const lessonsData = useSelector(selectCurrentLessons);
 
   const generateValues = () => {
     const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];

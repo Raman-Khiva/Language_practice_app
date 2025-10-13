@@ -1,10 +1,18 @@
 'use client'
 import SideBar from '@/components/layout/SideBar';
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 
 const Layout = ({children}) => {
-    const [sideBarOpen, setSideBarOpen] = useState(true);
+  
+     const [sideBarOpen, setSideBarOpen] = useState(true);
+     const disatch = useDispatch();
+     
+     useEffect(()=>{
+        disatch(getAllLessons())
+     },[])
+    
 
     const gridCols = sideBarOpen? " grid-cols-[200px_calc(100%-200px)]": " grid-cols-[80px_calc(100%-80px)]";
 

@@ -6,15 +6,13 @@ import LineGraph from '@/components/visuals/lineGraph';
 
 import { useState } from 'react';
 import ProgressCardsBar from '@/components/progress/ProgressCardsBar';
-import { selectSideBarOpen } from '@/app/store/slices/sideBarSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import {selectCurrentLessons } from '@/app/store/slices/lessonsSlices';
+
 
 import LessonsSection from '@/components/sections/LessonsSection';
 
 
 const LibraryPage = () => {
-  const barOpen = useSelector(selectSideBarOpen);
+  
   const [mainExpanded, setMainExpanded] = useState(true);
   // const loading = useSelector(selectLoading);
 
@@ -55,7 +53,6 @@ const LibraryPage = () => {
             <div className={` flex flex-col gap-2  rounded-xl 
                             relative row-span-10 col-span-8 
                             transition-all duration-800 ease-in-out
-                            
                             
                           ` + displayPropertyMain}
             >

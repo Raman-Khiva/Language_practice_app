@@ -1,9 +1,10 @@
 'use client'
-import SideBar from '@/components/layout/SideBar'
-import React, { useEffect } from 'react'
+
+import React, { useEffect, useState } from 'react'
 import { getCategories,selectCategories } from '@/app/store/slices/categoriesSlices'
 import { useDispatch, useSelector } from 'react-redux'
-import CategoryCard from '@/components/cards/CategoryCard'
+import LessonsSection from '@/components/sections/LessonsSection'
+import CategoryCardNew from '@/components/cards/CategoryCardNew'
 
 
 
@@ -12,6 +13,7 @@ import CategoryCard from '@/components/cards/CategoryCard'
 const CategoriesPage = () => {
   const dispatch = useDispatch();
   const categories = useSelector(selectCategories);
+  const [categorySelected,setCategorySelected] = useState(false);
 
   useEffect(()=>{
     if(!categories.dataFetched){
@@ -46,13 +48,16 @@ const CategoriesPage = () => {
 
 
   return (
-    <div className='w-full h-full relative
+    <div className='w-full h-full relative bg-[#fffefa]
                     grid grid-cols-10 grid-rows-1 gap-1
     '>
-       
+       {categorySelected ?(
+        <div className='col-start-1 col-end-9 row-span-1'>
+        <LessonsSection/>
+       </div>
+       ):(
        <div className=' col-span-8 row-span-1
-                        rounded-2xl 
-                        bg-violet-50/40 border-2 border-[#c3c3c3d2]
+                        
                         overflow-hidden
                         pb-20
                         
@@ -68,13 +73,13 @@ const CategoriesPage = () => {
                             py-8 gap-5 h-full
                             overflow-auto
             '>
-              
                 {categories.categoriesList.map((item,i)=>(
-                  <CategoryCard
+                  <CategoryCardNew
+                    setCategorySelected = {setCategorySelected}
                     key={i}
-                    i={i}
-                    name={item.name}
-                    count={item.count}
+                    index={i}
+                    title={item.name}
+                    totalLessons={item.count}
                   />
                 ))}
               
@@ -82,17 +87,17 @@ const CategoriesPage = () => {
           </div>
 
        </div>
-
-       <div className='col-span-2 row-span-1
+       )}
+       <div className='col-start-9 col-end-11 row-span-1
                        rounded-2xl
                        grid place-items-center
                        bg-white/20 border-2 border-[#c3c3c3d2]
-       '>
+         '>
          section
        </div>
 
     </div>
-  )
+    )
 }
 
 export default CategoriesPage

@@ -4,6 +4,50 @@ import Lesson  from '../models/lessonModel.js';
 
 
 
+
+
+export const getAllLessons = async (req,res) => {
+    try{
+        console.log("GET ALL LESSONS : Request recieved");
+        const lessons = await Lesson.find();
+        console.log("GET ALL LESSONS : This is data sent : " ,lessons);
+        res.status(200).json({success:true, lessons: lessons});
+    }catch(error){
+        return res.status(500).json({success:false, message : 'Server Error', error: error});
+    }
+}
+
+
+export const getLessonsWithCateAndDiff = async (req,res) => {
+    try{
+    const { category, difficulty } = req.query;
+
+    // Parse query params into arrays
+    const categories = category ? category.split(",") : [];
+    const difficulties = difficulty ? difficulty.split(",").map(Number) : [];
+
+    const filter = {};
+
+    // Apply filters conditionally
+    if (categories.length > 0 ) {
+      filter.category = { $in: categories };
+    }
+
+    if (difficulties.length > 0 && !difficulties.includes(-1)) {
+      filter.difficulty = { $in: difficulties };
+    }
+
+    const lessons = await Lesson.find(filter);
+
+    res.status(200).json({success:true, lessons:lessons});
+  } catch (err) {
+    console.error("Error fetching problems:", err);
+    res.status(500).json({success:false, error: "Failed to fetch problems" });
+  }
+}
+
+
+
 export const getLessons = async (req,res) => {
     try{
         console.log("GET_LESSONS : Request recieved");
