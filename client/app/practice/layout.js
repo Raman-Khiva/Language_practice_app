@@ -18,6 +18,9 @@ const Layout = ({children}) => {
       }
      },[disatch])
     
+    if(!lessonsFetched){
+      return <div className='w-full h-full grid place-items-center'>loading all lessons...</div>
+    }
 
     const gridCols = sideBarOpen? " grid-cols-[200px_calc(100%-200px)]": " grid-cols-[80px_calc(100%-80px)]";
 
