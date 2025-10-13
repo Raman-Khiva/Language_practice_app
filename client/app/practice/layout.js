@@ -2,16 +2,21 @@
 import SideBar from '@/components/layout/SideBar';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllLessons, selectLessonsFetched } from '../store/slices/lessonsSlices';
 
 const Layout = ({children}) => {
   
      const [sideBarOpen, setSideBarOpen] = useState(true);
      const disatch = useDispatch();
+     const lessonsFetched = useSelector(selectLessonsFetched);
+
      
      useEffect(()=>{
+      if(!lessonsFetched){
         disatch(getAllLessons())
-     },[])
+      }
+     },[disatch])
     
 
     const gridCols = sideBarOpen? " grid-cols-[200px_calc(100%-200px)]": " grid-cols-[80px_calc(100%-80px)]";

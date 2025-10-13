@@ -4,12 +4,10 @@ import { BiChevronDown } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleDifficulties, fetchLessonsData,selectLessonsData, selectCurrentLessons } from '@/app/store/slices/lessonsSlices';
 
-const SingleSelectDropdown = () => {
+const SingleSelectDropdown = ({selectedValueIdx,setSelectedValueIdx}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValueIdx, setSelectedValueIdx] = useState(0);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
-
   const generateValues = () => {
     const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
     const types = ['Early', 'Pro'];
@@ -37,9 +35,6 @@ const SingleSelectDropdown = () => {
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    dispatch(toggleDifficulties([selectedValueIdx]));
-  }, [dispatch])
   
   // Fixed: Use isOpen instead of open
   useEffect(() => {

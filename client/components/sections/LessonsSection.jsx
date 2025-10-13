@@ -10,7 +10,7 @@ import LessonCard from '../cards/LessonCard';
 
 
 
-const LessonsSection = ({setMainExpanded, mainExpanded}) => {
+const LessonsSection = ({setMainExpanded, mainExpanded, selectedValueIdx, setSelectedValueIdx}) => {
 
     const currentLessons = useSelector(selectCurrentLessons);
 
@@ -21,7 +21,7 @@ const LessonsSection = ({setMainExpanded, mainExpanded}) => {
               />
               <div className='border-t-1 mx-6 border-gray-300 py-2 px-10 text-lg flex-shrink-0 flex flex-row-reverse items-center justify-between'>
                   {/* <p>Cureent difficulty is {currentLessonsRecord.difficulty}</p> */}
-                  <SingleSelectDropdown/>
+                  <SingleSelectDropdown selectedValueIdx={selectedValueIdx} setSelectedValueIdx={setSelectedValueIdx}/>
               </div>
 
 

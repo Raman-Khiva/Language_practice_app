@@ -126,7 +126,6 @@ export const fetchLessonsData = createAsyncThunk(
   }
 );
 
-
 const checkDataExists = (lessonsRecord, difficulty, category = 'allLessons') => {
   // Guard invalid difficulty
   if (difficulty < 0 || difficulty > 11) return false;
@@ -145,8 +144,6 @@ const checkDataExists = (lessonsRecord, difficulty, category = 'allLessons') => 
   return diffStatus !== 0;
 };
  
-
-
 // New thunk for toggling category with automatic fetching
 export const toggleCategoryThunk = createAsyncThunk(
   "lessons/toggleCategory",
@@ -227,7 +224,6 @@ export const toggleCategoryThunk = createAsyncThunk(
     };
   }
 );
-
 
 export const toggleDifficulties = createAsyncThunk(
   "lessons/toggleDifficulties",
@@ -461,15 +457,54 @@ export const clearAllCategoriesThunk = createAsyncThunk(
   }
 );
 
+export const getAllLessons = createAsyncThunk(
+  "lessons/getAllLessons",
+  async (_, { getState, rejectWithValue }) => {
+    
+    try{
+      const state = getState().lessons;
+      const { lessonsFetched } = state;
+      
+      if(lessonsFetched){
+        return rejectWithValue({
+          error : "Lessons already fetched",
+          lessonsFetched : true
+        })
+      }
+
+      const res = await fetch("http://localhost:5000/api/lessons/getAllLessons");
+      const data = await res.json();
+      if(data.success === false){
+        return rejectWithValue({
+          error : data.error,
+          lessonsFetched : false
+        })
+      }
+      
+      return {
+        lessonsData : data.lessons,
+        lessonsFetched : true
+      }
+      
+    }catch(err){
+      return rejectWithValue({
+        lessonsFetched : false,
+        error : err.message
+      })
+    }
+  }
+);
+
 const initialState = {
+    lessonsData           :  [], 
     currentLessons        :  [],
-    selectedDifficulties : [],
+    selectedDifficulties :   [],
     currentLessonsRecord  :  {category: null,difficulty: null},
     loading               :  false,
-    lessonsData           :  [], 
     lessonsRecord         :  [{name: 'allLessons', recordList: Array(12).fill(0)}], // each category has 12 difficulties inculding universal category i.e. 'allLessons'
     error                 :  null,
-    hasPendingFetches     :  false 
+    hasPendingFetches     :  false,
+    lessonsFetched        :  false
 }
 
 
@@ -485,7 +520,25 @@ const lessonsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       
-
+      .addCase(getAllLessons.pending,(state,action)=>{
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAllLessons.fulfilled,(state,action)=>{
+        state.loading = false;
+        state.lessonsData = action.payload.lessonsData;
+        state.lessonsFetched = action.payload.lessonsFetched;
+      })
+      .addCase(getAllLessons.rejected,(state,action)=>{
+        state.loading = false;
+        state.lessonsFetched = action.payload.lessonsFetched
+        if(action.payload.lessonsFetched === false){
+          state.error = action.payload.error
+        }
+        else {
+          state.error = null
+        }
+      })
       //handle fetch lessons data
       .addCase(fetchLessonsData.fulfilled,(state,action)=>{
         state.lessonsData = action.payload.lessonsData
@@ -543,13 +596,15 @@ const lessonsSlice = createSlice({
 export const { setSelectedDifficulties, setCurrentLessons } = lessonsSlice.actions;
 
 
-export const selectLessons = (state) => state.lessons;
-export const selectLessonsError = (state)=> state.lessons.error
-export const selectLessonsLoading = (state) => state.lessons.loading;
-export const selectLessonsData = (state) => state.lessons.lessonsData;
-export const selectCurrentLessons = (state) => state.lessons.currentLessons;
-export const selectLessonsRecord = (state) => state.lessons.lessonsRecord;
-export const selectCurrentLessonsRecord = (state) => state.lessons.currentLessonsRecord;
+export const selectLessons               =  (state) => state.lessons;
+export const selectLessonsError          =  (state) => state.lessons.error;
+export const selectLessonsLoading        =  (state) => state.lessons.loading;
+export const selectLessonsData           =  (state) => state.lessons.lessonsData;
+export const selectCurrentLessons        =  (state) => state.lessons.currentLessons;
+export const selectLessonsRecord         =  (state) => state.lessons.lessonsRecord;
+export const selectCurrentLessonsRecord  =  (state) => state.lessons.currentLessonsRecord;
+export const selectLessonsFetched        =  (state) => state.lessons.lessonsFetched;
+
 
 
 
