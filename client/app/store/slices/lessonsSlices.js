@@ -495,30 +495,58 @@ export const toggleCategoryAndDifficulty = createAsyncThunk(
 export const getAllLessons = createAsyncThunk(
   "lessons/getAllLessons",
   async (_, { getState, rejectWithValue }) => {
+    console.log("GET-ALL-LESSONS ▶ Starting to fetch all lessons");
     
-    try{
+    try {
       const state = getState().lessons;
+      console.log("GET-ALL-LESSONS ▶ Current state snapshot:", {
+        lessonsCount: state.lessonsData?.length || 0,
+      
+      });
       const { lessonsFetched } = state;
       
       if(lessonsFetched){
+        console.log("GET-ALL-LESSONS ▶ Lessons already fetched, skipping API call");
         return rejectWithValue({
           error : "Lessons already fetched",
           lessonsFetched : true
-        })
+        });
       }
 
-      const res = await fetch("http://localhost:5000/api/lessons/getAllLessons");
-      const data = await res.json();
-      if(data.success === false){
-        return rejectWithValue({
-          error : data.error,
-          lessonsFetched : false
-        })
-      }
+      console.log("GET-ALL-LESSONS ▶ Fetching lessons from API...");
+      const startTime = performance.now();
       
-      return {
-        lessonsData : data.lessons,
-        lessonsFetched : true
+      try {
+        const res = await fetch("http://localhost:5000/api/lessons/getAllLessons");
+        const fetchTime = performance.now() - startTime;
+        console.log(`GET-ALL-LESSONS ▶ API response received in ${fetchTime.toFixed(2)}ms`, { 
+          status: res.status,
+          statusText: res.statusText 
+        });
+        
+        const data = await res.json();
+        
+        if(data.success === false){
+          console.error("GET-ALL-LESSONS ▶ API returned error:", data.error);
+          return rejectWithValue({
+            error: data.error,
+            lessonsFetched: false
+          });
+        }
+        
+        console.log(`GET-ALL-LESSONS ▶ Successfully fetched ${data.lessons?.length || 0} lessons`);
+        console.log("GET-ALL-LESSONS ▶ Fetched lessons data:", data.lessons);
+        return {
+          lessonsData: data.lessons,
+          lessonsFetched: true
+        };
+      } catch (error) {
+        const errorTime = performance.now() - startTime;
+        console.error(`GET-ALL-LESSONS ▶ Failed to fetch lessons after ${errorTime.toFixed(2)}ms:`, error);
+        return rejectWithValue({
+          error: error.message || 'Failed to fetch lessons',
+          lessonsFetched: false
+        });
       }
       
     }catch(err){

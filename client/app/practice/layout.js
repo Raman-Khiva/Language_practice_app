@@ -8,15 +8,15 @@ import { getAllLessons, selectLessonsFetched } from '../store/slices/lessonsSlic
 const Layout = ({children}) => {
   
      const [sideBarOpen, setSideBarOpen] = useState(true);
-     const disatch = useDispatch();
+     const dispatch = useDispatch();
      const lessonsFetched = useSelector(selectLessonsFetched);
 
      
      useEffect(()=>{
       if(!lessonsFetched){
-        disatch(getAllLessons())
+        dispatch(getAllLessons())
       }
-     },[disatch])
+     },[dispatch])
     
     if(!lessonsFetched){
       return <div className='w-full h-full grid place-items-center'>loading all lessons...</div>
