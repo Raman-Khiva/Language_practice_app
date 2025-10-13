@@ -1,10 +1,14 @@
 'use client'
 import { useEffect, useRef, useState } from 'react';
 import { BiChevronDown } from 'react-icons/bi'; 
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleDifficulties, fetchLessonsData,selectLessonsData, selectCurrentLessons } from '@/app/store/slices/lessonsSlices';
+import { useDispatch, } from 'react-redux';
+import { toggleCategoryAndDifficulty} from '@/app/store/slices/lessonsSlices';
 
-const SingleSelectDropdown = ({selectedValueIdx,setSelectedValueIdx}) => {
+const SingleSelectDropdown = ({
+     selectedValueIdx,
+     setSelectedValueIdx,
+     category = 'allLessons'
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
@@ -31,7 +35,7 @@ const SingleSelectDropdown = ({selectedValueIdx,setSelectedValueIdx}) => {
 
   const handleSelect = (value) => {
     setSelectedValueIdx(value);
-    dispatch(toggleDifficulties([value]));
+    dispatch(toggleCategoryAndDifficulty({targetCategory : category,targetDifficulty : value+1}));
     setIsOpen(false);
   };
 

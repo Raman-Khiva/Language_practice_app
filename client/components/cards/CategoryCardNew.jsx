@@ -9,7 +9,7 @@ const CategoryCardNew = ({
   completedLessons = 2,
   color = 'blue',
   index = 0,
-  setCategorySelected
+  setSelectedCategory
 }) => {
   const colorVariants = {
     blue: {
@@ -29,13 +29,11 @@ const CategoryCardNew = ({
 
   const colors = colorVariants[color] || colorVariants.blue;
 
-  const handleSelectCategory = () => {
-    setCategorySelected(true);
-  };
+  
 
   return (
     <div className={` bg-white rounded-2xl p-4 shadow-lg  transition-shadow duration-200`}
-         onClick={handleSelectCategory}
+         onClick={()=>setSelectedCategory(title)}
     >
       <div className="flex flex-col gap-2 h-full">
         <div className="flex-1">

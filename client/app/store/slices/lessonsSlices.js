@@ -297,6 +297,7 @@ export const toggleDifficulties = createAsyncThunk(
 
 
 
+
 // export const toggleDifficulties = createAsyncThunk(
 //   'lessons/toggleDifficulties',
 //   async (targetDifficulties , { getState, dispatch,rejectWithValue }) => {
@@ -457,6 +458,40 @@ export const clearAllCategoriesThunk = createAsyncThunk(
   }
 );
 
+export const toggleCategoryAndDifficulty = createAsyncThunk(
+    'lessons/toggleCategoryAndDifficulty',
+    async ({targetCategory='allLessons',targetDifficulty=1},{getState,rejectWithValue})=>{
+        try{
+            console.log("TOGGLE-CATEGORY-AND-DIFFICULTY ▶ Called with category:", targetCategory);
+            console.log("TOGGLE-CATEGORY-AND-DIFFICULTY ▶ Called with difficulty:", targetDifficulty);
+            
+            const state = getState().lessons;
+            const { lessonsData } = state;
+            
+            let currentLessons = [];
+            if(targetCategory==='allLessons'){
+                currentLessons = lessonsData.filter(item => item.difficulty === targetDifficulty);
+            }else{
+                currentLessons = lessonsData.filter(item => item.difficulty === targetDifficulty && item.category === targetCategory);
+            }
+            
+            console.log("\n ||||| \n ||||| ");
+            console.log("TOGGLE-CATEGORY-AND-DIFFICULTY ▶ currentLessons:", currentLessons);
+            
+            console.log("TOGGLE-CATEGORY-AND-DIFFICULTY ▶ Filtered lessons count:", currentLessons.length);
+            
+            return {
+              currentLessons : currentLessons,
+              
+            };
+        }catch(error){
+            return rejectWithValue({
+                error : error
+            })
+        }
+    }
+);
+
 export const getAllLessons = createAsyncThunk(
   "lessons/getAllLessons",
   async (_, { getState, rejectWithValue }) => {
@@ -539,6 +574,24 @@ const lessonsSlice = createSlice({
           state.error = null
         }
       })
+      
+      //handle toggleCategoryAndDifficulty
+      .addCase(toggleCategoryAndDifficulty.pending,(state,action)=>{
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(toggleCategoryAndDifficulty.fulfilled,(state,action)=>{
+        state.currentLessons = action.payload.currentLessons;
+        state.loading = false;
+      })
+      .addCase(toggleCategoryAndDifficulty.rejected,(state,action)=>{
+        state.error = 'Something went wrong'
+        state.loading = false;
+      })
+
+
+
+
       //handle fetch lessons data
       .addCase(fetchLessonsData.fulfilled,(state,action)=>{
         state.lessonsData = action.payload.lessonsData
@@ -587,10 +640,6 @@ const lessonsSlice = createSlice({
       
   },
 });
-
-
-
-
 
 
 export const { setSelectedDifficulties, setCurrentLessons } = lessonsSlice.actions;

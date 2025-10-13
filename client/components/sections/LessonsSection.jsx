@@ -1,8 +1,9 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+'use client'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { BsArrowsAngleExpand } from 'react-icons/bs';
 import SingleSelectDropdown from '../forms/SingleSelectDropDown';
-import { selectCurrentLessons} from '@/app/store/slices/lessonsSlices';
+import { selectCurrentLessons, selectLessonsFetched, selectLessonsLoading, toggleCategoryAndDifficulty} from '@/app/store/slices/lessonsSlices';
 import LessonCard from '../cards/LessonCard';
 
 
@@ -10,9 +11,37 @@ import LessonCard from '../cards/LessonCard';
 
 
 
-const LessonsSection = ({setMainExpanded, mainExpanded, selectedValueIdx, setSelectedValueIdx}) => {
-
+const LessonsSection = ({setMainExpanded, mainExpanded,  category='allLessons'}) => {
+    const [selectedValueIdx,setSelectedValueIdx] = useState(0);
     const currentLessons = useSelector(selectCurrentLessons);
+    const lessonsFetched = useSelector(selectLessonsFetched);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        let isMounted = true;
+        const fetchData = async () => {
+              dispatch(toggleCategoryAndDifficulty({
+                targetCategory: category,
+                targetDifficulty: selectedValueIdx + 1
+              }))
+                
+        };
+
+        fetchData();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [dispatch,lessonsFetched]);
+    
+    console.log("LessonsSection -- currentLessons : ",currentLessons);
+    if(currentLessons.length === 0){
+      return (
+        <div className='h-full w-full grid place-items-center'>
+          loading
+        </div>
+      )
+    }
 
   return (
     <div className=' h-full'>
@@ -21,7 +50,11 @@ const LessonsSection = ({setMainExpanded, mainExpanded, selectedValueIdx, setSel
               />
               <div className='border-t-1 mx-6 border-gray-300 py-2 px-10 text-lg flex-shrink-0 flex flex-row-reverse items-center justify-between'>
                   {/* <p>Cureent difficulty is {currentLessonsRecord.difficulty}</p> */}
-                  <SingleSelectDropdown selectedValueIdx={selectedValueIdx} setSelectedValueIdx={setSelectedValueIdx}/>
+                  <SingleSelectDropdown 
+                    selectedValueIdx={selectedValueIdx} 
+                    setSelectedValueIdx={setSelectedValueIdx}
+                    category={category}
+                  />
               </div>
 
 

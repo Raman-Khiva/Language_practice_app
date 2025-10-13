@@ -7,20 +7,16 @@ import LessonsSection from '@/components/sections/LessonsSection'
 import CategoryCardNew from '@/components/cards/CategoryCardNew'
 
 
-
-
-
 const CategoriesPage = () => {
   const dispatch = useDispatch();
   const categories = useSelector(selectCategories);
-  const [categorySelected,setCategorySelected] = useState(false);
+  const [selectedCategory,setSelectedCategory] = useState(null);
 
   useEffect(()=>{
     if(!categories.dataFetched){
       dispatch(getCategories());
     }
   },[dispatch]);
-
 
   if(!categories.dataFetched && categories.loading){
       return (
@@ -51,9 +47,9 @@ const CategoriesPage = () => {
     <div className='w-full h-full relative bg-[#fffefa]
                     grid grid-cols-10 grid-rows-1 gap-1
     '>
-       {categorySelected ?(
+       {selectedCategory !== null ?(
         <div className='col-start-1 col-end-9 row-span-1'>
-        <LessonsSection/>
+        <LessonsSection category={selectedCategory}/>
        </div>
        ):(
        <div className=' col-span-8 row-span-1
@@ -75,7 +71,7 @@ const CategoriesPage = () => {
             '>
                 {categories.categoriesList.map((item,i)=>(
                   <CategoryCardNew
-                    setCategorySelected = {setCategorySelected}
+                    setSelectedCategory={setSelectedCategory}
                     key={i}
                     index={i}
                     title={item.name}
@@ -83,7 +79,7 @@ const CategoriesPage = () => {
                   />
                 ))}
               
-            </div>
+            </div>  
           </div>
 
        </div>
