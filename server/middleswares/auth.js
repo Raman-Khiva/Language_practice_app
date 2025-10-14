@@ -44,7 +44,6 @@ export const protect = async (req, res, next) => {
 }
 
         req.user = user;
-        console.log('USER_ID :',user);
         next();
     } catch (error) {
         return res.status(401).json({

@@ -32,11 +32,8 @@ router.post('/validate', validateTranslationRequest, async (req, res) => {
     const { originalText, spanishTranslation } = req.body;
     
     const startTime = Date.now();
-    // console.log(`Validating translation for by groq`)
     const validation = await GroqService.validateSpanishTranslation(originalText, spanishTranslation);
     const responseTime = Date.now() - startTime;
-    // console.log(`Translation validation completed in ${responseTime}ms`);
-    // console.log("sending response to user");
     res.json({
       success: true,
       data: validation,
@@ -48,13 +45,10 @@ router.post('/validate', validateTranslationRequest, async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Translation validation error:', error);
-    
     res.status(500).json({
       success: false,
-      error: 'Translation validation failed',
-      message: error.message,
-      timestamp: new Date().toISOString()
+      message: 'Error validating translation',
+      error: error.message
     });
   }
 });

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, current} from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk} from "@reduxjs/toolkit"
 
 const baseApi = "http://localhost:5000/api";
 

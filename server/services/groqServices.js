@@ -2,13 +2,8 @@
 import axios from 'axios';
 import 'dotenv/config'
 
-
-
-
 class GroqService {
   constructor() {
-    console.log('Initializing GroqService');
-    console.log('Using Groq API Key:', process.env.GROQ_API_KEY );
     this.client = axios.create({
       baseURL: 'https://api.groq.com/openai/v1',
       headers: {
@@ -37,7 +32,6 @@ class GroqService {
 
   async validateSpanishTranslation(originalText, spanishTranslation) {
     try {
-      console.log("GROQ SERVICES : request to validate received , ",originalText, spanishTranslation,)
       const response = await this.client.post('/chat/completions', {
         model: 'openai/gpt-oss-120b',
         messages: [{
@@ -86,7 +80,6 @@ class GroqService {
       
       // Try to parse JSON response, fallback to text analysis
       try {
-        console.log("GROQ SERVICES : Model response ,",content);
         return JSON.parse(content);
       } catch (parseError) {
         // Fallback parsing if model doesn't return valid JSON
@@ -94,7 +87,6 @@ class GroqService {
       }
 
     } catch (error) {
-      console.error('Groq API Error:', error.message);
       throw error;
     }
   }

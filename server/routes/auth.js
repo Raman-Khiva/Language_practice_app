@@ -21,11 +21,7 @@ const generateToken = (id) => {
 // @access  Public
 router.post('/register', async (req, res) => {
     try {
-        console.log('Registering new user!')
-        console.log('request body : ', req.body);
-
         const { name, email, password } = req.body;
-        console.log('data recieved! ',name , email, password);
 
         // Check if user already exists
         const userExists = await User.findOne({ email });
@@ -69,7 +65,6 @@ router.post('/register', async (req, res) => {
 // @access  Public
 router.post('/login', async (req, res) => {
     try {
-        console.log('login request!');
         const { email, password } = req.body;
 
         // Check for user
