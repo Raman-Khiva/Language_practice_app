@@ -43,3 +43,5 @@ Thumbs.db
 
 /client/app/oldLesson.js
 /server/.env
+
+/client/.next
