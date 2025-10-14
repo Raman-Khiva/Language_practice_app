@@ -1,7 +1,9 @@
 'use client'
 import { useState } from 'react';
 
-const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+const server_url = process.env.NEXT_PUBLIC_MODE === 'DEV'
+  ? process.env.NEXT_PUBLIC_LOCAL_SERVER_URL
+  : process.env.NEXT_PUBLIC_SERVER_URL;
 
 export const useTranslationValidation = () => {
   const [validationResult, setValidationResult] = useState(null);

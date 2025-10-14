@@ -4,12 +4,14 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllLessons, selectLessonsFetched } from '../store/slices/lessonsSlices';
+import { selectPendingFetches } from '../store/slices/userProgressSlice';
 
 const Layout = ({children}) => {
   
      const [sideBarOpen, setSideBarOpen] = useState(true);
      const dispatch = useDispatch();
      const lessonsFetched = useSelector(selectLessonsFetched);
+     const pendingFetches = useSelector(selectPendingFetches);
 
      
      useEffect(()=>{
@@ -17,6 +19,12 @@ const Layout = ({children}) => {
         dispatch(getAllLessons())
       }
      },[dispatch])
+
+     useEffect(()=>{
+      if(pendingFetches){
+        dispatch(getUserProgress())
+      }
+     },[pendingFetches])
     
     if(!lessonsFetched){
       return <div className='w-full h-full grid place-items-center'>loading all lessons...</div>

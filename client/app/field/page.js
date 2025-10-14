@@ -10,7 +10,9 @@ import {ScoreCard, GoodScoreCard, AverageScoreCard, NeedsImprovementScoreCard} f
 import AnswerSection from '@/components/feedback/AnswerSection'
 import { addLessonToProgress } from '../store/slices/userProgressSlice'
 
-const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+const server_url = process.env.NEXT_PUBLIC_MODE === 'DEV'
+    ? process.env.NEXT_PUBLIC_LOCAL_SERVER_URL
+    : process.env.NEXT_PUBLIC_SERVER_URL;
 
 const Field = () => {
     const currentLesson = useSelector(selectCurrentLesson);
@@ -103,7 +105,7 @@ const Field = () => {
             // Last question completed, show score card
             setIdx(10);
             console.log(`FIELD - HANDLE_NEXT_QUESTION :${currentIdx}, lessonId : ${currentLesson.lessonId}, category : ${currentLesson.category} , difficulty : ${currentLesson.difficulty}`);
-            dispatch(addLessonToProgress({lessonId: currentLesson.lessonId, category : currentLesson.category, difficulty : currentLesson.difficulty, correctCount : correctCount}));
+            dispatch(addLessonToProgress({lessonId: currentLesson.lessonId, category : currentLesson.category, difficulty : currentLesson.difficulty, currentScore : correctCount*10}));
 
         }
     };

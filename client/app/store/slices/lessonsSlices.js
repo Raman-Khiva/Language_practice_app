@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit"
 
-const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+const server_url = process.env.NEXT_PUBLIC_MODE === 'DEV'
+  ? process.env.NEXT_PUBLIC_LOCAL_SERVER_URL
+  : process.env.NEXT_PUBLIC_SERVER_URL;
 const baseApi = `${server_url}/api`;
 
 
