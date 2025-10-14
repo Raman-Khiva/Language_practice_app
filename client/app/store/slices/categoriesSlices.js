@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // API base URL - adjust according to your setup
-const API_BASE_URL = 'http://localhost:5000/api';
+const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+const API_BASE_URL = `${server_url}/api`;
 
 // Async thunks for API calls
 

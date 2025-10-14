@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Async thunks for user progress
-const baseApi = 'http://localhost:5000/api'
+const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+const baseApi = `${server_url}/api`
 
 
 

@@ -1,14 +1,14 @@
-
-
 // store/slices/authSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
 
 // Async thunks for authentication
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(`${server_url}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export const registerUser = createAsyncThunk(
   async ({ email, password, name }, { rejectWithValue }) => {
     try {
         console.log('registering new user!',email,password,name);
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch(`${server_url}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

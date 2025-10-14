@@ -1,6 +1,8 @@
 'use client'
 import { useState } from 'react';
 
+const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+
 export const useTranslationValidation = () => {
   const [validationResult, setValidationResult] = useState(null);
   const [isValidating, setIsValidating] = useState(false);
@@ -11,7 +13,7 @@ export const useTranslationValidation = () => {
       setIsValidating(true);
       setValidationError(null);
       
-      const response = await fetch('http://localhost:5000/api/translation/validate', {
+      const response = await fetch(`${server_url}/api/translation/validate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

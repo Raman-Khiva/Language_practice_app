@@ -10,6 +10,7 @@ import {ScoreCard, GoodScoreCard, AverageScoreCard, NeedsImprovementScoreCard} f
 import AnswerSection from '@/components/feedback/AnswerSection'
 import { addLessonToProgress } from '../store/slices/userProgressSlice'
 
+const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
 
 const Field = () => {
     const currentLesson = useSelector(selectCurrentLesson);
@@ -34,7 +35,7 @@ const Field = () => {
             setIsValidating(true);
             setValidationError(null);
             
-            const response = await fetch('http://localhost:5000/api/translation/validate', {
+            const response = await fetch(`${server_url}/api/translation/validate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

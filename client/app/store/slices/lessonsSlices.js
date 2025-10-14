@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit"
 
-const baseApi = "http://localhost:5000/api";
+const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+const baseApi = `${server_url}/api`;
 
 
 
@@ -517,7 +518,7 @@ export const getAllLessons = createAsyncThunk(
       const startTime = performance.now();
       
       try {
-        const res = await fetch("http://localhost:5000/api/lessons/getAllLessons");
+        const res = await fetch(`${baseApi}/lessons/getAllLessons`);
         const fetchTime = performance.now() - startTime;
         console.log(`GET-ALL-LESSONS ▶ API response received in ${fetchTime.toFixed(2)}ms`, { 
           status: res.status,
