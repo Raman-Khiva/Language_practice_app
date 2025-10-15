@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllLessons, selectLessonsFetched } from '../store/slices/lessonsSlices';
-import { selectPendingFetches } from '../store/slices/userProgressSlice';
+import { getUserProgress, selectPendingFetches } from '../store/slices/userProgressSlice';
 
 const Layout = ({children}) => {
   

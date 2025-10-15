@@ -144,20 +144,14 @@ const userProgressSlice = createSlice({
       })
 
       // Add lesson to progress cases
-      .addCase(addLessonToProgress.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(addLessonToProgress.fulfilled, (state) => {
-        state.isLoading = false;
-        state.error = null;
+      .addCase(addLessonToProgress.fulfilled, (state,action)=>{
         state.pendingFetches = true;
       })
       .addCase(addLessonToProgress.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-      
+
   },
 });
 
