@@ -30,7 +30,7 @@ export default function Profile() {
 
   return(
     <div>
-      <Navbar/>
+      
       <ProfilePage user={user} />;
     </div>
 
