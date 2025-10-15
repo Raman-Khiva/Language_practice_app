@@ -1,8 +1,6 @@
 'use client'
 import Link from 'next/link'
-// import { useContext } from 'react'
 import { usePathname } from 'next/navigation'
-// import { ProductContext } from '@/app/context/ProductContext'
 import Image from 'next/image'
 import {selectIsAuthenticated, selectUser} from '../../app/store/slices/authSlice';
 import { useSelector } from 'react-redux';

@@ -4,6 +4,7 @@ import { selectUser, selectIsAuthenticated } from '@/app/store/slices/authSlice'
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import ProfilePage from '@/components/pages/ProfilePage';
+import Navbar from '@/components/Navbar/Navbar';
 
 export default function Profile() {
   const user = useSelector(selectUser);
@@ -27,5 +28,11 @@ export default function Profile() {
     );
   }
 
-  return <ProfilePage user={user} />;
+  return(
+    <div>
+      <Navbar/>
+      <ProfilePage user={user} />;
+    </div>
+
+  ) 
 }
