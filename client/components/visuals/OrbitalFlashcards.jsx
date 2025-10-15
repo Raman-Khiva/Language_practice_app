@@ -76,15 +76,15 @@ const ringStyle = (thickness = 4, opacity = 0.9) => ({
 
 const OrbitalFlashcards = () => {
   return (
-    <div className='relative flex w-full items-center justify-center px-4'>
-      <div className='relative h-[26rem] w-[26rem] md:h-[32rem] md:w-[32rem]'>
+    <div className='relative flex w-full max-w-sm sm:max-w-md lg:max-w-2xl items-center justify-center px-4'>
+      <div className='relative h-[18rem] w-[18rem] sm:h-[24rem] sm:w-[24rem] lg:h-[32rem] lg:w-[32rem]'>
         <div className='absolute shadow-2xl inset-0 rounded-full opacity-80' style={ringStyle(6, 0.9)} />
-        <div className='absolute inset-[12%] rounded-full opacity-70' style={ringStyle(6, 0.6)} />
-        <div className='absolute inset-[25%] rounded-full opacity-60' style={ringStyle(6, 0.45)} />
+        <div className='absolute inset-[14%] sm:inset-[12%] rounded-full opacity-70' style={ringStyle(6, 0.6)} />
+        <div className='absolute inset-[28%] sm:inset-[25%] rounded-full opacity-60' style={ringStyle(6, 0.45)} />
 
-        <div className='absolute inset-[38%] flex flex-col items-center justify-center gap-2 rounded-full bg-white shadow-[0_25px_60px_-35px_rgba(36,33,66,0.35)]'>
-          <div className='flex h-22 w-22 items-center justify-center rounded-full  shadow-xl'>
- 
+        <div className='absolute inset-[42%] sm:inset-[38%] flex flex-col items-center justify-center gap-2 rounded-full bg-white shadow-[0_25px_60px_-35px_rgba(36,33,66,0.35)]'>
+          <div className='flex h-20 w-20 sm:h-22 sm:w-22 items-center justify-center rounded-full shadow-xl'>
+
             <Image src="/brain-logo.svg" width={60} height={25} className='' alt="Nativelabs" />
           </div>
          

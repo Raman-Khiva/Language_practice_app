@@ -1,11 +1,11 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { GoSidebarCollapse } from "react-icons/go";
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { FaUserCircle } from "react-icons/fa";
 import { BookOpen, LayoutGrid, BookMarked, PenTool, ClipboardList } from "lucide-react";
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -13,20 +13,30 @@ import Image from 'next/image';
 
 
 const sideBarOptions = [
-  { name: 'Library', link: '/practice/library', icon: BookOpen },       // General reading/practice hub
+  { name: 'Library',    link: '/practice/library',    icon: BookOpen },       // General reading/practice hub
   { name: 'Categories', link: '/practice/categories', icon: LayoutGrid }, // Browse topics
-  { name: 'Stories', link: '/practice/library', icon: BookMarked },     // Story/lesson-based learning
-  { name: 'Custom', link: '/practice/library', icon: PenTool },         // Create your own exercises
-  { name: 'My Plans', link:'/practice/library', icon: ClipboardList },  // Learning plans/progress
+  { name: 'Stories',    link: '/practice/library',    icon: BookMarked },     // Story/lesson-based learning
+  { name: 'Custom',     link: '/practice/library',    icon: PenTool },         // Create your own exercises
+  { name: 'My Plans',   link:'/practice/library',     icon: ClipboardList },  // Learning plans/progress
 ];
 
 
-const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
-  
-  const [selectedItemIdx, setSelectedItemIdx] = useState(0);
+const SideBar = ({
+  isSideBarOpen,
+  setSideBarOpen,
+}) => {
+
+  const pathname = usePathname();
   const router = useRouter();
+  const [selectedItemIdx, setSelectedItemIdx] = useState(0);
+  
+  useEffect(()=>{
+    const currentFocus = sideBarOptions.findIndex(option => pathname.startsWith(option.link));
+    setSelectedItemIdx(currentFocus);
+  },[pathname])
+    
+  
   const handleClick = (index) =>{
-    setSelectedItemIdx(index);
     router.push(sideBarOptions[index].link);
   }
 
@@ -73,15 +83,14 @@ const SideBar = ({isSideBarOpen,setSideBarOpen}) => {
                           animate={{ width : "100%" ,opacity:1}}
                           transition={{ duration: 0.4,    ease: "easeInOut" }}
                           style={{ transformOrigin: "left center" }}
-                        key={index} //+((currentFocus===index)?' bg-gray-300':'hover:bg-gray-200')
-                        className={` pl-5 pr-1 py-1 rounded-lg 
-                                     flex items-center justify-start 
-                                     cursor-pointer overflow-hidden
-  
-                                     ${selectedItemIdx===index?"bg-violet-200 text-violet-600":"hover:bg-gray-200"}
+                          key={index} //+((currentFocus===index)?' bg-gray-300':'hover:bg-gray-200')
+                          className={` pl-5 pr-1 py-1 rounded-lg 
+                                       flex items-center justify-start 
+                                       cursor-pointer overflow-hidden
+                                       ${selectedItemIdx===index?"bg-violet-200 text-violet-600":"hover:bg-gray-200"}
                                      ` 
                          }
-                        onClick={()=>handleClick(index)}
+                         onClick={()=>handleClick(index)}
                       >
                         <span className='whitespace-nowrap 
                                          flex items-center gap-3

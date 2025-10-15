@@ -126,7 +126,7 @@ const TestimonialRow = ({ testimonials, direction }) => {
 
 const Testimonials = () => {
   return (
-    <section className='w-full flex flex-col items-center gap-14 py-28 px-8 md:px-32'>
+    <section className='w-full flex flex-col items-center gap-14 py-28 px-8 md:px-16'>
       <div className='flex flex-col items-center gap-4 text-center max-w-3xl'>
         <Badge tag='Loved by learners worldwide' icon={HiOutlineChatBubbleLeftRight} />
         <h2 className='text-[50px] leading-tight font-[400]'>Testimonials that Tell the Story</h2>

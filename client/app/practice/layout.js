@@ -12,8 +12,8 @@ const Layout = ({children}) => {
      const dispatch = useDispatch();
      const lessonsFetched = useSelector(selectLessonsFetched);
      const pendingFetches = useSelector(selectPendingFetches);
-
-     
+           
+           
      useEffect(()=>{
       if(!lessonsFetched){
         dispatch(getAllLessons())
@@ -32,6 +32,9 @@ const Layout = ({children}) => {
 
     const gridCols = sideBarOpen? " grid-cols-[200px_calc(100%-200px)]": " grid-cols-[80px_calc(100%-80px)]";
 
+
+
+
   return (
     <div className={`w-full h-screen overflow-hidden
                     grid ${gridCols} grid-rows-[60px_1fr]
@@ -42,7 +45,10 @@ const Layout = ({children}) => {
                       col-span-1 row-span-2
       ' 
       >
-        <SideBar isSideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen}/>
+        <SideBar 
+           isSideBarOpen={sideBarOpen}
+           setSideBarOpen={setSideBarOpen}
+        />
       </div>
 
       <div className='flex items-center justify-center             
