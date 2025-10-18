@@ -5,9 +5,10 @@ import React from 'react'
 const FeatureCard = ({title,description,icon:Icon}) => {
   return (
     // border-2 border-[]
-    <div className=' card-bg
+    <div className='  
                       px-6 py-6 rounded-2xl 
                       flex gap-7 items-start
+                      shadow-md shadow-violet-200
     '>
        <div className='flex justify-center '>
          <Icon className="text-4xl text-indigo-700"/>

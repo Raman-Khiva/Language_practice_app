@@ -37,33 +37,32 @@ export default function LessonCard({
     
 
   return (
-    <div className={` bg-white rounded-3xl shadow-xl p-3 w-full max-w-[14rem]
+    <div className={` bg-white rounded-2xl shadow-[0_0_10px_0_rgba(0,0,0,0.1)] p-3 w-full max-w-[14rem]
                       flex flex-col justify-between gap-1.5
     `}>
       {/* Header Section */}
       <div className=""> 
         <div className="flex items-center justify-between mb-1 ">
-          <h2 className="text-lg font-bold leading-tight text-gray-900">Lesson {index+1}</h2>
+          <h2 className="text-lg font-bold leading-tight text-gray-700">Lesson {index+1}</h2>
           <span className="text-sm leading-tight font-bold text-gray-900">{currentLesson.difficulty}</span>
         </div>
         
         <div className="flex items-center justify-betjween text-sm ">
           <div className="flex items-center gap-1">
-            <TrendingUp className=" h-4 w-4 text-gray-700" />
-            <span className=" text-gray-900">{currentLesson.category}</span>
+            <TrendingUp className=" h-4 w-4 text-gray-500" />
+            <span className=" text-gray-500">{currentLesson.category}</span>
           </div>
-          <span className="text-gray-600">{lessonId}</span>
         </div>
       </div>
 
       {/* Title */}
-      <h3 className="text-lg pb-1 pt-2 font-bold text-gray-900 ">{title}</h3>
+      <h3 className="text-lg pb-1 pt-2 font-bold text-gray-700 ">{title}</h3>
 
       {/* Completion Section */}
       <div className="bg-white rounded-2xl  py-2 px-3 flex items-center justify-between">
         <div>
-          <div className="text-lg font-bold text-gray-900 ">{bestScore}%</div>
-          <div className="text-sm text-gray-600">Complete</div>
+          <div className="text-lg font-bold text-gray-700 ">{bestScore}%</div>
+          <div className="text-sm text-gray-500">Complete</div>
         </div>
         
         <div className="relative">

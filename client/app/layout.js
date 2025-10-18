@@ -3,14 +3,12 @@
 import "./globals.css";
 import { Inter, Josefin_Sans, Ubuntu} from "next/font/google"
 import MainLoader from "@/components/common/MainLoader"
-// import Navbar from "@/components/Navbar/Navbar";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadAuthFromLocalStorage, selectIsInitialized, selectIsAuthenticated } from "./store/slices/authSlice";
 import {getUserProgress,selectUserProgress}  from './store/slices/userProgressSlice'
-// import {fetchLessons,selectLessons}  from './store/slices/lessonsSlices'
 
 const josefin_sans = Josefin_Sans({
   subsets: ['latin'],
@@ -19,12 +17,8 @@ const josefin_sans = Josefin_Sans({
   variable: '--font-josefin-sans', // Create a CSS variable
 });
 
-// const tasa = Tasa_Explorer({
-//   subsets: ['latin'],
-//   display: 'swap',
-//   weight: ['400', '700'], // Specify the weights you want to use
-//   variable: '--font-tasa-explorer',
-// });
+
+
 const ubuntu = Ubuntu({
   subsets: ['latin'],
   display: 'swap',

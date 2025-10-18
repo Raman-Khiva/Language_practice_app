@@ -15,23 +15,20 @@ const server_url = process.env.NEXT_PUBLIC_MODE === 'DEV'
     : process.env.NEXT_PUBLIC_SERVER_URL;
 
 const Field = () => {
-    const currentLesson = useSelector(selectCurrentLesson);
-    const [currentIdx, setIdx] = useState(0);
-    const [userAnswer, setUserAnswer] = useState(""); // Added missing state
-    const [showAnswer, setShowAnswer] = useState(false); // Added missing state
+
+                const [userAnswer, setUserAnswer] = useState(""); // Added missing state
+                const [showAnswer, setShowAnswer] = useState(false); // Added missing state
     const [validationResult, setValidationResult] = useState(null);
-    const [isValidating, setIsValidating] = useState(false);
-    const [validationError, setValidationError] = useState(null);
-    // const [currCard, setCurrentCard] = useState(0);
-    const [correctCount , incCorrectCount] = useState(0);
-    const [borderStyling , setBorderStyling] = useState('border-violet-600/90 ring-5 ring-violet-300/50');
-    const dispatch = useDispatch();
+            const [isValidating, setIsValidating] = useState(false);
+      const [validationError, setValidationError] = useState(null);
+              // const [currCard, setCurrentCard] = useState(0);
+           const [correctCount , incCorrectCount] = useState(0);
+         const [borderStyling , setBorderStyling] = useState('border-violet-600/90 ring-5 ring-violet-300/50');
+                       const [currentIdx, setIdx] = useState(0);
+                              const currentLesson = useSelector(selectCurrentLesson);
+                                   const dispatch = useDispatch();
     
-    // const changeCard = ()=>{
-    //     const idx = Math.ceil(Math.random()*3);
-    //     setCurrentCard(idx);
-    // }
-    // Validate translation function
+    
     const validateTranslation = async (originalText, spanishTranslation) => {
         try {
             setIsValidating(true);

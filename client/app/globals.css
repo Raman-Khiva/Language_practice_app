@@ -22,6 +22,10 @@
   font-family: var(--font-ubuntu);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 #__next_dev_overlay {
   display: none;
 }

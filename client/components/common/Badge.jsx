@@ -6,7 +6,7 @@ const Badge = ({tag,icon:Icon}) => {
                      w-fit px-5 py-1.5 rounded-4xl
                      bg-[rgb(251,251,251)] 
                     border-[1.5px] border-black/10
-                    shadow-[0_0_10px_rgba(0,0,0,0.0.07)]
+                    shadow-md shadow-violet-300
     '>
 
 
@@ -41,7 +41,7 @@ const Badge = ({tag,icon:Icon}) => {
 </svg> */}
 
 
-      <p className='text-[#303030]'>{tag}</p>
+      <p className='text-[#303030] text-sm font-[500]'>{tag}</p>
     </div>
   )
 }

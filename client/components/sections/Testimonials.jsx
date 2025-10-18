@@ -61,7 +61,7 @@ const testimonialsBottom = [
 ]
 
 const TestimonialCard = ({ name, role, rating, quote }) => (
-  <div className='min-w-[18rem] max-w-xs  card-bg order border-black/5 rounded-2xl px-6 py-6 flex flex-col gap-4 '>
+  <div className='min-w-[18rem] max-w-xs shadow-md my-5 shadow-violet-200/80 rounded-2xl px-6 py-6 flex flex-col gap-4 '>
     <div className='flex items-center justify-between gap-4'>
       <div className='flex flex-col'>
         <h4 className='text-lg font-[600] text-black/85'>{name}</h4>
@@ -135,7 +135,7 @@ const Testimonials = () => {
         </p>
       </div>
 
-      <div className='flex flex-col gap-8 w-full'>
+      <div className='flex flex-col w-full'>
         <TestimonialRow testimonials={testimonialsTop} direction='right' />
         <TestimonialRow testimonials={testimonialsBottom} direction='left' />
       </div>
