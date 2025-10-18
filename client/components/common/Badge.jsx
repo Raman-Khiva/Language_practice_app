@@ -10,7 +10,7 @@ const Badge = ({tag,icon:Icon}) => {
     '>
 
 
-      <Icon className="text-2xl font-[600] ubuntu text-violet-600 " />
+      <Icon className="text-xl font-[600] ubuntu text-violet-600 " />
       {/* <svg
   width="24"
   height="24"

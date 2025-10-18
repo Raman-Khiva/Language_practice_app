@@ -66,7 +66,7 @@ const Layout = ({children}) => {
        </div>
 
       <div className='flex items-center justify-center
-                      col-span-1 row-span-1 overflow-hidden
+                      col-span-1 row-span-1 overflow-auto
       '>
         {children}
       </div>

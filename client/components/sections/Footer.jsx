@@ -48,7 +48,7 @@ const Footer = () => {
       <div className='max-w-6xl mx-auto flex flex-col gap-16'>
         <div className='grid grid-cols-1 md:grid-cols-4 gap-10 items-start'>
           <div className='flex flex-col gap-5'>
-            <Badge tag='Lingua App' icon={HiOutlineSparkles} />
+            <Badge tag='Native labs' icon={HiOutlineSparkles} />
             <h3 className='text-3xl font-[500] text-black/85'>Your AI-powered language companion</h3>
             <p className='text-black/60 text-[15px] font-[500] leading-relaxed'>
               Practice speaking, get real-time corrections, and stay motivated with adaptive guidance tuned to your goals.
@@ -56,8 +56,10 @@ const Footer = () => {
             <div className='flex items-center gap-3'>
               {[FaTwitter, FaFacebookF, FaYoutube, FaLinkedinIn].map((Icon, idx) => (
                 <Link key={idx} href='#social'
-                  className='h-11 w-11 flex items-center justify-center rounded-full bg-black/10 hover:bg-black/20 transition-colors text-black/70'>
-                  <Icon className='text-lg' />
+                  className=' p-1 flex items-center justify-center shadow-md shadow-violet-500 rounded-full bg-white hover:shadow-sm transition-colors text-black/70'>
+                  <span className='w-10 h-10 flex items-center justify-center bg-violet-600 rounded-full '>
+                   <Icon className='text-lg text-white' />
+                  </span>
                 </Link>
               ))}
             </div>

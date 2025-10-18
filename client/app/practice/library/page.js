@@ -1,9 +1,8 @@
 'use client'
 
-import LineGraph from '@/components/visuals/lineGraph';
-import {useState } from 'react';
-import ProgressCardsBar from '@/components/progress/ProgressCardsBar';
+import { useState } from 'react';
 import LessonsSection from '@/components/sections/LessonsSection';
+import DifficultyTripleBarChart from '@/components/visuals/DifficultyTripleBarChart';
 
 
 
@@ -11,63 +10,46 @@ const LibraryPage = () => {
   
   const [mainExpanded, setMainExpanded] = useState(true);
 
-  let displayPropertyGraphs = mainExpanded ? ' hidden' : '';
-  let displayPropertyMain = mainExpanded ? ' col-start-1 col-end-9 row-start-1 row-end-11' : ' col-start-1 col-end-8 row-start-3 row-end-11';
-  let displayPropertyStatsBar = mainExpanded ? ' col-start-9 col-end-11 row-start-1 row-end-11 flex-col py-16 justify-evenly' : 'col-start-1 col-end-8 row-start-1 row-end-3';
-
 
 
   
   return (
         <div className={`  text-3xl font-[500] 
-                          h-full w-full
-                          grid  grid-cols-10 grid-rows-10 gap-2  overflow-hidden
+                          h-full w-full pr-8 py-4
+                          grid  grid-cols-[1fr_21rem] 
                           transition-all duration-800 ease-in-out`     
         }>
             
-            <ProgressCardsBar className={` flex place-items-center justify-evenly
-                              px-5  rounded-xl 
-                                gap-2 min-h-0 
-                              transition-all duration-800 ease-in-out
-                             ` + displayPropertyStatsBar} />
             
-          <div className={`col-span-3 row-span-3 grid place-items-center rounded-xl 
-                            min-h-0 bg-white/20
-                            shadow-[0_0_10px_rgba(0,0,0,0.1)] border-2 border-[#c3c3c3d2]
-                            transition-all duration-800 ease-in-out
-                            ` + displayPropertyGraphs}
-            >
-              <LineGraph />
-            </div>
-            
-
-
-
             {/*main content area*/}
-            <div className={` flex flex-col gap-2  rounded-xl 
-                            relative row-span-10 col-span-8 
+            <div className={` col-start-1 col-end-2 flex flex-col gap-2  rounded-xl 
+                            relative 
                             transition-all duration-800 ease-in-out
                             
-                          ` + displayPropertyMain}
+                          ` }
             >
-             <LessonsSection setMainExpanded={setMainExpanded} mainExpanded={mainExpanded}
-               />
+             <LessonsSection 
+                setMainExpanded={setMainExpanded} 
+                mainExpanded={mainExpanded}
+              />
               
             </div>
             
-
-
-
-
-            <div className={`col-span-3  row-span-7 grid place-items-center  rounded-xl
-                            bg-white/20 
-                            shadow-[0_0_10px_rgba(0,0,0,0.1)] border-2 border-[#c3c3c3d2]
-                           transition-all duration-800 ease-in-out
-                           ` + displayPropertyGraphs}
+            
+            <div className={`col-start-2 col-end-3 flex flex-col  mt-[6.2rem]
+                            h-fit p-5 bg-white border-2 border-gray-100 rounded-xl  
+                            transition-all duration-800 ease-in-out shadow-[0_0_10px_rgba(0,0,0,0.1)]
+                            `}
             >
-              stats graph
+              <header className="flex flex-col gap-1 mb-6">
+                <h3 className="text-lg font-semibold text-slate-800">Level Progress Overview</h3>
+                <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Total vs Attempted vs Passed</p>
+              </header>
+              <div className="flex-1 flex flex-col ">
+                <DifficultyTripleBarChart />
+              </div>
             </div>
-
+            
 
         </div>
   )

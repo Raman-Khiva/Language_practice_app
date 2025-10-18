@@ -10,11 +10,8 @@ import { useRouter } from 'next/navigation';
 import { selectLessonsStats } from '@/app/store/slices/userProgressSlice';
 
 export default function LessonCard({
-  xp = 150,
-  difficulty = 'Intermediate',
   title = 'Podcast Discussions',
   index,
-  lessonId,
   currentLesson,
 }){
     
@@ -37,7 +34,7 @@ export default function LessonCard({
     
 
   return (
-    <div className={` bg-white rounded-2xl shadow-[0_0_10px_0_rgba(0,0,0,0.1)] p-3 w-full max-w-[14rem]
+    <div className={` bg-white rounded-2xl shadow-[0_0_10px_0_rgba(0,0,0,0.1)] p-3 w-full max-w-[17rem]
                       flex flex-col justify-between gap-1.5
     `}>
       {/* Header Section */}
@@ -55,8 +52,7 @@ export default function LessonCard({
         </div>
       </div>
 
-      {/* Title */}
-      <h3 className="text-lg pb-1 pt-2 font-bold text-gray-700 ">{title}</h3>
+
 
       {/* Completion Section */}
       <div className="bg-white rounded-2xl  py-2 px-3 flex items-center justify-between">
